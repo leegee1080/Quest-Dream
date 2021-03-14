@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scripts/Enemy.gd"
+}, {
+"base": "Reference",
+"class": "Enemy_Type",
+"language": "GDScript",
+"path": "res://scripts/Enemy_Type.gd"
+} ]
 _global_script_class_icons={
-
+"Enemy": "",
+"Enemy_Type": ""
 }
 
 [application]
