@@ -1,16 +1,16 @@
 extends Node2D
 
-
 class_name Enemy
-
 
 
 var type
 
 func _init(new_type):
-	self.type = new_type
-	pass
+	generate_enemy_stats(new_type)
 
+func generate_enemy_stats(new_type):
+	#type = Enemy_Type.new(Enemy_Type.enemy_types_enum.alien_god)
+	self.type = Enemy_Type.new(new_type)
 
 func process_turn():
 	return
