@@ -84,7 +84,7 @@ const necromancer = {
 	"icon": "res://assets/visuals/tile199.png"
 }
 
-const enemy_types = {
+const player_types = {
 	player_types_enum.soldier: soldier,
 	player_types_enum.valkyrie: valkyrie,
 	player_types_enum.ranger: ranger,
