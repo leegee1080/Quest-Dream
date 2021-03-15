@@ -42,6 +42,15 @@ config/name="Quest Dream"
 run/main_scene="res://nodes/Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=180
+window/size/height=320
+window/size/resizable=false
+window/size/test_width=750
+window/size/test_height=1334
+window/vsync/use_vsync=false
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
