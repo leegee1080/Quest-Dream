@@ -1,9 +1,9 @@
 extends Node2D
 
+
 class_name Player
 
-
-
+#var rand_num = rand_range(Player_Type.player_types_enum)
 var type
 
 func _init(new_type, level: int, difficulty: int, equipment: Dictionary):

@@ -18,70 +18,70 @@ const soldier = {
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile190.png"
 }
 const valkyrie = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile191.png"
 }
 const ranger = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile192.png"
 }
 const executioner = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile193.png"
 }
 const berserker = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile194.png"
 }
 const knight = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile195.png"
 }
 const assassin = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile196.png"
 }
 const wizard = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile197.png"
 }
 const traveler = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile198.png"
 }
 const necromancer = {
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
 	"base_loot": 10,
-	"icon": "res://assets/visuals/tile200.png"
+	"icon": "res://assets/visuals/tile199.png"
 }
 
 const enemy_types = {

@@ -9,7 +9,9 @@ func _init(new_type):
 	generate_enemy_stats(new_type)
 
 func generate_enemy_stats(new_type):
-	#type = Enemy_Type.new(Enemy_Type.enemy_types_enum.alien_god)
+	if new_type == null:
+		self.type = Enemy_Type.new(Enemy_Type.enemy_types_enum.alien_god)
+		return
 	self.type = Enemy_Type.new(new_type)
 
 func process_turn():
