@@ -1,13 +1,5 @@
 class_name Enemy_Type
 
-var chosen_type
-
-func _init(new_forced_type):
-	if new_forced_type == null:
-		#random type
-		return
-	chosen_type = new_forced_type
-
 enum enemy_types_enum{
 	avatar,
 	goblin,
@@ -42,6 +34,7 @@ enum enemy_types_enum{
 }
 
 const avatar = {
+	"name": "Avatar of the End",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -49,6 +42,7 @@ const avatar = {
 	"icon": "res://assets/visuals/tile200.png"
 }
 const goblin = {
+	"name": "Goblin",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -56,6 +50,7 @@ const goblin = {
 	"icon":"res://assets/visuals/tile201.png"
 }
 const goblin_wizard = {
+	"name": "Goblin Wizard",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -63,6 +58,7 @@ const goblin_wizard = {
 	"icon":"res://assets/visuals/tile202.png"
 }
 const monkey = {
+	"name": "Monkey",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -70,6 +66,7 @@ const monkey = {
 	"icon":"res://assets/visuals/tile203.png"
 }
 const robber = {
+	"name": "Highway Man",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -77,6 +74,7 @@ const robber = {
 	"icon":"res://assets/visuals/tile204.png"
 }
 const human_wizard = {
+	"name": "Wizard",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -84,6 +82,7 @@ const human_wizard = {
 	"icon":"res://assets/visuals/tile205.png"
 }
 const human_sorcerer = {
+	"name": "Sorcerer",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -91,6 +90,7 @@ const human_sorcerer = {
 	"icon": "res://assets/visuals/tile206.png"
 }
 const human_jack = {
+	"name": "Court Jack",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -98,6 +98,7 @@ const human_jack = {
 	"icon": "res://assets/visuals/tile207.png"
 }
 const human_queen = {
+	"name": "The Queen",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -105,6 +106,7 @@ const human_queen = {
 	"icon": "res://assets/visuals/tile208.png"
 }
 const human_king = {
+	"name": "The King",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -112,6 +114,7 @@ const human_king = {
 	"icon": "res://assets/visuals/tile209.png"
 }
 const rat = {
+	"name": "Rat",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -119,6 +122,7 @@ const rat = {
 	"icon": "res://assets/visuals/tile210.png"
 }
 const bat = {
+	"name": "Bat",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -126,6 +130,7 @@ const bat = {
 	"icon": "res://assets/visuals/tile211.png"
 }
 const dog = {
+	"name": "Dog",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -133,6 +138,7 @@ const dog = {
 	"icon": "res://assets/visuals/tile212.png"
 }
 const snake = {
+	"name": "Snake",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -140,6 +146,7 @@ const snake = {
 	"icon": "res://assets/visuals/tile213.png"
 }
 const spider_tiny = {
+	"name": "Spider",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -147,6 +154,7 @@ const spider_tiny = {
 	"icon": "res://assets/visuals/tile214.png"
 }
 const spider_big = {
+	"name": "Giant Spider",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -154,6 +162,7 @@ const spider_big = {
 	"icon": "res://assets/visuals/tile215.png"
 }
 const eye = {
+	"name": "Specter Eye",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -161,6 +170,7 @@ const eye = {
 	"icon": "res://assets/visuals/tile216.png"
 }
 const slime_tiny = {
+	"name": "Tiny Slime",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -168,6 +178,7 @@ const slime_tiny = {
 	"icon":"res://assets/visuals/tile217.png"
 }
 const slime_big = {
+	"name": "Big Slime",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -175,6 +186,7 @@ const slime_big = {
 	"icon":"res://assets/visuals/tile218.png"
 }
 const vines = {
+	"name": "Virulent Vines",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -182,6 +194,7 @@ const vines = {
 	"icon":"res://assets/visuals/tile219.png"
 }
 const slime_boss = {
+	"name": "Slime Boss",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -189,6 +202,7 @@ const slime_boss = {
 	"icon":"res://assets/visuals/tile220.png"
 }
 const goblin_boss = {
+	"name": "Goblin Boss",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -196,6 +210,7 @@ const goblin_boss = {
 	"icon":"res://assets/visuals/tile221.png"
 }
 const undead = {
+	"name": "Undead",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -203,6 +218,7 @@ const undead = {
 	"icon":"res://assets/visuals/tile222.png"
 }
 const demon = {
+	"name": "Demon",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -210,6 +226,7 @@ const demon = {
 	"icon":"res://assets/visuals/tile223.png"
 }
 const vampire = {
+	"name": "Vampire",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -217,6 +234,7 @@ const vampire = {
 	"icon":"res://assets/visuals/tile224.png"
 }
 const lich = {
+	"name": "Lich",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -224,6 +242,7 @@ const lich = {
 	"icon":"res://assets/visuals/tile225.png"
 }
 const bull_god = {
+	"name": "Bull God",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -231,6 +250,7 @@ const bull_god = {
 	"icon":"res://assets/visuals/tile226.png"
 }
 const golem_god = {
+	"name": "Golem God",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -238,6 +258,7 @@ const golem_god = {
 	"icon":"res://assets/visuals/tile227.png"
 }
 const alien_god = {
+	"name": "Alien God",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,
@@ -245,6 +266,7 @@ const alien_god = {
 	"icon": "res://assets/visuals/tile228.png"
 }
 const dragon_god = {
+	"name": "Dragon God",
 	"base_health": 10,
 	"base_attack": 10,
 	"base_speed": 10,

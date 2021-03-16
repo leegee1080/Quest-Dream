@@ -1,11 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/visuals/tile210.png" type="Texture" id=21]
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=31]
 
 [node name="Enemy" type="Node2D"]
 scale = Vector2( -1, 1 )
 script = ExtResource( 31 )
-
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 21 )
