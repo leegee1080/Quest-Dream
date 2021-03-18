@@ -1,0 +1,10 @@
+class_name Necromancer
+
+export(String) var name = "Necromancer"
+export(int) var sprite_frame = 9
+var stat_dict = {
+	"health": 10,
+	"attack": 10,
+	"speed": 10,
+	"equipment": {},
+}

@@ -2,35 +2,68 @@ extends Node2D
 
 class_name Player
 
-var generic_player_stats = Player_Type.new()
-var type_enum
-var type_stats
+enum player_types_enum{
+	soldier,
+	valkyrie,
+	ranger,
+	executioner,
+	berserker,
+	knight,
+	assassin,
+	wizard,
+	traveler,
+	necromancer
+}
+const player_types = {
+	player_types_enum.soldier: Soldier,
+	player_types_enum.valkyrie: Valkyrie,
+	player_types_enum.ranger: Ranger,
+	player_types_enum.executioner: Executioner,
+	player_types_enum.berserker: Berserker,
+	player_types_enum.knight: Knight,
+	player_types_enum.assassin: Assassin,
+	player_types_enum.wizard: Wizard,
+	player_types_enum.traveler: Traveler,
+	player_types_enum.necromancer: Necromancer
+}
+
+export(player_types_enum) var type_enum
+var type_class
+export(Dictionary) var stat_dict = {
+	"health": 10,
+	"attack": 10,
+	"speed": 10,
+	"equipment": {}
+}
 var level
 var difficulty
-var equipment
-var my_sprite = Sprite.new()
+
+var ani_sprite
 
 func _ready():
+	ani_sprite = AnimatedSprite.new()
+	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
+	add_child(ani_sprite)
 	generate_player()
 	return
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
 	if new_type == null:
-		self.type_enum = generic_player_stats.player_types_enum.soldier
+		type_enum = player_types_enum.soldier
 		return
-	self.type_enum = new_type
-	self.level = set_level
-	self.difficulty = set_difficulty
-	self.equipment = set_equipment
+	type_enum = new_type
+	level = set_level
+	difficulty = set_difficulty
+	stat_dict["equipment"] = set_equipment
 	
 
 func generate_player():
-	if self.type_enum == null:
-		self.type_enum = generic_player_stats.player_types_enum.soldier
-	self.type_stats = generic_player_stats.player_types.get(self.type_enum)
-	add_child(my_sprite)
-	print(self.type_stats.get("name"))
-	my_sprite.texture = load(self.type_stats.get("icon"))
+	if type_enum == null:
+		type_enum = player_types_enum.soldier
+	type_class = player_types.get(type_enum).new()
+	print(type_class.name)
+	stat_dict = type_class.stat_dict
+	ani_sprite.set_frame(type_class.sprite_frame)
 
 func process_turn():
 	return

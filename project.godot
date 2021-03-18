@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Assassin",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Assassin.gd"
+}, {
+"base": "Reference",
+"class": "Berserker",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Berserker.gd"
+}, {
 "base": "Node2D",
 "class": "Enemy",
 "language": "GDScript",
@@ -17,7 +27,22 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Enemy_Type",
 "language": "GDScript",
-"path": "res://scripts/Enemy_Type.gd"
+"path": "res://scripts/Enemytypes/Enemy_Type.gd"
+}, {
+"base": "Reference",
+"class": "Executioner",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Executioner.gd"
+}, {
+"base": "Reference",
+"class": "Knight",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Knight.gd"
+}, {
+"base": "Reference",
+"class": "Necromancer",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Necromancer.gd"
 }, {
 "base": "Node2D",
 "class": "Player",
@@ -27,13 +52,60 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Player_Type",
 "language": "GDScript",
-"path": "res://scripts/Player_Type.gd"
+"path": "res://DEP/Player_Type.gd"
+}, {
+"base": "Reference",
+"class": "Ranger",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Ranger.gd"
+}, {
+"base": "Node2D",
+"class": "Room",
+"language": "GDScript",
+"path": "res://scripts/Room.gd"
+}, {
+"base": "Reference",
+"class": "Room_Type",
+"language": "GDScript",
+"path": "res://scripts/Roomtypes/Room_Type.gd"
+}, {
+"base": "Reference",
+"class": "Soldier",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Soldier.gd"
+}, {
+"base": "Reference",
+"class": "Traveler",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Traveler.gd"
+}, {
+"base": "Reference",
+"class": "Valkyrie",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Valkyrie.gd"
+}, {
+"base": "Reference",
+"class": "Wizard",
+"language": "GDScript",
+"path": "res://scripts/Playertypes/Wizard.gd"
 } ]
 _global_script_class_icons={
+"Assassin": "",
+"Berserker": "",
 "Enemy": "",
 "Enemy_Type": "",
+"Executioner": "",
+"Knight": "",
+"Necromancer": "",
 "Player": "",
-"Player_Type": ""
+"Player_Type": "",
+"Ranger": "",
+"Room": "",
+"Room_Type": "",
+"Soldier": "",
+"Traveler": "",
+"Valkyrie": "",
+"Wizard": ""
 }
 
 [application]
@@ -44,8 +116,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=75
-window/size/height=133
+window/size/width=150
+window/size/height=267
 window/size/test_width=750
 window/size/test_height=1334
 window/vsync/use_vsync=false

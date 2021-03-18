@@ -4,7 +4,6 @@ class_name Enemy
 
 
 var generic_enemy_types = Enemy_Type.new()
-var rand_num = rand_range(0, len(generic_enemy_types.enemy_types_enum))
 var type_enum
 var type_stats
 var my_sprite = Sprite.new()

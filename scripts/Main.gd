@@ -4,7 +4,7 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var player = Player.new(Player_Type.player_types_enum.soldier, 1, 1, {})
+var player = Player.new(Player.player_types_enum.necromancer, 1, 1, {})
 var test_enemy = Enemy.new(Enemy_Type.enemy_types_enum.rat)
 
 
