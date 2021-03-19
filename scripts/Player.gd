@@ -45,6 +45,7 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
 	generate_player()
+	process_turn()
 	return
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
@@ -66,4 +67,5 @@ func generate_player():
 	ani_sprite.set_frame(type_class.sprite_frame)
 
 func process_turn():
+	type_class.special()
 	return
