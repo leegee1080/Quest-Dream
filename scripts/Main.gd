@@ -1,11 +1,11 @@
 extends Node2D
 
-
+var diff = 1
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var player = Player.new(Player.player_types_enum.necromancer, 1, 1, {})
-var test_enemy = Enemy.new(Enemy_Type.enemy_types_enum.rat)
+var player = Player.new(Player.player_types_enum.soldier, 1, diff, {})
+var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, diff)
 
 
 # Called when the node enters the scene tree for the first time.
