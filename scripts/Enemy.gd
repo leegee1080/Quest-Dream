@@ -88,6 +88,10 @@ func _ready():
 
 func _init(new_type, power_boost:int):
 	type_enum = new_type
+	stat_dict["health"] = stat_dict["health"] * power_boost
+	stat_dict["attack"] = stat_dict["attack"] * power_boost
+	stat_dict["speed"] = stat_dict["speed"] * power_boost
+	stat_dict["loot"] = stat_dict["loot"] * power_boost
 
 func generate_enemy():
 	if type_enum == null:
