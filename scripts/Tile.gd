@@ -52,6 +52,8 @@ export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_t
 var center_subtile
 var current_tileset: Dictionary
 
+var deco_number
+
 var level
 var difficulty
 
@@ -87,7 +89,7 @@ func place_center():
 	return
 
 func place_deco():
-	# Moves to Vector(0,0) at a speed of 1 unit per second
+#	Moves to Vector(0,0) at a speed of 1 unit per second
 #	var speed = 1 # Change this to increase it to more units/second
 #	position = position.move_toward(Vector2(0,0), delta * speed)
 	return

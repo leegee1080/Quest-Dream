@@ -7,7 +7,7 @@ var diff = 1
 var player = Player.new(Player.player_types_enum.soldier, 1, diff, {})
 var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, diff)
 #direction, theme, center, level, diff
-var test_tile = Tile.new(Tile_Enums.tile_directions_enum.cross, Tile_Enums.tile_themes_enum.castle, Tile_Enums.center_type_enum.shop, 1, diff)
+var test_tile = Tile.new(Tile_Enums.tile_directions_enum.cross, Tile_Enums.tile_themes_enum.castle, Tile_Enums.center_type_enum.battle, 1, diff)
 
 
 # Called when the node enters the scene tree for the first time.
