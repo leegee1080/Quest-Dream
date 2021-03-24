@@ -50,6 +50,7 @@ const subtile_theme_dict = {
 export(Tile_Enums.tile_themes_enum) var subtile_theme_enum = Tile_Enums.tile_themes_enum.forest
 export(Tile_Enums.center_type_enum) var subtile_type_enum = Tile_Enums.center_type_enum.none
 export(Array) var icon_list
+export(int) var subtile_level
 
 var ani_sprite
 
@@ -58,16 +59,21 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/center_subtile_frames.tres"))
 	generate_subtile()
 
-func _init(new_theme, new_type):
+func _init(new_theme, new_type, new_level):
 	subtile_theme_enum = new_theme
 	subtile_type_enum = new_type
+	subtile_level = new_level
 
 func generate_subtile():
 	if subtile_type_enum == Tile_Enums.center_type_enum.none:
 		return
 	icon_list = subtile_theme_dict.get(subtile_theme_enum).get(subtile_type_enum)
 	#pick the frame from the list
-	ani_sprite.set_frame(icon_list[0])
+	if subtile_level > icon_list.size():
+		ani_sprite.set_frame(icon_list[0])
+		subtile_level = 0
+	else:
+		ani_sprite.set_frame(icon_list[subtile_level])
 	add_child(ani_sprite)
 	print(Tile_Enums.center_type_enum.keys()[subtile_type_enum])
 

@@ -26,5 +26,6 @@ func _init(new_theme):
 
 func generate_subtile():
 	icon_list = subtile_deco_dict.get(subtile_theme_enum)
+	randomize()
 	ani_sprite.set_frame(icon_list[int(rand_range(0, icon_list.size()))])
 	add_child(ani_sprite)
