@@ -10,7 +10,7 @@ var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, diff)
 var test_tile = Tile.new(Tile_Enums.tile_directions_enum.cross, Tile_Enums.tile_themes_enum.castle, Tile_Enums.center_type_enum.battle, 0, diff, 1, 0)
 
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	add_child(player)
 	player.position.x = 10
@@ -21,7 +21,7 @@ func _ready():
 	add_child(test_tile)
 	test_tile.position.x = 50
 	test_tile.position.y = 200
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
