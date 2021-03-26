@@ -82,8 +82,6 @@ func generate_tile():
 	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum))
 	add_child(ani_sprite)
 	place_center()
-	print(Tile_Enums.tile_directions_enum.keys()[direction_enum])
-	print(Tile_Enums.tile_themes_enum.keys()[theme_enum])
 #	debug placement
 	place_tile()
 

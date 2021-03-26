@@ -75,7 +75,6 @@ func generate_subtile():
 	else:
 		ani_sprite.set_frame(icon_list[subtile_level])
 	add_child(ani_sprite)
-	print(Tile_Enums.center_type_enum.keys()[subtile_type_enum])
 
 func change_subtile(new_type):
 	subtile_type_enum = new_type
