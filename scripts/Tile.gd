@@ -54,6 +54,8 @@ export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_t
 var center_subtile
 var current_tileset: Dictionary
 
+var is_placed = false
+
 var deco_number
 var deco_list = []
 
@@ -61,6 +63,8 @@ var player_level
 var difficulty
 var center_level
 
+const rot = [0,90,180,-90]
+var rotate_var = 0
 
 var ani_sprite
 
@@ -81,9 +85,10 @@ func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int,
 func generate_tile():
 	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum))
 	add_child(ani_sprite)
+	randomize()
+	rotate_var = rot[int(rand_range(0,3))]
+	ani_sprite.rotation_degrees = rotate_var
 	place_center()
-#	debug placement
-	place_tile()
 
 func place_center():
 	if center_object_enum == Tile_Enums.center_type_enum.none:
@@ -123,7 +128,9 @@ func delete_tile():
 func lock_tile():
 	return
 
-func place_tile():
+func place_tile(new_loc: Vector2):
 	#place tile in clicked location
+	self.position.x = new_loc.x
+	self.position.y = new_loc.y
 	place_deco()
 	return

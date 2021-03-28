@@ -13,5 +13,4 @@ __meta__ = {
 texture = ExtResource( 1 )
 centered = false
 
-[node name="PlayAreaCoordSystem" type="Node2D" parent="."]
-position = Vector2( 20, 21 )
+[node name="InGameTileGroup" type="Node2D" parent="."]
