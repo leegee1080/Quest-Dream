@@ -1,11 +1,8 @@
 extends Node2D
 
-var diff = 1
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var player = Player.new(Player.player_types_enum.soldier, 0, diff, {})
-var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, diff)
+var difficulty = 1
+var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
+var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
 
 ##play area vars
 var clicked
@@ -31,7 +28,6 @@ const queue_loc_dict = {
 	"8":Vector2(309,583)
 }
 
-
 func _ready():
 	add_child(player)
 	player.name = player.type_class.name
@@ -45,7 +41,6 @@ func _ready():
 	setup_tile_dict()
 	place_tiles()
 	pass
-
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -91,13 +86,13 @@ func slide_queue():
 func generate_random_tile():
 	var tile
 	randomize()
-	multi.shuffle()
-	var chosen_tile_type = multi[0]
-	multi2.shuffle()
-	var chosen_tile_center = multi2[0]
+	Tile_Enums.multi.shuffle()
+	var chosen_tile_type = Tile_Enums.multi[0]
+	Tile_Enums.multi2.shuffle()
+	var chosen_tile_center = Tile_Enums.multi2[0]
 	#direction, theme, center, level, diff, deco amount, center level
-#	var test_tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.castle, chosen_tile_center, 0, diff, 1, 0)
-	tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.mountain, chosen_tile_center, 0, diff, 1, 0)
+#	var test_tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.castle, chosen_tile_center, 0, difficulty, 1, 0)
+	tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.forest, chosen_tile_center, 0, difficulty, 1, 0)
 	return tile
 
 func setup_tile_dict():
@@ -128,33 +123,6 @@ func setup_coord_array():
 		col -= 1
 #	print(clickable_coords_list)
 	return
-
-
-const multi = [
-	Tile_Enums.tile_directions_enum.cross,
-	Tile_Enums.tile_directions_enum.elbow,
-	Tile_Enums.tile_directions_enum.elbow,
-	Tile_Enums.tile_directions_enum.elbow,
-	Tile_Enums.tile_directions_enum.tee,
-	Tile_Enums.tile_directions_enum.tee,
-	Tile_Enums.tile_directions_enum.straight,
-	Tile_Enums.tile_directions_enum.straight
-]
-const multi2 = [
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.none,
-	Tile_Enums.center_type_enum.rest,
-	Tile_Enums.center_type_enum.battle,
-	Tile_Enums.center_type_enum.treasure,
-	Tile_Enums.center_type_enum.shop,
-	Tile_Enums.center_type_enum.silly
-]
 
 func place_tiles():
 	var tile

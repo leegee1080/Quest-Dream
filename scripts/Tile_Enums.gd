@@ -24,3 +24,30 @@ enum center_type_enum{
 	shop,
 	silly
 }
+
+#Chances To Spawn
+const multi = [
+	tile_directions_enum.cross,
+	tile_directions_enum.elbow,
+	tile_directions_enum.elbow,
+	tile_directions_enum.elbow,
+	tile_directions_enum.tee,
+	tile_directions_enum.tee,
+	tile_directions_enum.straight,
+	tile_directions_enum.straight
+]
+const multi2 = [
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.none,
+	center_type_enum.rest,
+	center_type_enum.battle,
+	center_type_enum.treasure,
+	center_type_enum.shop,
+	center_type_enum.silly
+]
