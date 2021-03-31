@@ -1,8 +1,8 @@
 extends Node2D
 
 var difficulty = 1
-var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
-var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
+var player = Player.new(Player.player_types_enum.berserker, 0, difficulty, {})
+var test_enemy = Enemy.new(Enemy.enemy_types_enum.human_sorcerer, difficulty)
 
 ##play area vars
 var clicked
@@ -92,7 +92,7 @@ func generate_random_tile():
 	var chosen_tile_center = Tile_Enums.multi2[0]
 	#direction, theme, center, level, diff, deco amount, center level
 #	var test_tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.castle, chosen_tile_center, 0, difficulty, 1, 0)
-	tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.forest, chosen_tile_center, 0, difficulty, 1, 0)
+	tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.castle, chosen_tile_center, 0, difficulty, 1, 0)
 	return tile
 
 func setup_tile_dict():
