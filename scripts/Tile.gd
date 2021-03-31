@@ -3,40 +3,44 @@ extends Node2D
 class_name Tile
 
 const castle_type_dict = {
-	Tile_Enums.tile_directions_enum.cross: 17,
-	Tile_Enums.tile_directions_enum.elbow: 18,
-	Tile_Enums.tile_directions_enum.straight: 19,
-	Tile_Enums.tile_directions_enum.tee: 16,
-	Tile_Enums.tile_directions_enum.impass: null
+	Tile_Enums.tile_directions_enum.cross: [36],
+	Tile_Enums.tile_directions_enum.elbow: [39,40,41,42],
+	Tile_Enums.tile_directions_enum.straight: [37,38],
+	Tile_Enums.tile_directions_enum.tee: [45,46,47,48],
+	Tile_Enums.tile_directions_enum.impass: [43],
+	Tile_Enums.tile_directions_enum.boss: [44]
 }
 const forest_type_dict = {
-	Tile_Enums.tile_directions_enum.cross: 13,
-	Tile_Enums.tile_directions_enum.elbow: 14,
-	Tile_Enums.tile_directions_enum.straight: 15,
-	Tile_Enums.tile_directions_enum.tee: 12,
-	Tile_Enums.tile_directions_enum.impass: null
-	
+	Tile_Enums.tile_directions_enum.cross: [18],
+	Tile_Enums.tile_directions_enum.elbow: [21,22,23,24],
+	Tile_Enums.tile_directions_enum.straight: [19,20],
+	Tile_Enums.tile_directions_enum.tee: [27,28,29,30],
+	Tile_Enums.tile_directions_enum.impass: [25],
+	Tile_Enums.tile_directions_enum.boss: [26]
 }
 const grave_type_dict = {
-	Tile_Enums.tile_directions_enum.cross: 9,
-	Tile_Enums.tile_directions_enum.elbow: 10,
-	Tile_Enums.tile_directions_enum.straight: 11,
-	Tile_Enums.tile_directions_enum.tee: 8,
-	Tile_Enums.tile_directions_enum.impass: null
+	Tile_Enums.tile_directions_enum.cross: [54],
+	Tile_Enums.tile_directions_enum.elbow: [57,58,59,60],
+	Tile_Enums.tile_directions_enum.straight: [55,56],
+	Tile_Enums.tile_directions_enum.tee: [63,64,65,66],
+	Tile_Enums.tile_directions_enum.impass: [61],
+	Tile_Enums.tile_directions_enum.boss: [62]
 }
 const mountain_type_dict = {
-	Tile_Enums.tile_directions_enum.cross: 5,
-	Tile_Enums.tile_directions_enum.elbow: 6,
-	Tile_Enums.tile_directions_enum.straight: 7,
-	Tile_Enums.tile_directions_enum.tee: 4,
-	Tile_Enums.tile_directions_enum.impass: null
+	Tile_Enums.tile_directions_enum.cross: [0],
+	Tile_Enums.tile_directions_enum.elbow: [3,4,5,6],
+	Tile_Enums.tile_directions_enum.straight: [1,2],
+	Tile_Enums.tile_directions_enum.tee: [9,10,11,12],
+	Tile_Enums.tile_directions_enum.impass: [7],
+	Tile_Enums.tile_directions_enum.boss: [8]
 }
 const swamp_type_dict = {
-	Tile_Enums.tile_directions_enum.cross: 1,
-	Tile_Enums.tile_directions_enum.elbow: 2,
-	Tile_Enums.tile_directions_enum.straight: 3,
-	Tile_Enums.tile_directions_enum.tee: 0,
-	Tile_Enums.tile_directions_enum.impass: null
+	Tile_Enums.tile_directions_enum.cross: [72],
+	Tile_Enums.tile_directions_enum.elbow: [75,76,77,78],
+	Tile_Enums.tile_directions_enum.straight: [73,74],
+	Tile_Enums.tile_directions_enum.tee: [81,82,83,84],
+	Tile_Enums.tile_directions_enum.impass: [79],
+	Tile_Enums.tile_directions_enum.boss: [80]
 }
 const tile_theme_dict = {
 	Tile_Enums.tile_themes_enum.castle: castle_type_dict,
@@ -54,7 +58,7 @@ export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_t
 var center_subtile
 var current_tileset: Dictionary
 
-var is_placed = false
+var is_locked = false
 
 var deco_number
 var deco_list = []
@@ -63,7 +67,6 @@ var player_level
 var difficulty
 var center_level
 
-const rot = [0,90,180,-90]
 var rotate_var = 0
 
 var ani_sprite
@@ -83,11 +86,10 @@ func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int,
 	center_level = new_center_level
 
 func generate_tile():
-	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum))
-	add_child(ani_sprite)
 	randomize()
-	rotate_var = rot[int(rand_range(0,3))]
-	ani_sprite.rotation_degrees = rotate_var
+	rotate_var = int(rand_range(0,tile_theme_dict.get(theme_enum).get(direction_enum).size()))
+	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum)[rotate_var])
+	add_child(ani_sprite)
 	place_center()
 
 func place_center():
@@ -98,7 +100,7 @@ func place_center():
 	return
 
 func place_deco():
-	var multi = [1,1,1,-1,-1,-1,0]
+	var multi = [1,1,1,-1,-1,-1]
 	randomize()
 	while deco_number > 0:
 		var temp_deco = Subtile_Deco.new(theme_enum)
@@ -106,9 +108,9 @@ func place_deco():
 		deco_number -= 1
 	for deco in deco_list:
 		multi.shuffle()
-		var rngx = rand_range(12.0, 18.0)* multi[0]
+		var rngx = rand_range(14.0, 18.0)* multi[0]
 		multi.shuffle()
-		var rngy = rand_range(12.0, 18.0)* multi[0]
+		var rngy = rand_range(14.0, 18.0)* multi[0]
 		add_child(deco)
 		deco.translate(Vector2(rngx,rngy))
 	return
@@ -122,15 +124,20 @@ func place_deco():
 #
 #func pick_tile():
 #	return
+
 func delete_tile():
-	return
+	if is_locked == false:
+		queue_free()
+
 
 func lock_tile():
 	return
 
-func place_tile(new_loc: Vector2):
+func place_tile(new_loc: Vector2, is_preplaced: bool):
 	#place tile in clicked location
 	self.position.x = new_loc.x
 	self.position.y = new_loc.y
 	place_deco()
+	if is_preplaced == true:
+		is_locked = true
 	return

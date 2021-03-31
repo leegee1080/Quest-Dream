@@ -1,13 +1,18 @@
 extends Node2D
 
 var difficulty = 1
-var player = Player.new(Player.player_types_enum.berserker, 0, difficulty, {})
-var test_enemy = Enemy.new(Enemy.enemy_types_enum.human_sorcerer, difficulty)
+var player_level = 1
+var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
+var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
+var chosen_level_theme = Tile_Enums.tile_themes_enum.mountain
+
+var gen_boss_tile =  true
+var num_impass_tiles = 3
 
 ##play area vars
 var clicked
 const starting_playarea_coord = [43,73]
-# [[xmin, xmax],[ymin, ymax]]
+# [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 export(Array) var clickable_coords_list = []
 var tile_dict = {}
 var rows_total = 6
@@ -17,15 +22,15 @@ var col_total = 6
 const queue_length = 9
 var tile_queue = []
 const queue_loc_dict = {
-	"0":Vector2(309,423),
-	"1":Vector2(229,423),
-	"2":Vector2(149,423),
-	"3":Vector2(69,423),
-	"4":Vector2(69,503),
-	"5":Vector2(69,583),
-	"6":Vector2(149,583),
-	"7":Vector2(229,583),
-	"8":Vector2(309,583)
+	"0":Vector2(308,423),
+	"1":Vector2(228,423),
+	"2":Vector2(148,423),
+	"3":Vector2(68,423),
+	"4":Vector2(68,503),
+	"5":Vector2(68,583),
+	"6":Vector2(148,583),
+	"7":Vector2(228,583),
+	"8":Vector2(308,583)
 }
 
 func _ready():
@@ -39,7 +44,7 @@ func _ready():
 	test_enemy.position.y = 200
 	setup_coord_array()
 	setup_tile_dict()
-	place_tiles()
+	place_starting_tiles()
 	pass
 
 func _input(event):
@@ -52,13 +57,14 @@ func _input(event):
 			var x_test = loc[0]
 			var y_test = loc[1]
 			if event.position[0] >= x_test[0] and event.position[0] < x_test[1] and event.position[1] >= y_test[0] and event.position[1] < y_test[1]:
-				if tile_dict.get(loc[2]) != null:
+				if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
 #					print(tile_dict.get(loc[2]).name)
-					tile_dict.get(loc[2]).queue_free()
+					tile_dict.get(loc[2]).delete_tile()
 					return
 				elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
+					#assign the new tile node to the correct dictionary entry
 					tile_dict[loc[2]] = tile_queue[0]
-					tile_dict[loc[2]].place_tile(loc[3])
+					tile_dict[loc[2]].place_tile(loc[3], false)
 					slide_queue()
 					return
 
@@ -91,8 +97,7 @@ func generate_random_tile():
 	Tile_Enums.multi2.shuffle()
 	var chosen_tile_center = Tile_Enums.multi2[0]
 	#direction, theme, center, level, diff, deco amount, center level
-#	var test_tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.castle, chosen_tile_center, 0, difficulty, 1, 0)
-	tile = Tile.new(chosen_tile_type, Tile_Enums.tile_themes_enum.castle, chosen_tile_center, 0, difficulty, 1, 0)
+	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, player_level, difficulty, 1, 0)
 	return tile
 
 func setup_tile_dict():
@@ -124,8 +129,27 @@ func setup_coord_array():
 #	print(clickable_coords_list)
 	return
 
-func place_tiles():
+func place_starting_tiles():
 	var tile
+
+	#place preplaced tiles
+	if gen_boss_tile == true:
+		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0)
+		var picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
+		tile_dict[picked_coord[2]] = tile
+		$InGameTileGroup.add_child(tile)
+		tile.place_tile(picked_coord[3], true)
+	if num_impass_tiles > 0:
+		while num_impass_tiles > 0:
+			tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0)
+			var picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
+			tile_dict[picked_coord[2]] = tile
+			$InGameTileGroup.add_child(tile)
+			tile.place_tile(picked_coord[3], true)
+			num_impass_tiles -= 1
+
+
+	#start queue
 	var queue = 0
 	while queue < queue_length:
 		tile = generate_random_tile()
