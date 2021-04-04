@@ -5,9 +5,6 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_horizontal_guides_": [  ]
-}
 
 [node name="bg" type="Sprite" parent="."]
 texture = ExtResource( 1 )

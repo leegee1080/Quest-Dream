@@ -38,6 +38,9 @@ export(Dictionary) var stat_dict = {
 var level
 var difficulty
 
+
+var map_loc = Vector2(0,0)
+
 var ani_sprite
 
 func _ready():

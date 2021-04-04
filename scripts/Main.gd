@@ -6,14 +6,17 @@ var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
 var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.mountain
 
-var gen_boss_tile =  true
+var gen_boss_tile = true
 var num_impass_tiles = 3
 
 ##play area vars
 var clicked
-const starting_playarea_coord = [43,73]
+const starting_playarea_coord = [44,74] ##x and y of the starting top corner of the play area
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 export(Array) var clickable_coords_list = []
+var potential_terminal_locations = []
+var start_tile
+var end_tile
 var tile_dict = {}
 var rows_total = 6
 var col_total = 6
@@ -84,9 +87,9 @@ func slide_queue():
 	var new_tile = generate_random_tile()
 	tile_queue.append(new_tile)
 	$InGameTileGroup.add_child(new_tile)
-	new_tile.name = "8"
-	new_tile.position.x = queue_loc_dict.get("8").x
-	new_tile.position.y = queue_loc_dict.get("8").y
+	new_tile.name = str(queue_length-1)
+	new_tile.position.x = queue_loc_dict.get(str(queue_length-1)).x
+	new_tile.position.y = queue_loc_dict.get(str(queue_length-1)).y
 	return
 
 func generate_random_tile():
@@ -96,8 +99,8 @@ func generate_random_tile():
 	var chosen_tile_type = Tile_Enums.multi[0]
 	Tile_Enums.multi2.shuffle()
 	var chosen_tile_center = Tile_Enums.multi2[0]
-	#direction, theme, center, level, diff, deco amount, center level
-	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, player_level, difficulty, 1, 0)
+	#direction, theme, center, level, diff, deco amount, center level, chosen sprite(-1 for rand)
+	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, player_level, difficulty, 1, 0, -1)
 	return tile
 
 func setup_tile_dict():
@@ -114,42 +117,86 @@ func setup_tile_dict():
 
 func setup_coord_array():
 	var col = col_total
-	var rows = rows_total
+	var row = rows_total
 	var current_x = starting_playarea_coord[0]
 	var current_y = starting_playarea_coord[1]
 	while col > 0:
-		rows = rows_total
+		row = rows_total
 		current_y = starting_playarea_coord[1]
-		while rows > 0:
-			clickable_coords_list.append([[current_x,current_x+48],[current_y,current_y+48],str(col)+","+str(rows), Vector2(current_x+24, current_y+24)])
+		while row > 0:
+			var coord_name = str(col)+","+str(row)
+			var coord_name_vector = Vector2(col, row)
+			#add a terminal loc at the start and end of a row and col
+			if coord_name_vector != Vector2(col_total, rows_total) and coord_name_vector != Vector2(1, 1) and coord_name_vector != Vector2(1, rows_total) and coord_name_vector != Vector2(col_total, 1):
+				if row == 1:
+					potential_terminal_locations.append([Vector2(current_x+24, current_y+56),coord_name_vector])
+				if col == 1:
+					potential_terminal_locations.append([Vector2(current_x+56, current_y+24),coord_name_vector])
+				if row == rows_total:
+					potential_terminal_locations.append([Vector2(current_x+24, current_y-8),coord_name_vector])
+				if col == col_total:
+					potential_terminal_locations.append([Vector2(current_x-8, current_y+24),coord_name_vector])
+			#add an array of usuable coords for placing tiles in play area
+			clickable_coords_list.append([[current_x,current_x+48],[current_y,current_y+48],coord_name, Vector2(current_x+24, current_y+24)])
 			current_y += 48
-			rows -= 1
+			row -= 1
 		current_x += 48
 		col -= 1
 #	print(clickable_coords_list)
+#	print(potential_terminal_locations)
 	return
 
 func place_starting_tiles():
 	var tile
-
+	var picked_coord
+	#work on start tile
+	var start_tile_index = int(rand_range(0,potential_terminal_locations.size())) #so that the entry can be removed later insuring the end and start are not on the same tile
+	var start_tile_sprite_index = 0
+	picked_coord = potential_terminal_locations[start_tile_index]
+	potential_terminal_locations.remove(start_tile_index)
+	if picked_coord[1].y == 1:
+		start_tile_sprite_index = 2
+	elif picked_coord[1].y == rows_total:
+		start_tile_sprite_index = 3
+	elif picked_coord[1].x == 1:
+		start_tile_sprite_index = 0
+	elif picked_coord[1].x == col_total:
+		start_tile_sprite_index = 1
+	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, start_tile_sprite_index)
+	add_child(start_tile)
+	start_tile.place_tile(picked_coord[0], true)
+	#work on end tile
+	var end_tile_sprite_index = 0
+	picked_coord = potential_terminal_locations[int(rand_range(0,potential_terminal_locations.size()))]
+	if picked_coord[1].y == 1:
+		end_tile_sprite_index = 3
+	elif picked_coord[1].y == rows_total:
+		end_tile_sprite_index = 2
+	elif picked_coord[1].x == 1:
+		end_tile_sprite_index = 1
+	elif picked_coord[1].x == col_total:
+		end_tile_sprite_index = 0
+	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, end_tile_sprite_index)
+	add_child(end_tile)
+	end_tile.place_tile(picked_coord[0], true)
 	#place preplaced tiles
 	if gen_boss_tile == true:
-		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0)
-		var picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
+		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
+		picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 		tile_dict[picked_coord[2]] = tile
 		$InGameTileGroup.add_child(tile)
 		tile.place_tile(picked_coord[3], true)
 	if num_impass_tiles > 0:
 		while num_impass_tiles > 0:
-			tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0)
-			var picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
-			tile_dict[picked_coord[2]] = tile
-			$InGameTileGroup.add_child(tile)
-			tile.place_tile(picked_coord[3], true)
+			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
+			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
+				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
+				tile_dict[picked_coord[2]] = tile
+				$InGameTileGroup.add_child(tile)
+				tile.place_tile(picked_coord[3], true)
 			num_impass_tiles -= 1
 
-
-	#start queue
+	#create the starting queue
 	var queue = 0
 	while queue < queue_length:
 		tile = generate_random_tile()

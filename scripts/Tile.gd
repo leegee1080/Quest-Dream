@@ -8,7 +8,8 @@ const castle_type_dict = {
 	Tile_Enums.tile_directions_enum.straight: [37,38],
 	Tile_Enums.tile_directions_enum.tee: [45,46,47,48],
 	Tile_Enums.tile_directions_enum.impass: [43],
-	Tile_Enums.tile_directions_enum.boss: [44]
+	Tile_Enums.tile_directions_enum.boss: [44],
+	Tile_Enums.tile_directions_enum.terminal: [49,50,51,52]
 }
 const forest_type_dict = {
 	Tile_Enums.tile_directions_enum.cross: [18],
@@ -16,7 +17,8 @@ const forest_type_dict = {
 	Tile_Enums.tile_directions_enum.straight: [19,20],
 	Tile_Enums.tile_directions_enum.tee: [27,28,29,30],
 	Tile_Enums.tile_directions_enum.impass: [25],
-	Tile_Enums.tile_directions_enum.boss: [26]
+	Tile_Enums.tile_directions_enum.boss: [26],
+	Tile_Enums.tile_directions_enum.terminal: [31,32,33,34]
 }
 const grave_type_dict = {
 	Tile_Enums.tile_directions_enum.cross: [54],
@@ -24,7 +26,8 @@ const grave_type_dict = {
 	Tile_Enums.tile_directions_enum.straight: [55,56],
 	Tile_Enums.tile_directions_enum.tee: [63,64,65,66],
 	Tile_Enums.tile_directions_enum.impass: [61],
-	Tile_Enums.tile_directions_enum.boss: [62]
+	Tile_Enums.tile_directions_enum.boss: [62],
+	Tile_Enums.tile_directions_enum.terminal: [67,68,69,70]
 }
 const mountain_type_dict = {
 	Tile_Enums.tile_directions_enum.cross: [0],
@@ -32,7 +35,8 @@ const mountain_type_dict = {
 	Tile_Enums.tile_directions_enum.straight: [1,2],
 	Tile_Enums.tile_directions_enum.tee: [9,10,11,12],
 	Tile_Enums.tile_directions_enum.impass: [7],
-	Tile_Enums.tile_directions_enum.boss: [8]
+	Tile_Enums.tile_directions_enum.boss: [8],
+	Tile_Enums.tile_directions_enum.terminal: [13,14,15,16]
 }
 const swamp_type_dict = {
 	Tile_Enums.tile_directions_enum.cross: [72],
@@ -40,7 +44,8 @@ const swamp_type_dict = {
 	Tile_Enums.tile_directions_enum.straight: [73,74],
 	Tile_Enums.tile_directions_enum.tee: [81,82,83,84],
 	Tile_Enums.tile_directions_enum.impass: [79],
-	Tile_Enums.tile_directions_enum.boss: [80]
+	Tile_Enums.tile_directions_enum.boss: [80],
+	Tile_Enums.tile_directions_enum.terminal: [85,86,87,88]
 }
 const tile_theme_dict = {
 	Tile_Enums.tile_themes_enum.castle: castle_type_dict,
@@ -69,6 +74,7 @@ var center_level
 
 var rotate_var = 0
 
+var init_chosen_sprite
 var ani_sprite
 
 func _ready():
@@ -76,7 +82,8 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
 	generate_tile()
 
-func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int, new_deco_number: int, new_center_level: int):
+
+func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int, new_deco_number: int, new_center_level: int, chosen_sprite: int): #if chosen_sprite is -1 then rand gen sprite
 	direction_enum = new_type
 	theme_enum = new_theme
 	center_object_enum = new_center
@@ -84,13 +91,20 @@ func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int,
 	difficulty = set_difficulty
 	deco_number = new_deco_number
 	center_level = new_center_level
+	init_chosen_sprite = chosen_sprite
 
 func generate_tile():
-	randomize()
-	rotate_var = int(rand_range(0,tile_theme_dict.get(theme_enum).get(direction_enum).size()))
-	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum)[rotate_var])
+	if init_chosen_sprite == -1:
+		randomize()
+		rotate_var = int(rand_range(0,tile_theme_dict.get(theme_enum).get(direction_enum).size()))
+		ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum)[rotate_var])
+		add_child(ani_sprite)
+		place_center()
+		return
+	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum)[init_chosen_sprite])
 	add_child(ani_sprite)
 	place_center()
+	return
 
 func place_center():
 	if center_object_enum == Tile_Enums.center_type_enum.none:

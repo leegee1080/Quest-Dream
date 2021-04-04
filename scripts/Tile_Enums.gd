@@ -15,7 +15,8 @@ enum tile_directions_enum{
 	straight,
 	tee,
 	impass,
-	boss
+	boss,
+	terminal
 }
 enum center_type_enum{
 	none,
