@@ -4,10 +4,11 @@ var difficulty = 1
 var player_level = 1
 var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
 var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
-var chosen_level_theme = Tile_Enums.tile_themes_enum.mountain
+var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var gen_boss_tile = true
 var num_impass_tiles = 3
+
 
 ##play area vars
 var clicked
@@ -17,7 +18,7 @@ export(Array) var clickable_coords_list = []
 var potential_terminal_locations = []
 var start_tile
 var end_tile
-var tile_dict = {}
+var tile_dict = {} #this is a dict more readable collection of tiles (string: tileobject)
 var rows_total = 6
 var col_total = 6
 
@@ -37,17 +38,18 @@ const queue_loc_dict = {
 }
 
 func _ready():
-	add_child(player)
-	player.name = player.type_class.name
-	player.position.x = 10
-	player.position.y = 100
-	add_child(test_enemy)
-	test_enemy.name = test_enemy.type_class.name
-	test_enemy.position.x = 10
-	test_enemy.position.y = 200
 	setup_coord_array()
 	setup_tile_dict()
 	place_starting_tiles()
+	add_child(player)
+	player.name = player.type_class.name
+	player.position = start_tile.position
+	player.walk_toggle()
+	player.change_dir(player.walk_dir.up)
+#	add_child(test_enemy)
+#	test_enemy.name = test_enemy.type_class.name
+#	test_enemy.position.x = 10
+#	test_enemy.position.y = 200
 	pass
 
 func _input(event):
@@ -63,6 +65,7 @@ func _input(event):
 				if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
 #					print(tile_dict.get(loc[2]).name)
 					tile_dict.get(loc[2]).delete_tile()
+					tile_dict[loc[2]] = null
 					return
 				elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
 					#assign the new tile node to the correct dictionary entry
@@ -70,6 +73,19 @@ func _input(event):
 					tile_dict[loc[2]].place_tile(loc[3], false)
 					slide_queue()
 					return
+
+func check_player_tile():
+	for loc in clickable_coords_list:
+			var x_test = loc[0]
+			var y_test = loc[1]
+			if player.position[0] >= x_test[0] and player.position[0] < x_test[1] and player.position[1] >= y_test[0] and player.position[1] < y_test[1]:
+				if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
+#					#react to tile
+					return
+				elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
+					#turn player around
+					return
+	return
 
 func slide_queue():
 	var index = 1
@@ -144,6 +160,7 @@ func setup_coord_array():
 		col -= 1
 #	print(clickable_coords_list)
 #	print(potential_terminal_locations)
+#	print(player_tile_dict)
 	return
 
 func place_starting_tiles():
@@ -153,7 +170,6 @@ func place_starting_tiles():
 	var start_tile_index = int(rand_range(0,potential_terminal_locations.size())) #so that the entry can be removed later insuring the end and start are not on the same tile
 	var start_tile_sprite_index = 0
 	picked_coord = potential_terminal_locations[start_tile_index]
-	potential_terminal_locations.remove(start_tile_index)
 	if picked_coord[1].y == 1:
 		start_tile_sprite_index = 2
 	elif picked_coord[1].y == rows_total:
@@ -165,6 +181,7 @@ func place_starting_tiles():
 	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, start_tile_sprite_index)
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0], true)
+	potential_terminal_locations.remove(start_tile_index)
 	#work on end tile
 	var end_tile_sprite_index = 0
 	picked_coord = potential_terminal_locations[int(rand_range(0,potential_terminal_locations.size()))]
