@@ -71,6 +71,8 @@ var deco_list = []
 var player_level
 var difficulty
 var center_level
+var is_boss_tile = false
+var is_impass_tile = false
 
 var rotate_var = 0
 

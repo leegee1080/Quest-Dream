@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Main_Game
+
 var difficulty = 1
 var player_level = 1
 var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
@@ -71,6 +73,7 @@ func _input(event):
 					#assign the new tile node to the correct dictionary entry
 					tile_dict[loc[2]] = tile_queue[0]
 					tile_dict[loc[2]].place_tile(loc[3], false)
+					tile_dict[loc[2]].name = loc[2]
 					slide_queue()
 					return
 
@@ -203,6 +206,7 @@ func place_starting_tiles():
 		tile_dict[picked_coord[2]] = tile
 		$InGameTileGroup.add_child(tile)
 		tile.place_tile(picked_coord[3], true)
+		tile.is_boss_tile = true
 	if num_impass_tiles > 0:
 		while num_impass_tiles > 0:
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
@@ -211,6 +215,7 @@ func place_starting_tiles():
 				tile_dict[picked_coord[2]] = tile
 				$InGameTileGroup.add_child(tile)
 				tile.place_tile(picked_coord[3], true)
+				tile.is_impass_tile = true
 			num_impass_tiles -= 1
 
 	#create the starting queue

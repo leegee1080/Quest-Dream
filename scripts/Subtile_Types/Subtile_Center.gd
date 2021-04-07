@@ -52,6 +52,7 @@ export(Tile_Enums.center_type_enum) var subtile_type_enum = Tile_Enums.center_ty
 export(Array) var icon_list
 export(int) var subtile_level
 
+
 var ani_sprite
 
 func _ready():

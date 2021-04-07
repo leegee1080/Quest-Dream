@@ -53,7 +53,11 @@ var difficulty
 var can_walk = false
 var direction = Vector2(0,0)
 var speed = .1
+const walk_interval = 16
+var walk_interval_count = walk_interval
 var walk_timer
+const center_interval = 3
+var center_interval_count = 2
 var current_tile
 
 var ani_sprite
@@ -61,7 +65,7 @@ var ani_sprite
 func _ready():
 	walk_timer = Timer.new()
 	add_child(walk_timer)
-	walk_timer.set_wait_time(0.1)
+	walk_timer.set_wait_time(.01)
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.start()
 	walk_timer.connect("timeout", self, "walk")
@@ -99,6 +103,58 @@ func walk_toggle():
 
 func walk():
 	translate(direction*speed)
+	walk_interval_count -= speed
+	if walk_interval_count <= 0:
+		check_tile()
+		walk_interval_count = walk_interval
+		center_interval_count -= 1
+	if center_interval_count <= 0:
+		center_interval_count = center_interval
+		check_center_tile()
+	return
+
+func check_tile():
+	var tile_coords_list = get_parent().clickable_coords_list
+	var current_tile_dict = get_parent().tile_dict
+	for loc in tile_coords_list:
+				var x_test = loc[0]
+				var y_test = loc[1]
+				if position.x >= x_test[0] and position.x < x_test[1] and position.y >= y_test[0] and position.y < y_test[1]:
+					if current_tile_dict.get(loc[2]) != null:
+						if current_tile_dict.get(loc[2]).is_impass_tile == true:
+							print("ded by impass")
+							walk_toggle()
+							return
+						current_tile_dict.get(loc[2]).is_locked = true
+						current_tile = current_tile_dict.get(loc[2])
+						return
+					elif current_tile_dict.get(loc[2]) == null:
+						print("ded by no tile")
+						walk_toggle()
+						return
+	return
+
+func check_center_tile():
+	if current_tile == null:
+		return
+	if current_tile.center_subtile == null:
+		if current_tile.is_boss_tile == true:
+			print("boss battle")
+			walk_toggle()
+			return
+		print("no center tile " + 
+		"|at:" + current_tile.name + 
+		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] + 
+		"|rotation:" + str(current_tile.rotate_var)
+		)
+		return
+	print(
+		"|level:" + str(current_tile.center_subtile.subtile_level) + 
+		"|centertile:" + Tile_Enums.center_type_enum.keys()[current_tile.center_subtile.subtile_type_enum] + 
+		"|at:" + current_tile.name + 
+		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] +
+		"|rotation:" + str(current_tile.rotate_var)
+		)
 	return
 
 func generate_player():
