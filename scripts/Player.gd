@@ -67,8 +67,8 @@ func _ready():
 	add_child(walk_timer)
 	walk_timer.set_wait_time(.01)
 	walk_timer.set_one_shot(false) # Make sure it loops
-	walk_timer.start()
 	walk_timer.connect("timeout", self, "walk")
+	walk_timer.stop()
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
@@ -137,6 +137,7 @@ func check_tile():
 func check_center_tile():
 	if current_tile == null:
 		return
+	direction = current_tile.rot_value_changer(direction)
 	if current_tile.center_subtile == null:
 		if current_tile.is_boss_tile == true:
 			print("boss battle")

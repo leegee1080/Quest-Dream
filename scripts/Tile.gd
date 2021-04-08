@@ -54,6 +54,29 @@ const tile_theme_dict = {
 	Tile_Enums.tile_themes_enum.mountain: mountain_type_dict,
 	Tile_Enums.tile_themes_enum.swamp: swamp_type_dict
 }
+# player dir --> tile type --> tile rot value --> output: new player direction
+const player_turn_dict = {
+	Vector2(0,-1): #up
+		{
+		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(1,0), 1:Vector2(-1,0), 2:null, 3:null}, 
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:null, 2:Vector2(0,-1), 3:Vector2(0,-1)}
+		},
+	Vector2(0,1): #down
+		{
+		Tile_Enums.tile_directions_enum.elbow: {0:null, 1:null, 2:Vector2(1,0), 3:Vector2(-1,0)}, 
+		Tile_Enums.tile_directions_enum.tee: {0:null, 1:Vector2(-1,0), 2:Vector2(0,1), 3:Vector2(0,1)}
+		},
+	Vector2(-1,0): #left
+		{
+		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(0,1), 1:null, 2:Vector2(0,-1), 3:null}, 
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,1)}
+		},
+	Vector2(1,0): #right
+		{
+		Tile_Enums.tile_directions_enum.elbow: {0:null, 1:Vector2(0,1), 2:null, 3:Vector2(0,-1)}, 
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:Vector2(1,0), 2:Vector2(0,1), 3:null}
+		},
+}
 
 export(Tile_Enums.tile_themes_enum) var theme_enum = Tile_Enums.tile_themes_enum.forest
 export(Tile_Enums.tile_directions_enum) var direction_enum = Tile_Enums.tile_directions_enum.cross
@@ -83,7 +106,6 @@ func _ready():
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
 	generate_tile()
-
 
 func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int, new_deco_number: int, new_center_level: int, chosen_sprite: int): #if chosen_sprite is -1 then rand gen sprite
 	direction_enum = new_type
@@ -138,16 +160,19 @@ func place_deco():
 #func flip_tile():
 #	return
 #
-#func pick_tile():
+#func pick_tile()
 #	return
+
+func rot_value_changer(current_player_dir: Vector2):
+	var new_rot = current_player_dir
+	if direction_enum == Tile_Enums.tile_directions_enum.elbow or direction_enum == Tile_Enums.tile_directions_enum.tee:
+		new_rot = player_turn_dict.get(current_player_dir).get(direction_enum).get(rotate_var)
+#	var new_rot = current_player_dir * -1 #this will turn the player around
+	return new_rot
 
 func delete_tile():
 	if is_locked == false:
 		queue_free()
-
-
-func lock_tile():
-	return
 
 func place_tile(new_loc: Vector2, is_preplaced: bool):
 	#place tile in clicked location

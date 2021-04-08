@@ -14,7 +14,7 @@ var num_impass_tiles = 3
 
 ##play area vars
 var clicked
-const starting_playarea_coord = [44,74] ##x and y of the starting top corner of the play area
+const starting_playarea_coord = [44,74] #x and y of the starting top corner of the play area
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 export(Array) var clickable_coords_list = []
 var potential_terminal_locations = []
@@ -40,19 +40,28 @@ const queue_loc_dict = {
 }
 
 func _ready():
+	var start_timer = Timer.new()
+	add_child(start_timer)
+	start_timer.set_wait_time(60)
+	start_timer.set_one_shot(true)
+	start_timer.connect("timeout", self, "start_round")
+	start_timer.start()
 	setup_coord_array()
 	setup_tile_dict()
 	place_starting_tiles()
 	add_child(player)
 	player.name = player.type_class.name
 	player.position = start_tile.position
-	player.walk_toggle()
 	player.change_dir(player.walk_dir.up)
 #	add_child(test_enemy)
 #	test_enemy.name = test_enemy.type_class.name
 #	test_enemy.position.x = 10
 #	test_enemy.position.y = 200
 	pass
+
+func start_round():
+	player.walk_toggle()
+	return
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -83,7 +92,7 @@ func check_player_tile():
 			var y_test = loc[1]
 			if player.position[0] >= x_test[0] and player.position[0] < x_test[1] and player.position[1] >= y_test[0] and player.position[1] < y_test[1]:
 				if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
-#					#react to tile
+					#react to tile
 					return
 				elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
 					#turn player around

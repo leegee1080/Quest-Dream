@@ -28,12 +28,22 @@ enum center_type_enum{
 }
 
 #Chances To Spawn
+#const multi = [
+#	tile_directions_enum.cross,
+#	tile_directions_enum.elbow,
+#	tile_directions_enum.elbow,
+#	tile_directions_enum.elbow,
+#	tile_directions_enum.tee,
+#	tile_directions_enum.tee,
+#	tile_directions_enum.straight,
+#	tile_directions_enum.straight
+#]
 const multi = [
+	tile_directions_enum.elbow,
+	tile_directions_enum.elbow,
+	tile_directions_enum.elbow,
+	tile_directions_enum.elbow,
 	tile_directions_enum.cross,
-	tile_directions_enum.elbow,
-	tile_directions_enum.elbow,
-	tile_directions_enum.elbow,
-	tile_directions_enum.tee,
 	tile_directions_enum.tee,
 	tile_directions_enum.straight,
 	tile_directions_enum.straight
