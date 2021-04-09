@@ -59,22 +59,26 @@ const player_turn_dict = {
 	Vector2(0,-1): #up
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(1,0), 1:Vector2(-1,0), 2:null, 3:null}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:null, 2:Vector2(0,-1), 3:Vector2(0,-1)}
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:null, 2:Vector2(0,-1), 3:Vector2(0,-1)},
+		Tile_Enums.tile_directions_enum.straight: {0:null, 1:Vector2(0,-1), 2:null, 3:Vector2(0,-1)}
 		},
 	Vector2(0,1): #down
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:null, 1:null, 2:Vector2(1,0), 3:Vector2(-1,0)}, 
-		Tile_Enums.tile_directions_enum.tee: {0:null, 1:Vector2(-1,0), 2:Vector2(0,1), 3:Vector2(0,1)}
+		Tile_Enums.tile_directions_enum.tee: {0:null, 1:Vector2(-1,0), 2:Vector2(0,1), 3:Vector2(0,1)},
+		Tile_Enums.tile_directions_enum.straight: {0:null, 1:Vector2(0,1), 2:null, 3:Vector2(0,1)}
 		},
 	Vector2(-1,0): #left
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(0,1), 1:null, 2:Vector2(0,-1), 3:null}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,-1)}
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,-1)},
+		Tile_Enums.tile_directions_enum.straight: {0:Vector2(-1,0), 1:null, 2:Vector2(-1,0), 3:null}
 		},
 	Vector2(1,0): #right
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:null, 1:Vector2(0,1), 2:null, 3:Vector2(0,-1)}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:Vector2(1,0), 2:Vector2(0,1), 3:null}
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:Vector2(1,0), 2:Vector2(0,1), 3:null},
+		Tile_Enums.tile_directions_enum.straight: {0:Vector2(1,0), 1:null, 2:Vector2(1,0), 3:null}
 		},
 }
 
@@ -165,9 +169,8 @@ func place_deco():
 
 func rot_value_changer(current_player_dir: Vector2):
 	var new_rot = current_player_dir
-	if direction_enum == Tile_Enums.tile_directions_enum.elbow or direction_enum == Tile_Enums.tile_directions_enum.tee:
+	if direction_enum == Tile_Enums.tile_directions_enum.elbow or direction_enum == Tile_Enums.tile_directions_enum.tee or direction_enum == Tile_Enums.tile_directions_enum.straight:
 		new_rot = player_turn_dict.get(current_player_dir).get(direction_enum).get(rotate_var)
-#	var new_rot = current_player_dir * -1 #this will turn the player around
 	return new_rot
 
 func delete_tile():

@@ -8,6 +8,7 @@ var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
 var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
+var round_start_time = 10.0
 var gen_boss_tile = true
 var num_impass_tiles = 3
 
@@ -44,7 +45,7 @@ const queue_loc_dict = {
 func _ready():
 	var start_timer = Timer.new()
 	add_child(start_timer)
-	start_timer.set_wait_time(30)
+	start_timer.set_wait_time(round_start_time)
 	start_timer.set_one_shot(true)
 	start_timer.connect("timeout", self, "start_round")
 	start_timer.start()

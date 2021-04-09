@@ -54,7 +54,7 @@ var exit_tile_pos
 
 var can_walk = false
 var direction = Vector2(0,0)
-var speed = .2
+var speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
 var walk_timer
@@ -107,14 +107,15 @@ func walk_toggle():
 func walk():
 	translate(direction*speed)
 	walk_interval_count -= speed
-	if walk_interval_count <= 0:
+	if center_interval_count == 1:
 		check_map_edge()
 		check_tile()
-		walk_interval_count = walk_interval
-		center_interval_count -= 1
 	if center_interval_count <= 0:
 		center_interval_count = center_interval
 		check_center_tile()
+	if walk_interval_count <= 0:
+		walk_interval_count = walk_interval
+		center_interval_count -= 1
 	return
 
 func check_map_edge():
@@ -124,9 +125,17 @@ func check_map_edge():
 #	print(x_test)
 #	print(y_test)
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
+		if check_dist_exit():
+			walk_toggle()
+			print("Round End")
+			return
 		turn_around()
-		pass
 	return
+
+func check_dist_exit():
+	if position.distance_to(exit_tile_pos) <= 16:
+		return true
+	return false
 
 func check_tile():
 	var tile_coords_list = get_parent().clickable_coords_list
@@ -137,6 +146,9 @@ func check_tile():
 				if position.x >= x_test[0] and position.x < x_test[1] and position.y >= y_test[0] and position.y < y_test[1]:
 					if current_tile_dict.get(loc[2]) != null:
 						if current_tile_dict.get(loc[2]).is_impass_tile == true:
+							turn_around()
+							return
+						if current_tile_dict.get(loc[2]).rot_value_changer(direction) == null:
 							turn_around()
 							return
 						current_tile_dict.get(loc[2]).is_locked = true
@@ -150,7 +162,9 @@ func check_tile():
 func check_center_tile():
 	if current_tile == null:
 		return
+	position = current_tile.position #to make sure the grid stays aligned
 	direction = current_tile.rot_value_changer(direction)
+#	print("direction: " + str(direction))
 	if current_tile.center_subtile == null:
 		if current_tile.is_boss_tile == true:
 			print("boss battle")
@@ -182,7 +196,7 @@ func generate_player():
 
 func turn_around():
 	direction = (direction *-1) #turn the player around
-	center_interval_count = 3
+	center_interval_count = 2
 	return
 
 func process_turn():
