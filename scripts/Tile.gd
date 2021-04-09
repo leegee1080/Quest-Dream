@@ -69,7 +69,7 @@ const player_turn_dict = {
 	Vector2(-1,0): #left
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(0,1), 1:null, 2:Vector2(0,-1), 3:null}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,1)}
+		Tile_Enums.tile_directions_enum.tee: {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,-1)}
 		},
 	Vector2(1,0): #right
 		{

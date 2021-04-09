@@ -14,15 +14,17 @@ var num_impass_tiles = 3
 
 ##play area vars
 var clicked
-const starting_playarea_coord = [44,74] #x and y of the starting top corner of the play area
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 export(Array) var clickable_coords_list = []
 var potential_terminal_locations = []
 var start_tile
 var end_tile
 var tile_dict = {} #this is a dict more readable collection of tiles (string: tileobject)
+const starting_playarea_coord = [44,74] #x and y of the starting top corner of the play area
+const tile_size = 48
 var rows_total = 6
 var col_total = 6
+var max_starting_playarea = [starting_playarea_coord,[starting_playarea_coord[0]+((col_total)* tile_size), starting_playarea_coord[1]+((rows_total) *tile_size)]]
 
 ##queue area vars
 const queue_length = 9
@@ -42,7 +44,7 @@ const queue_loc_dict = {
 func _ready():
 	var start_timer = Timer.new()
 	add_child(start_timer)
-	start_timer.set_wait_time(60)
+	start_timer.set_wait_time(30)
 	start_timer.set_one_shot(true)
 	start_timer.connect("timeout", self, "start_round")
 	start_timer.start()
@@ -50,9 +52,10 @@ func _ready():
 	setup_tile_dict()
 	place_starting_tiles()
 	add_child(player)
+	player.playarea = max_starting_playarea
+	player.exit_tile_pos = end_tile.position
 	player.name = player.type_class.name
 	player.position = start_tile.position
-	player.change_dir(player.walk_dir.up)
 #	add_child(test_enemy)
 #	test_enemy.name = test_enemy.type_class.name
 #	test_enemy.position.x = 10
@@ -178,18 +181,23 @@ func setup_coord_array():
 func place_starting_tiles():
 	var tile
 	var picked_coord
+	randomize()
 	#work on start tile
 	var start_tile_index = int(rand_range(0,potential_terminal_locations.size())) #so that the entry can be removed later insuring the end and start are not on the same tile
 	var start_tile_sprite_index = 0
 	picked_coord = potential_terminal_locations[start_tile_index]
 	if picked_coord[1].y == 1:
 		start_tile_sprite_index = 2
+		player.direction = Vector2(0,-1)
 	elif picked_coord[1].y == rows_total:
 		start_tile_sprite_index = 3
+		player.direction = Vector2(0,1)
 	elif picked_coord[1].x == 1:
 		start_tile_sprite_index = 0
+		player.direction = Vector2(-1,0)
 	elif picked_coord[1].x == col_total:
 		start_tile_sprite_index = 1
+		player.direction = Vector2(1,0)
 	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, start_tile_sprite_index)
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0], true)

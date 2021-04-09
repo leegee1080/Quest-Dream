@@ -49,10 +49,12 @@ export(Dictionary) var stat_dict = {
 }
 var level
 var difficulty
+var playarea
+var exit_tile_pos
 
 var can_walk = false
 var direction = Vector2(0,0)
-var speed = .1
+var speed = .2
 const walk_interval = 16
 var walk_interval_count = walk_interval
 var walk_timer
@@ -61,6 +63,7 @@ var center_interval_count = 2
 var current_tile
 
 var ani_sprite
+
 
 func _ready():
 	walk_timer = Timer.new()
@@ -83,7 +86,7 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	level = set_level
 	difficulty = set_difficulty
 	stat_dict["equipment"] = set_equipment
-	
+	return
 
 func change_dir(new_dir):
 	if new_dir >= 0 and new_dir < walk_dir.size():
@@ -105,12 +108,24 @@ func walk():
 	translate(direction*speed)
 	walk_interval_count -= speed
 	if walk_interval_count <= 0:
+		check_map_edge()
 		check_tile()
 		walk_interval_count = walk_interval
 		center_interval_count -= 1
 	if center_interval_count <= 0:
 		center_interval_count = center_interval
 		check_center_tile()
+	return
+
+func check_map_edge():
+	var x_test = [playarea[0][0],playarea[1][0]]
+	var y_test = [playarea[0][1],playarea[1][1]]
+#	print(position)
+#	print(x_test)
+#	print(y_test)
+	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
+		turn_around()
+		pass
 	return
 
 func check_tile():
@@ -122,15 +137,13 @@ func check_tile():
 				if position.x >= x_test[0] and position.x < x_test[1] and position.y >= y_test[0] and position.y < y_test[1]:
 					if current_tile_dict.get(loc[2]) != null:
 						if current_tile_dict.get(loc[2]).is_impass_tile == true:
-							print("ded by impass")
-							walk_toggle()
+							turn_around()
 							return
 						current_tile_dict.get(loc[2]).is_locked = true
 						current_tile = current_tile_dict.get(loc[2])
 						return
 					elif current_tile_dict.get(loc[2]) == null:
-						print("ded by no tile")
-						walk_toggle()
+						turn_around()
 						return
 	return
 
@@ -141,7 +154,7 @@ func check_center_tile():
 	if current_tile.center_subtile == null:
 		if current_tile.is_boss_tile == true:
 			print("boss battle")
-			walk_toggle()
+#			walk_toggle()
 			return
 		print("no center tile " + 
 		"|at:" + current_tile.name + 
@@ -156,6 +169,7 @@ func check_center_tile():
 		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] +
 		"|rotation:" + str(current_tile.rotate_var)
 		)
+#	walk_toggle()
 	return
 
 func generate_player():
@@ -165,6 +179,11 @@ func generate_player():
 	print(type_class.name)
 	stat_dict = type_class.stat_dict
 	ani_sprite.set_frame(type_class.sprite_frame)
+
+func turn_around():
+	direction = (direction *-1) #turn the player around
+	center_interval_count = 3
+	return
 
 func process_turn():
 	type_class.special()
