@@ -38,6 +38,16 @@ const walk_dir_dict = {
 	walk_dir.left: Vector2(-1,0),
 	walk_dir.right: Vector2(1,0)
 }
+const walk_ani_pos_list = [
+	[Vector2(-2,-2), 0.1],
+	[Vector2(1,0), 0],
+	[Vector2(0,0), 0],
+	[Vector2(-1,0), 0],
+	[Vector2(2,-2), -0.1],
+	[Vector2(1,0), 0],
+	[Vector2(0,0), 0],
+	[Vector2(-1,0), 0]
+]
 
 export(player_types_enum) var type_enum
 var type_class
@@ -58,6 +68,8 @@ var speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
 var walk_timer
+var walk_animation_timer
+var walk_animation_step = (walk_ani_pos_list.size()-1)
 const center_interval = 3
 var center_interval_count = 2
 var current_tile
@@ -72,6 +84,14 @@ func _ready():
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
+	
+	walk_animation_timer = Timer.new()
+	add_child(walk_animation_timer)
+	walk_animation_timer.set_wait_time(.1)
+	walk_animation_timer.set_one_shot(false) # Make sure it loops
+	walk_animation_timer.connect("timeout", self, "walk_cycle")
+	walk_animation_timer.stop()
+	
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
@@ -98,10 +118,12 @@ func walk_toggle():
 	if can_walk:
 		can_walk = false
 		walk_timer.stop()
+		walk_animation_timer.stop()
 		return
 	elif !can_walk:
 		can_walk = true
 		walk_timer.start()
+		walk_animation_timer.start()
 		return
 
 func walk():
@@ -116,6 +138,14 @@ func walk():
 	if walk_interval_count <= 0:
 		walk_interval_count = walk_interval
 		center_interval_count -= 1
+	return
+
+func walk_cycle():
+	ani_sprite.position = walk_ani_pos_list[walk_animation_step][0]
+	ani_sprite.rotation = walk_ani_pos_list[walk_animation_step][1]
+	walk_animation_step -= 1
+	if walk_animation_step < 0:
+		walk_animation_step = (walk_ani_pos_list.size()-1)
 	return
 
 func check_map_edge():
@@ -151,7 +181,9 @@ func check_tile():
 						if current_tile_dict.get(loc[2]).rot_value_changer(direction) == null:
 							turn_around()
 							return
-						current_tile_dict.get(loc[2]).is_locked = true
+#						current_tile_dict.get(loc[2]).is_locked = true
+						if current_tile_dict.get(loc[2]).is_locked != true:
+							current_tile_dict.get(loc[2]).lock_tile()
 						current_tile = current_tile_dict.get(loc[2])
 						return
 					elif current_tile_dict.get(loc[2]) == null:
@@ -170,11 +202,11 @@ func check_center_tile():
 			print("boss battle")
 #			walk_toggle()
 			return
-		print("no center tile " + 
-		"|at:" + current_tile.name + 
-		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] + 
-		"|rotation:" + str(current_tile.rotate_var)
-		)
+#		print("no center tile " + 
+#		"|at:" + current_tile.name + 
+#		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] + 
+#		"|rotation:" + str(current_tile.rotate_var)
+#		)
 		return
 	print(
 		"|level:" + str(current_tile.center_subtile.subtile_level) + 

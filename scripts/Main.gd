@@ -4,11 +4,11 @@ class_name Main_Game
 
 var difficulty = 1
 var player_level = 1
-var player = Player.new(Player.player_types_enum.soldier, 0, difficulty, {})
+var player = Player.new(Player.player_types_enum.assassin, 0, difficulty, {})
 var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
-var round_start_time = 10.0
+var round_start_time = 5.0
 var gen_boss_tile = true
 var num_impass_tiles = 3
 

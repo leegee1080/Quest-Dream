@@ -105,6 +105,11 @@ var rotate_var = 0
 
 var init_chosen_sprite
 var ani_sprite
+var lock_timer = Timer.new()
+var lock_sprite = AnimatedSprite.new()
+var total_lock_frames = 4
+var current_lock_frame = 0
+const starting_lock_frame = 90
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
@@ -166,6 +171,30 @@ func place_deco():
 #
 #func pick_tile()
 #	return
+
+func lock_tile():
+	if is_locked == true:
+		return
+	is_locked = true
+	print("started lock animation")
+	lock_sprite = AnimatedSprite.new()
+	lock_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
+	add_child(lock_timer)
+	lock_timer.set_wait_time(0.1)
+	lock_timer.set_one_shot(false)
+	lock_timer.connect("timeout", self, "change_lock_animation")
+	lock_timer.start()
+	lock_sprite.set_frame(starting_lock_frame)
+	add_child(lock_sprite)
+	return
+
+func change_lock_animation():
+	if current_lock_frame < (total_lock_frames):
+		lock_sprite.set_frame(starting_lock_frame + current_lock_frame)
+		current_lock_frame +=1
+		return
+	lock_timer.stop()
+	return
 
 func rot_value_changer(current_player_dir: Vector2):
 	var new_rot = current_player_dir
