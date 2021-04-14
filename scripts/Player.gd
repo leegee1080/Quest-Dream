@@ -47,24 +47,24 @@ const walk_ani_pos_list = [
 	[Vector2(-1,0), 0]
 ]
 
-export(player_types_enum) var type_enum
+var type_enum
 var type_class
-export(Dictionary) var stat_dict = {
-	"health": 10,
-	"attack": 10,
-	"speed": 10,
-	"equipment": {}
-}
+var stat_dict = {"attack": 10, "speed": 10, "equipment": {}}
+var vit_dict = {"health": 10, "food": 100}
 var level
 var difficulty
+
+
 var playarea
 var exit_tile_pos
 
 var can_walk = false
 var direction = Vector2(0,0)
 var speed = .3
+
 const walk_interval = 16
 var walk_interval_count = walk_interval
+const walk_timer_wait_time = 0.01
 var walk_timer
 var walk_animation_timer
 var walk_animation_step = (walk_ani_pos_list.size()-1)
@@ -78,7 +78,7 @@ var ani_sprite
 func _ready():
 	walk_timer = Timer.new()
 	add_child(walk_timer)
-	walk_timer.set_wait_time(.01)
+	walk_timer.set_wait_time(walk_timer_wait_time)
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
@@ -94,6 +94,9 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
 	generate_player()
+#	stat_dict["food"] = 10
+#	print(stat_dict.food)
+	print(vit_dict.food)
 	return
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
@@ -103,7 +106,19 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_enum = new_type
 	level = set_level
 	difficulty = set_difficulty
-	stat_dict["equipment"] = set_equipment
+	
+	stat_dict.equipment = set_equipment
+	return
+
+func change_food(amt):
+	vit_dict.food += amt
+	return
+
+func check_food_level():
+	if vit_dict.food <= 0:
+		print("ded by food loss")
+		walk_toggle()
+		print("Round End")
 	return
 
 func change_dir(new_dir):
@@ -127,6 +142,8 @@ func walk_toggle():
 func walk():
 	translate(direction*speed)
 	walk_interval_count -= speed
+	change_food(walk_timer_wait_time * -1)
+	check_food_level()
 	if center_interval_count == 1:
 		check_map_edge()
 		check_tile()

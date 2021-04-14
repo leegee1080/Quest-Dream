@@ -176,7 +176,6 @@ func lock_tile():
 	if is_locked == true:
 		return
 	is_locked = true
-	print("started lock animation")
 	lock_sprite = AnimatedSprite.new()
 	lock_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
 	add_child(lock_timer)
