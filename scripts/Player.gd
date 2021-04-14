@@ -39,13 +39,11 @@ const walk_dir_dict = {
 	walk_dir.right: Vector2(1,0)
 }
 const walk_ani_pos_list = [
-	[Vector2(-2,-2), 0.1],
+	[Vector2(-1,-2), 0.1],
 	[Vector2(1,0), 0],
-	[Vector2(0,0), 0],
 	[Vector2(-1,0), 0],
-	[Vector2(2,-2), -0.1],
+	[Vector2(1,-2), -0.1],
 	[Vector2(1,0), 0],
-	[Vector2(0,0), 0],
 	[Vector2(-1,0), 0]
 ]
 
