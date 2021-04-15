@@ -229,7 +229,7 @@ func check_center_tile():
 		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] +
 		"|rotation:" + str(current_tile.rotate_var)
 		)
-#	walk_toggle()
+	walk_toggle()
 	return
 
 func generate_player():
