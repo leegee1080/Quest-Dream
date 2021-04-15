@@ -39,12 +39,10 @@ const walk_dir_dict = {
 	walk_dir.right: Vector2(1,0)
 }
 const walk_ani_pos_list = [
+	[Vector2(0,0), 0],
 	[Vector2(-1,-2), 0.1],
-	[Vector2(1,0), 0],
-	[Vector2(-1,0), 0],
-	[Vector2(1,-2), -0.1],
-	[Vector2(1,0), 0],
-	[Vector2(-1,0), 0]
+	[Vector2(0,0), 0],
+	[Vector2(1,-2), -0.1]
 ]
 
 var type_enum
@@ -106,7 +104,6 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_enum = new_type
 	level = set_level
 	difficulty = set_difficulty
-	
 	stat_dict.equipment = set_equipment
 	return
 
@@ -132,6 +129,8 @@ func walk_toggle():
 		can_walk = false
 		walk_timer.stop()
 		walk_animation_timer.stop()
+		ani_sprite.position = Vector2.ZERO
+		ani_sprite.rotation = 0
 		return
 	elif !can_walk:
 		can_walk = true

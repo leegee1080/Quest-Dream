@@ -10,7 +10,7 @@ var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var round_start_time = 5.0
 var gen_boss_tile = true
-var num_impass_tiles = 3
+var num_impass_tiles = 2
 
 
 ##play area vars
