@@ -90,17 +90,26 @@ func _input(event):
 					slide_queue()
 					return
 
-func check_player_tile():
-	for loc in clickable_coords_list:
-			var x_test = loc[0]
-			var y_test = loc[1]
-			if player.position[0] >= x_test[0] and player.position[0] < x_test[1] and player.position[1] >= y_test[0] and player.position[1] < y_test[1]:
-				if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
-					#react to tile
-					return
-				elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
-					#turn player around
-					return
+func open_room(current_tile):
+	var center_subtile = current_tile.center_subtile
+	print(
+	"|level:" + str(center_subtile.subtile_level) + 
+	"|type:" + Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum] +
+	"|theme:" + Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
+	)
+	var type = Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum]
+	var theme = Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
+	var level = center_subtile.subtile_leve
+#play animation for opening room.
+#show the correct theme for the room. (instance -> room object) pull room art based on subtile type
+
+#room should allow player to choose to interact or run
+#running from room would allow the player to return
+#interact would cause the room to be removed (shop interact does not get removed)
+#	current_tile.remove_center() ----------------------------add this line to remove the center when finished with the opened room
+
+#play close room animation
+#unfreeze player 
 	return
 
 func slide_queue():

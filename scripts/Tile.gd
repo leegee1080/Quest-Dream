@@ -205,6 +205,10 @@ func delete_tile():
 	if is_locked == false:
 		queue_free()
 
+func remove_center():
+	center_subtile.queue_free()
+	center_subtile = null
+
 func place_tile(new_loc: Vector2, is_preplaced: bool):
 	#place tile in clicked location
 	self.position.x = new_loc.x

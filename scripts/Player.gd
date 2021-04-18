@@ -94,7 +94,6 @@ func _ready():
 	generate_player()
 #	stat_dict["food"] = 10
 #	print(stat_dict.food)
-	print(vit_dict.food)
 	return
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
@@ -222,14 +221,15 @@ func check_center_tile():
 #		"|rotation:" + str(current_tile.rotate_var)
 #		)
 		return
-	print(
-		"|level:" + str(current_tile.center_subtile.subtile_level) + 
-		"|centertile:" + Tile_Enums.center_type_enum.keys()[current_tile.center_subtile.subtile_type_enum] + 
-		"|at:" + current_tile.name + 
-		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] +
-		"|rotation:" + str(current_tile.rotate_var)
-		)
+#	print(
+#		"|level:" + str(current_tile.center_subtile.subtile_level) + 
+#		"|centertile:" + Tile_Enums.center_type_enum.keys()[current_tile.center_subtile.subtile_type_enum] + 
+#		"|at:" + current_tile.name + 
+#		"|direction:" + Tile_Enums.tile_directions_enum.keys()[current_tile.direction_enum] +
+#		"|rotation:" + str(current_tile.rotate_var)
+#		)
 	walk_toggle()
+	get_parent().open_room(current_tile)
 	return
 
 func generate_player():
