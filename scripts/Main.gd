@@ -99,7 +99,7 @@ func open_room(current_tile):
 	)
 	var type = Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum]
 	var theme = Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
-	var level = center_subtile.subtile_leve
+	var level = center_subtile.subtile_level
 #play animation for opening room.
 #show the correct theme for the room. (instance -> room object) pull room art based on subtile type
 
