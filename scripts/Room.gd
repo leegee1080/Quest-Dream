@@ -38,7 +38,7 @@ func _ready():
 	generate_room()
 	return
 
-func _init(new_type, new_theme, new_room_screen_loc):
+func _init(new_type, new_theme, level, new_room_screen_loc):
 	if new_theme in room_theme_dict:
 		theme_enum = new_theme
 	else:

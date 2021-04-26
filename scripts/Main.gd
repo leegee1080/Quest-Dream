@@ -27,6 +27,12 @@ var rows_total = 6
 var col_total = 6
 var max_starting_playarea = [starting_playarea_coord,[starting_playarea_coord[0]+((col_total)* tile_size), starting_playarea_coord[1]+((rows_total) *tile_size)]]
 
+#room screen vars
+const room_screen_loc = Vector2(188,217)
+const player_room_screen_loc = Vector2(148,217)
+var player_last_loc
+const content_room_screen_loc = Vector2(238,217)
+
 ##queue area vars
 const queue_length = 9
 var tile_queue = []
@@ -44,6 +50,7 @@ const queue_loc_dict = {
 
 func _ready():
 	var start_timer = Timer.new()
+	start_timer.name = "Start Timer"
 	add_child(start_timer)
 	start_timer.set_wait_time(round_start_time)
 	start_timer.set_one_shot(true)
@@ -91,6 +98,8 @@ func _input(event):
 					return
 
 func open_room(current_tile):
+	player_last_loc = player.position #grab pos to later return the player to last tile
+	player.z_index = get_child_count()-1 #make sure the player sprite is on top
 	var center_subtile = current_tile.center_subtile
 	print(
 	"|level:" + str(center_subtile.subtile_level) + 
@@ -100,16 +109,24 @@ func open_room(current_tile):
 	var type = Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum]
 	var theme = Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
 	var level = center_subtile.subtile_level
+	var room_screen = Room.new(type, theme, level, room_screen_loc)
+	room_screen.name = "room"
+	add_child(room_screen)
+	player.position = player_room_screen_loc
 #play animation for opening room.
 #show the correct theme for the room. (instance -> room object) pull room art based on subtile type
 
-#room should allow player to choose to interact or run
+#room should allow player to choose to interact or run/leave
 #running from room would allow the player to return
 #interact would cause the room to be removed (shop interact does not get removed)
 #	current_tile.remove_center() ----------------------------add this line to remove the center when finished with the opened room
+	return
 
+func close_room():
 #play close room animation
 #unfreeze player 
+	player.position = player_last_loc
+	player.walk_toggle()
 	return
 
 func slide_queue():
@@ -209,6 +226,7 @@ func place_starting_tiles():
 		start_tile_sprite_index = 1
 		player.direction = Vector2(1,0)
 	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, start_tile_sprite_index)
+	start_tile.name = "Start Tile"
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0], true)
 	potential_terminal_locations.remove(start_tile_index)
@@ -224,11 +242,13 @@ func place_starting_tiles():
 	elif picked_coord[1].x == col_total:
 		end_tile_sprite_index = 0
 	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, end_tile_sprite_index)
+	end_tile.name = "End Tile"
 	add_child(end_tile)
 	end_tile.place_tile(picked_coord[0], true)
 	#place preplaced tiles
 	if gen_boss_tile == true:
 		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
+		tile.name = "Boss Tile"
 		picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 		tile_dict[picked_coord[2]] = tile
 		$InGameTileGroup.add_child(tile)
@@ -239,6 +259,7 @@ func place_starting_tiles():
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
 				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
+				tile.name = "Impass Tile " + str(num_impass_tiles)
 				tile_dict[picked_coord[2]] = tile
 				$InGameTileGroup.add_child(tile)
 				tile.place_tile(picked_coord[3], true)
