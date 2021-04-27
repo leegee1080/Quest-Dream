@@ -89,6 +89,7 @@ export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_t
 #pull info about the centertile here
 var center_subtile
 var current_tileset: Dictionary
+var saved_center_room = null
 
 var is_locked = false
 

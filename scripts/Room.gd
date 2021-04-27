@@ -11,7 +11,7 @@ const room_theme_dict = {
 	Tile_Enums.tile_themes_enum.swamp: 4
 }
 
-#[base enemies to gen, base loot to gen, base number of shopkeep items, can return to room true1/false0, can rest true1/false0]
+#[0base enemies to gen, 1base loot to gen, 2base number of shopkeep items, 3can return to room true1/false0, 4can rest true1/false0]
 const room_type_dict = {
 	Tile_Enums.center_type_enum.battle: [1, 1, 0, 0, 0],
 	Tile_Enums.center_type_enum.treasure: [0, 1, 0, 1, 0],
@@ -53,9 +53,16 @@ func _init(new_type, new_theme, level, new_room_screen_loc):
 	return
 
 func generate_room():
-	#unhide anisprite
+	#create anisprite
 	add_child(ani_sprite)
 	return
 
 func leave_room():
+	if room_type_hash[3] == 0:
+		get_parent().delete_centertile()
+		queue_free()
+		return
+	#do not delete room, this needs to save it but hide/regen child parts
+	get_parent().save_centertile()
+	queue_free()
 	return

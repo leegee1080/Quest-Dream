@@ -101,6 +101,7 @@ func open_room(current_tile):
 	player_last_loc = player.position #grab pos to later return the player to last tile
 	player.z_index = get_child_count()-1 #make sure the player sprite is on top
 	var center_subtile = current_tile.center_subtile
+	var saved_room = current_tile.saved_center_room
 	print(
 	"|level:" + str(center_subtile.subtile_level) + 
 	"|type:" + Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum] +
@@ -110,11 +111,14 @@ func open_room(current_tile):
 	var theme = Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
 	var level = center_subtile.subtile_level
 	var room_screen = Room.new(type, theme, level, room_screen_loc)
+	if saved_room != null:
+		room_screen = saved_room
 	room_screen.name = "room"
 	add_child(room_screen)
 	player.position = player_room_screen_loc
 #play animation for opening room.
 #show the correct theme for the room. (instance -> room object) pull room art based on subtile type
+#add deco using deco tiles based on room theme
 
 #room should allow player to choose to interact or run/leave
 #running from room would allow the player to return
@@ -122,9 +126,20 @@ func open_room(current_tile):
 #	current_tile.remove_center() ----------------------------add this line to remove the center when finished with the opened room
 	return
 
-func close_room():
+func delete_centertile():
+	var current_tile = player.current_tile
+	current_tile.center_subtile.queue_free()
 #play close room animation
 #unfreeze player 
+	player.position = player_last_loc
+	player.walk_toggle()
+	return
+
+func save_centertile(room_to_save):
+	var current_tile = player.current_tile
+	current_tile.saved_center_room = room_to_save
+#play close room animation
+#unfreeze player
 	player.position = player_last_loc
 	player.walk_toggle()
 	return
