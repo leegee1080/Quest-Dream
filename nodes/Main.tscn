@@ -1,13 +1,29 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/visuals/bg.png" type="Texture" id=1]
+[ext_resource path="res://assets/visuals/button_frames.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=3]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="bg" type="Sprite" parent="."]
+position = Vector2( -20, -50 )
 texture = ExtResource( 1 )
 centered = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 130, 410 )
+frames = ExtResource( 2 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+position = Vector2( 210, 410 )
+frames = ExtResource( 2 )
+frame = 2
+
+[node name="AnimatedSprite3" type="AnimatedSprite" parent="."]
+position = Vector2( 290, 410 )
+frames = ExtResource( 2 )
+frame = 4
 
 [node name="InGameTileGroup" type="Node2D" parent="."]

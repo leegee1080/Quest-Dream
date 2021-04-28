@@ -15,40 +15,44 @@ var num_impass_tiles = 2
 
 ##play area vars
 var clicked
+var can_player_place_tiles
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 export(Array) var clickable_coords_list = []
 var potential_terminal_locations = []
 var start_tile
 var end_tile
 var tile_dict = {} #this is a dict more readable collection of tiles (string: tileobject)
-const starting_playarea_coord = [44,74] #x and y of the starting top corner of the play area
+const starting_playarea_coord = [24,24] #x and y of the starting top corner of the play area
 const tile_size = 48
 var rows_total = 6
 var col_total = 6
 var max_starting_playarea = [starting_playarea_coord,[starting_playarea_coord[0]+((col_total)* tile_size), starting_playarea_coord[1]+((rows_total) *tile_size)]]
 
 #room screen vars
-const room_screen_loc = Vector2(188,217)
-const player_room_screen_loc = Vector2(148,217)
+const room_screen_loc = Vector2(168,167)
+const player_room_screen_loc = Vector2(128,167)
 var player_last_loc
-const content_room_screen_loc = Vector2(238,217)
+const content_room_screen_loc = Vector2(218,167)
 
 ##queue area vars
-const queue_length = 9
+const queue_length = 6
 var tile_queue = []
 const queue_loc_dict = {
-	"0":Vector2(308,423),
-	"1":Vector2(228,423),
-	"2":Vector2(148,423),
-	"3":Vector2(68,423),
-	"4":Vector2(68,503),
-	"5":Vector2(68,583),
-	"6":Vector2(148,583),
-	"7":Vector2(228,583),
-	"8":Vector2(308,583)
+	"0":Vector2(48,373),
+	"1":Vector2(48,453),
+	"2":Vector2(48,533),
+	"3":Vector2(128,533),
+	"4":Vector2(208,533),
+	"5":Vector2(288,533)
+}
+
+const button_loc_dict = {
+	#fill with the locations to instance the button objects
 }
 
 func _ready():
+	can_player_place_tiles = true
+	
 	var start_timer = Timer.new()
 	start_timer.name = "Start Timer"
 	add_child(start_timer)
@@ -80,24 +84,26 @@ func _input(event):
 			clicked = false
 			return
 		clicked = true
-		for loc in clickable_coords_list:
-			var x_test = loc[0]
-			var y_test = loc[1]
-			if event.position[0] >= x_test[0] and event.position[0] < x_test[1] and event.position[1] >= y_test[0] and event.position[1] < y_test[1]:
-				if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
-#					print(tile_dict.get(loc[2]).name)
-					tile_dict.get(loc[2]).delete_tile()
-					tile_dict[loc[2]] = null
-					return
-				elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
-					#assign the new tile node to the correct dictionary entry
-					tile_dict[loc[2]] = tile_queue[0]
-					tile_dict[loc[2]].place_tile(loc[3], false)
-					tile_dict[loc[2]].name = loc[2]
-					slide_queue()
-					return
+		if can_player_place_tiles:
+			for loc in clickable_coords_list:
+				var x_test = loc[0]
+				var y_test = loc[1]
+				if event.position[0] >= x_test[0] and event.position[0] < x_test[1] and event.position[1] >= y_test[0] and event.position[1] < y_test[1]:
+					if tile_dict.get(loc[2]) != null and tile_dict.get(loc[2]).is_locked == false:
+	#					print(tile_dict.get(loc[2]).name)
+						tile_dict.get(loc[2]).delete_tile()
+						tile_dict[loc[2]] = null
+						return
+					elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
+						#assign the new tile node to the correct dictionary entry
+						tile_dict[loc[2]] = tile_queue[0]
+						tile_dict[loc[2]].place_tile(loc[3], false)
+						tile_dict[loc[2]].name = loc[2]
+						slide_queue()
+						return
 
 func open_room(current_tile):
+	can_player_place_tiles = false
 	player_last_loc = player.position #grab pos to later return the player to last tile
 	player.z_index = get_child_count()-1 #make sure the player sprite is on top
 	var center_subtile = current_tile.center_subtile
@@ -129,8 +135,9 @@ func open_room(current_tile):
 func delete_centertile():
 	var current_tile = player.current_tile
 	current_tile.center_subtile.queue_free()
-#play close room animation
-#unfreeze player 
+	#play close room animation
+	#unfreeze player 
+	can_player_place_tiles = true
 	player.position = player_last_loc
 	player.walk_toggle()
 	return
@@ -138,8 +145,9 @@ func delete_centertile():
 func save_centertile(room_to_save):
 	var current_tile = player.current_tile
 	current_tile.saved_center_room = room_to_save
-#play close room animation
-#unfreeze player
+	#play close room animation
+	#unfreeze player
+	can_player_place_tiles = true
 	player.position = player_last_loc
 	player.walk_toggle()
 	return
