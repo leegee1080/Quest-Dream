@@ -12,6 +12,13 @@ var round_start_time = 5.0
 var gen_boss_tile = true
 var num_impass_tiles = 2
 
+#ui vars
+const button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"pause": [Vector2(95,345), 0, 1],
+	"back": [Vector2(175,345), 2, 3],
+	"menu": [Vector2(255,345), 4, 5]
+}
 
 ##play area vars
 var clicked
@@ -46,13 +53,14 @@ const queue_loc_dict = {
 	"5":Vector2(288,533)
 }
 
-const button_loc_dict = {
-	#fill with the locations to instance the button objects
-}
+
 
 func _ready():
-	can_player_place_tiles = true
+	#create UI
+	generate_ui()
 	
+	#setup start timer and player character
+	can_player_place_tiles = true
 	var start_timer = Timer.new()
 	start_timer.name = "Start Timer"
 	add_child(start_timer)
@@ -68,17 +76,29 @@ func _ready():
 	player.exit_tile_pos = end_tile.position
 	player.name = player.type_class.name
 	player.position = start_tile.position
+	
 #	add_child(test_enemy)
 #	test_enemy.name = test_enemy.type_class.name
 #	test_enemy.position.x = 10
 #	test_enemy.position.y = 200
-	pass
 
-func start_round():
+func generate_ui():
+	for btn in button_loc_dict:
+		var temp_btn = Btn.new(button_loc_dict[btn][0], "res://assets/visuals/button_frames.tres", button_loc_dict[btn][1], button_loc_dict[btn][2], Vector2(66,137))
+		temp_btn.name = btn
+		add_child(temp_btn)
+		temp_btn.connect("ui_sig", self, "temp_func")
+	return
+
+func temp_func(new_name): #change this out for something unique to the button pressed
+	print("click" + new_name)
+	return
+
+func start_round(): #just for the first time start, can add more here if needed
 	player.walk_toggle()
 	return
 
-func _input(event):
+func _input(event): #when the user clicks
 	if event is InputEventMouseButton:
 		if clicked == true:
 			clicked = false
