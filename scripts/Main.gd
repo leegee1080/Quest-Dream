@@ -12,6 +12,16 @@ var round_start_time = 5.0
 var gen_boss_tile = true
 var num_impass_tiles = 2
 
+var current_game_state
+var previous_game_state
+enum game_state{
+	run,
+	pause,
+	room,
+	lose,
+	win
+}
+
 #ui vars
 const button_loc_dict = {
 	#fill with the locations to instance the button objects
@@ -36,6 +46,7 @@ var col_total = 6
 var max_starting_playarea = [starting_playarea_coord,[starting_playarea_coord[0]+((col_total)* tile_size), starting_playarea_coord[1]+((rows_total) *tile_size)]]
 
 #room screen vars
+var room_screen
 const room_screen_loc = Vector2(168,167)
 const player_room_screen_loc = Vector2(128,167)
 var player_last_loc
@@ -76,7 +87,6 @@ func _ready():
 	player.exit_tile_pos = end_tile.position
 	player.name = player.type_class.name
 	player.position = start_tile.position
-	
 #	add_child(test_enemy)
 #	test_enemy.name = test_enemy.type_class.name
 #	test_enemy.position.x = 10
@@ -87,15 +97,44 @@ func generate_ui():
 		var temp_btn = Btn.new(button_loc_dict[btn][0], "res://assets/visuals/button_frames.tres", button_loc_dict[btn][1], button_loc_dict[btn][2], Vector2(66,137))
 		temp_btn.name = btn
 		add_child(temp_btn)
-		temp_btn.connect("ui_sig", self, "temp_func")
+		temp_btn.connect("ui_sig", self, "iu_func")
 	return
 
-func temp_func(new_name): #change this out for something unique to the button pressed
-	print("click" + new_name)
+func iu_func(new_name): #change this out for something unique to the button pressed
+	if new_name == "back":
+		ui_back()
+		return
+	if new_name == "pause":
+		ui_pause()
+		return
+	if new_name == "menu":
+		ui_menu()
+		return
+
+func ui_back():
+	if current_game_state == game_state.room:
+		current_game_state = game_state.run
+		room_screen.leave_room()
+		pass
+	return
+
+func ui_pause():
+	if current_game_state == game_state.pause:
+		current_game_state = previous_game_state
+		print("unpause game")
+		return
+	previous_game_state = current_game_state
+	current_game_state = game_state.pause
+	print("pause game")
+
+func ui_menu():
+	current_game_state = game_state.pause
+	print("pop up menu")
 	return
 
 func start_round(): #just for the first time start, can add more here if needed
 	player.walk_toggle()
+	current_game_state = game_state.run
 	return
 
 func _input(event): #when the user clicks
@@ -136,12 +175,13 @@ func open_room(current_tile):
 	var type = Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum]
 	var theme = Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
 	var level = center_subtile.subtile_level
-	var room_screen = Room.new(type, theme, level, room_screen_loc)
+	room_screen = Room.new(type, theme, level, room_screen_loc)
 	if saved_room != null:
 		room_screen = saved_room
 	room_screen.name = "room"
 	add_child(room_screen)
 	player.position = player_room_screen_loc
+	current_game_state = game_state.room
 #play animation for opening room.
 #show the correct theme for the room. (instance -> room object) pull room art based on subtile type
 #add deco using deco tiles based on room theme
@@ -160,6 +200,7 @@ func delete_centertile():
 	can_player_place_tiles = true
 	player.position = player_last_loc
 	player.walk_toggle()
+	current_game_state = game_state.run
 	return
 
 func save_centertile(room_to_save):
@@ -170,6 +211,7 @@ func save_centertile(room_to_save):
 	can_player_place_tiles = true
 	player.position = player_last_loc
 	player.walk_toggle()
+	current_game_state = game_state.run
 	return
 
 func slide_queue():
