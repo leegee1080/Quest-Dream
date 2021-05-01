@@ -4,7 +4,20 @@
 
 
 
-### todo:
+### prog todo:
+- [ ] shop room func
+    - [ ] items 
+      - [ ] weapons
+      - [ ] armor
+      - [ ] trinkets
+- [x] rest room func
+- [ ] battle room func
+   - [ ] enemies
+      - [ ] enemies' turn
+      - [ ] enemies' stats
+   - [ ] player's turn
+
+### art todo:
 - [ ] deco tiles to rooms
 - [ ] shop room
     - [ ] items 
