@@ -210,7 +210,7 @@ func remove_center():
 	center_subtile.queue_free()
 	center_subtile = null
 
-func place_tile(new_loc: Vector2, is_preplaced: bool):
+func place_tile(new_loc: Vector2):
 	#place tile in clicked location
 	self.position.x = new_loc.x
 	self.position.y = new_loc.y

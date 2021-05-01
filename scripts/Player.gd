@@ -62,7 +62,7 @@ var speed = .3
 
 const walk_interval = 16
 var walk_interval_count = walk_interval
-const walk_timer_wait_time = 0.01
+const walk_timer_wait_time = 0.04
 var walk_timer
 var walk_animation_timer
 var walk_animation_step = (walk_ani_pos_list.size()-1)
@@ -245,10 +245,11 @@ func turn_around():
 	center_interval_count = 2
 	return
 
+func heal_player(new_health):
+	vit_dict.health += new_health
+
 func process_turn():
 	type_class.special()
-	return
 
 func take_hit():
 	type_class.hit()
-	return

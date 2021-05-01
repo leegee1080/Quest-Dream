@@ -155,7 +155,7 @@ func _input(event): #when the user clicks
 					elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
 						#assign the new tile node to the correct dictionary entry
 						tile_dict[loc[2]] = tile_queue[0]
-						tile_dict[loc[2]].place_tile(loc[3], false)
+						tile_dict[loc[2]].place_tile(loc[3])
 						tile_dict[loc[2]].name = loc[2]
 						slide_queue()
 						return
@@ -171,8 +171,8 @@ func open_room(current_tile):
 	"|type:" + Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum] +
 	"|theme:" + Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
 	)
-	var type = Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum]
-	var theme = Tile_Enums.tile_themes_enum.keys()[center_subtile.subtile_theme_enum]
+	var type = center_subtile.subtile_type_enum
+	var theme = center_subtile.subtile_theme_enum
 	var level = center_subtile.subtile_level
 	room_screen = Room.new(type, theme, level, room_screen_loc)
 	if saved_room != null:
@@ -202,9 +202,9 @@ func delete_centertile():
 	current_game_state = game_state.run
 	return
 
-func save_centertile(room_to_save):
+func save_centertile():
 	var current_tile = player.current_tile
-	current_tile.saved_center_room = room_to_save
+	current_tile.saved_center_room = room_screen
 	#play close room animation
 	#unfreeze player
 	can_player_place_tiles = true
@@ -312,7 +312,7 @@ func place_starting_tiles():
 	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, start_tile_sprite_index)
 	start_tile.name = "Start Tile"
 	add_child(start_tile)
-	start_tile.place_tile(picked_coord[0], true)
+	start_tile.place_tile(picked_coord[0])
 	potential_terminal_locations.remove(start_tile_index)
 	#work on end tile
 	var end_tile_sprite_index = 0
@@ -328,7 +328,7 @@ func place_starting_tiles():
 	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, end_tile_sprite_index)
 	end_tile.name = "End Tile"
 	add_child(end_tile)
-	end_tile.place_tile(picked_coord[0], true)
+	end_tile.place_tile(picked_coord[0])
 	#place preplaced tiles
 	if gen_boss_tile == true:
 		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
@@ -336,7 +336,7 @@ func place_starting_tiles():
 		picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 		tile_dict[picked_coord[2]] = tile
 		$InGameTileGroup.add_child(tile)
-		tile.place_tile(picked_coord[3], true)
+		tile.place_tile(picked_coord[3])
 		tile.lock_tile()
 		tile.is_boss_tile = true
 	if num_impass_tiles > 0:
@@ -347,7 +347,7 @@ func place_starting_tiles():
 				tile.name = "Impass Tile " + str(num_impass_tiles)
 				tile_dict[picked_coord[2]] = tile
 				$InGameTileGroup.add_child(tile)
-				tile.place_tile(picked_coord[3], true)
+				tile.place_tile(picked_coord[3])
 				tile.lock_tile()
 				tile.is_impass_tile = true
 			num_impass_tiles -= 1
