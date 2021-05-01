@@ -326,8 +326,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=335
-window/size/height=580
+window/size/width=304
+window/size/height=546
 window/size/test_width=750
 window/size/test_height=1334
 window/vsync/use_vsync=false

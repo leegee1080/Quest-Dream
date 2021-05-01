@@ -2,6 +2,8 @@ extends Node2D
 
 class_name Main_Game
 
+var clicked #this var is used for all clicking
+
 var difficulty = 1
 var player_level = 1
 var player = Player.new(Player.player_types_enum.assassin, 0, difficulty, {})
@@ -25,13 +27,11 @@ enum game_state{
 #ui vars
 const button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"pause": [Vector2(95,345), 0, 1],
-	"back": [Vector2(175,345), 2, 3],
-	"menu": [Vector2(255,345), 4, 5]
+	"back": [Vector2(111,307), 2, 3],
+	"menu": [Vector2(191,307), 4, 5]
 }
 
 ##play area vars
-var clicked
 var can_player_place_tiles
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 export(Array) var clickable_coords_list = []
@@ -39,29 +39,28 @@ var potential_terminal_locations = []
 var start_tile
 var end_tile
 var tile_dict = {} #this is a dict more readable collection of tiles (string: tileobject)
-const starting_playarea_coord = [24,24] #x and y of the starting top corner of the play area
+const starting_playarea_coord = [32,32] #the center x y of the starting top corner of the play area
 const tile_size = 48
-var rows_total = 6
-var col_total = 6
+var rows_total = 5
+var col_total = 5
 var max_starting_playarea = [starting_playarea_coord,[starting_playarea_coord[0]+((col_total)* tile_size), starting_playarea_coord[1]+((rows_total) *tile_size)]]
 
 #room screen vars
 var room_screen
-const room_screen_loc = Vector2(168,167)
-const player_room_screen_loc = Vector2(128,167)
+const room_screen_loc = Vector2(152,152)
+var player_room_screen_loc = Vector2(room_screen_loc[0]-40,room_screen_loc[1])
 var player_last_loc
-const content_room_screen_loc = Vector2(218,167)
+var content_room_screen_loc = Vector2(room_screen_loc[0]+40,room_screen_loc[1])
 
 ##queue area vars
-const queue_length = 6
+const queue_length = 5
 var tile_queue = []
 const queue_loc_dict = {
-	"0":Vector2(48,373),
-	"1":Vector2(48,453),
-	"2":Vector2(48,533),
-	"3":Vector2(128,533),
-	"4":Vector2(208,533),
-	"5":Vector2(288,533)
+	"0":Vector2(56,332),
+	"1":Vector2(56,412),
+	"2":Vector2(56,492),
+	"3":Vector2(136,492),
+	"4":Vector2(216,492)
 }
 
 
@@ -338,6 +337,7 @@ func place_starting_tiles():
 		tile_dict[picked_coord[2]] = tile
 		$InGameTileGroup.add_child(tile)
 		tile.place_tile(picked_coord[3], true)
+		tile.lock_tile()
 		tile.is_boss_tile = true
 	if num_impass_tiles > 0:
 		while num_impass_tiles > 0:
@@ -348,6 +348,7 @@ func place_starting_tiles():
 				tile_dict[picked_coord[2]] = tile
 				$InGameTileGroup.add_child(tile)
 				tile.place_tile(picked_coord[3], true)
+				tile.lock_tile()
 				tile.is_impass_tile = true
 			num_impass_tiles -= 1
 

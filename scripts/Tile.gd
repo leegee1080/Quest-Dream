@@ -215,6 +215,4 @@ func place_tile(new_loc: Vector2, is_preplaced: bool):
 	self.position.x = new_loc.x
 	self.position.y = new_loc.y
 	place_deco()
-	if is_preplaced == true:
-		is_locked = true
 	return
