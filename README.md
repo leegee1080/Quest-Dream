@@ -2,7 +2,7 @@
 
 A pipe dream game where the water is replaced by an adventurer.
 
-todo
+###todo:
 - [ ] deco tiles to rooms
 - [ ] shop room
     - [ ] items 
