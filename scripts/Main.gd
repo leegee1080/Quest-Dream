@@ -7,7 +7,7 @@ var clicked #this var is used for all clicking
 var difficulty = 1
 var player_level = 1
 var player = Player.new(Player.player_types_enum.assassin, 0, difficulty, {})
-var test_enemy = Enemy.new(Enemy.enemy_types_enum.rat, difficulty)
+#var test_enemy = Enemy.new(null, difficulty)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var round_start_time = 5.0

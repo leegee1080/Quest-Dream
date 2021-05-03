@@ -87,7 +87,13 @@ func _ready():
 	generate_enemy()
 
 func _init(new_type, power_boost:int):
-	type_enum = new_type
+	if new_type == null:
+		randomize()
+		var rand_pick = int(rand_range(0, (enemy_types_enum.size()-1)))
+		type_enum = enemy_types_dict.keys()[rand_pick]
+		pass
+	else:
+		type_enum = new_type
 	stat_dict["health"] = stat_dict["health"] * power_boost
 	stat_dict["attack"] = stat_dict["attack"] * power_boost
 	stat_dict["speed"] = stat_dict["speed"] * power_boost

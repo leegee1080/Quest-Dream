@@ -50,6 +50,6 @@ const multi2 = [
 	center_type_enum.rest,
 	center_type_enum.battle,
 	center_type_enum.treasure,
-	center_type_enum.shop,
-	center_type_enum.silly
+	center_type_enum.shop
+#	center_type_enum.silly
 ]

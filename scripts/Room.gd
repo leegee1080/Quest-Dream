@@ -19,13 +19,21 @@ const room_type_dict = {
 	Tile_Enums.center_type_enum.rest: [0, 0, 0, 0, 1],
 	Tile_Enums.center_type_enum.silly: [0, 0, 0, 0, 0]
 }
-
+#generic room vars
 var type_enum
 var room_type_hash #stores the stats about the room type from the room_type_dict
 var theme_enum
 var room_theme_frame #stores the frame number of the room theme
 var room_screen_loc #the location the room will appear on the player's screen
 var room_level
+
+#battle vars
+var enemies = []
+var turn_order = []
+var xp_earned = 0
+var loot_pile = []
+var turn_counter_max
+var turn_counter_min
 
 var leave_time = 1.0
 var is_room_complete = false
@@ -96,15 +104,28 @@ func rest_room():
 	print("heal")
 	return
 
+func find_turn_counter_maximums(enemies_list, player_speed):
+	turn_counter_max = player_speed + 1
+	turn_counter_min = player_speed
+	for bad in enemies_list:
+		if (bad.stat_dict.speed > turn_counter_max):
+			turn_counter_max = bad.stat_dict.speed
+		if (bad.stat_dict.speed < turn_counter_max):
+			turn_counter_min = bad.stat_dict.speed
+
 func battle_room():
-	var leave_timer = Timer.new()
-	leave_timer.name = "Leave Timer"
-	add_child(leave_timer)
-	leave_timer.set_wait_time(leave_time)
-	leave_timer.set_one_shot(true)
-	leave_timer.connect("timeout", self, "complete_room")
-	leave_timer.start()
 	print("battle")
+	#generate enemies
+	randomize()
+	var rand_num_enemies = int(rand_range(1, room_level+1))
+	for i in rand_num_enemies:
+		enemies.append(Enemy.new(null, room_level))
+	#set turn order
+	find_turn_counter_maximums(enemies, get_parent().player.stat_dict.speed)
+	#loop turn order until end
+	
+	#give loot
+	complete_room()
 	return
 
 func shop_room():
