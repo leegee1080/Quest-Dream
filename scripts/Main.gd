@@ -174,7 +174,7 @@ func open_room(current_tile):
 	var type = center_subtile.subtile_type_enum
 	var theme = center_subtile.subtile_theme_enum
 	var level = center_subtile.subtile_level
-	room_screen = Room.new(type, theme, level, room_screen_loc)
+	room_screen = Room.new(type, theme, level, room_screen_loc, false)
 	if saved_room != null:
 		room_screen = saved_room
 	room_screen.name = "room"
@@ -194,6 +194,8 @@ func open_room(current_tile):
 func delete_centertile():
 	var current_tile = player.current_tile
 	current_tile.center_subtile.queue_free()
+	for enemy in room_screen.enemies:
+		enemy.queue_free()
 	#play close room animation
 	#unfreeze player 
 	can_player_place_tiles = true
@@ -205,6 +207,7 @@ func delete_centertile():
 func save_centertile():
 	var current_tile = player.current_tile
 	current_tile.saved_center_room = room_screen
+	room_screen.is_saved_room = true
 	#play close room animation
 	#unfreeze player
 	can_player_place_tiles = true
