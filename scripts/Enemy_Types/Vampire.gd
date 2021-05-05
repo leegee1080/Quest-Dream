@@ -3,10 +3,10 @@ class_name Vampire
 export(String) var name = "Vampire"
 export(int) var sprite_frame = 24
 var stat_dict = {
-	"health": 10,
-	"attack": 10,
-	"speed": 10,
-	"loot" : 10,
+	"health": 50,
+	"attack": 30,
+	"speed": 50,
+	"loot" : 30,
 }
 
 func attack():

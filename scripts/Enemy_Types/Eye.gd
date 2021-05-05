@@ -4,8 +4,8 @@ export(String) var name = "Specter Eye"
 export(int) var sprite_frame = 16
 var stat_dict = {
 	"health": 10,
-	"attack": 10,
-	"speed": 10,
+	"attack": 4,
+	"speed": 4,
 	"loot" : 10,
 }
 

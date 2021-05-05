@@ -3,9 +3,9 @@ class_name Goblin_Boss
 export(String) var name = "Goblin Boss"
 export(int) var sprite_frame = 21
 var stat_dict = {
-	"health": 10,
+	"health": 20,
 	"attack": 10,
-	"speed": 10,
+	"speed": 8,
 	"loot" : 10,
 }
 

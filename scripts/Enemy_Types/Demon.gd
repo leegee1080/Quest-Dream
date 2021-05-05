@@ -3,9 +3,9 @@ class_name Demon
 export(String) var name = "Demon"
 export(int) var sprite_frame = 23
 var stat_dict = {
-	"health": 10,
-	"attack": 10,
-	"speed": 10,
+	"health": 18,
+	"attack": 14,
+	"speed": 15,
 	"loot" : 10,
 }
 

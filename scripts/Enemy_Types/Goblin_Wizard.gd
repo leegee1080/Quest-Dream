@@ -3,9 +3,9 @@ class_name Goblin_Wizard
 export(String) var name = "Goblin Wizard"
 export(int) var sprite_frame = 2
 var stat_dict = {
-	"health": 10,
+	"health": 5,
 	"attack": 10,
-	"speed": 10,
+	"speed": 8,
 	"loot" : 10,
 }
 

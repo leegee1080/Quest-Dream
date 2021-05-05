@@ -5,7 +5,7 @@ export(int) var sprite_frame = 4
 var stat_dict = {
 	"health": 10,
 	"attack": 10,
-	"speed": 10,
+	"speed": 8,
 	"loot" : 10,
 }
 

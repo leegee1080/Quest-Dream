@@ -3,10 +3,10 @@ class_name Alien_God
 export(String) var name = "Alien God"
 export(int) var sprite_frame = 28
 var stat_dict = {
-	"health": 10,
-	"attack": 10,
-	"speed": 10,
-	"loot" : 10,
+	"health": 100,
+	"attack": 100,
+	"speed": 100,
+	"loot" : 100,
 }
 
 func attack():

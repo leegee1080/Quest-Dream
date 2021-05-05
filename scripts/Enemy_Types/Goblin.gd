@@ -3,10 +3,10 @@ class_name Goblin
 export(String) var name = "Goblin"
 export(int) var sprite_frame = 1
 var stat_dict = {
-	"health": 10,
-	"attack": 10,
-	"speed": 10,
-	"loot" : 10,
+	"health": 2,
+	"attack": 2,
+	"speed": 2,
+	"loot" : 1,
 }
 
 func attack():
