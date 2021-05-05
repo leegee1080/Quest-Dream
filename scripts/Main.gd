@@ -5,7 +5,7 @@ class_name Main_Game
 var clicked #this var is used for all clicking
 
 var difficulty = 1
-var player_level = 1
+var player_level = 10
 var player = Player.new(Player.player_types_enum.assassin, 0, difficulty, {})
 #var test_enemy = Enemy.new(null, difficulty)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
@@ -50,7 +50,7 @@ var room_screen
 const room_screen_loc = Vector2(152,152)
 var player_room_screen_loc = Vector2(room_screen_loc[0]-40,room_screen_loc[1])
 var player_last_loc
-var content_room_screen_loc = Vector2(room_screen_loc[0]+40,room_screen_loc[1])
+var content_room_screen_loc = Vector2(room_screen_loc[0]+20,room_screen_loc[1])
 
 ##queue area vars
 const queue_length = 5
@@ -245,7 +245,7 @@ func generate_random_tile():
 	Tile_Enums.multi2.shuffle()
 	var chosen_tile_center = Tile_Enums.multi2[0]
 	#direction, theme, center, level, diff, deco amount, center level, chosen sprite(-1 for rand)
-	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, player_level, difficulty, 1, 0, -1)
+	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, player_level, difficulty, 1, -1)
 	return tile
 
 func setup_tile_dict():
@@ -312,7 +312,7 @@ func place_starting_tiles():
 	elif picked_coord[1].x == col_total:
 		start_tile_sprite_index = 1
 		player.direction = Vector2(1,0)
-	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, start_tile_sprite_index)
+	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, start_tile_sprite_index)
 	start_tile.name = "Start Tile"
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0])
@@ -328,13 +328,13 @@ func place_starting_tiles():
 		end_tile_sprite_index = 1
 	elif picked_coord[1].x == col_total:
 		end_tile_sprite_index = 0
-	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, end_tile_sprite_index)
+	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, end_tile_sprite_index)
 	end_tile.name = "End Tile"
 	add_child(end_tile)
 	end_tile.place_tile(picked_coord[0])
 	#place preplaced tiles
 	if gen_boss_tile == true:
-		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
+		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, -1)
 		tile.name = "Boss Tile"
 		picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 		tile_dict[picked_coord[2]] = tile
@@ -346,7 +346,7 @@ func place_starting_tiles():
 		while num_impass_tiles > 0:
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
-				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, 0, -1)
+				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, -1)
 				tile.name = "Impass Tile " + str(num_impass_tiles)
 				tile_dict[picked_coord[2]] = tile
 				$InGameTileGroup.add_child(tile)

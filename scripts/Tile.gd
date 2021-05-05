@@ -117,14 +117,14 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
 	generate_tile()
 
-func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int, new_deco_number: int, new_center_level: int, chosen_sprite: int): #if chosen_sprite is -1 then rand gen sprite
+func _init(new_type, new_theme, new_center, set_level: int, set_difficulty: int, new_deco_number: int, chosen_sprite: int): #if chosen_sprite is -1 then rand gen sprite
 	direction_enum = new_type
 	theme_enum = new_theme
 	center_object_enum = new_center
 	player_level = set_level
 	difficulty = set_difficulty
 	deco_number = new_deco_number
-	center_level = new_center_level
+	center_level = difficulty * player_level
 	init_chosen_sprite = chosen_sprite
 
 func generate_tile():

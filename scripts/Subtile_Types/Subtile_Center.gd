@@ -70,9 +70,9 @@ func generate_subtile():
 		return
 	icon_list = subtile_theme_dict.get(subtile_theme_enum).get(subtile_type_enum)
 	#pick the frame from the list
+	
 	if subtile_level > icon_list.size():
-		ani_sprite.set_frame(icon_list[0])
-		subtile_level = 0
+		ani_sprite.set_frame(icon_list[icon_list.size()-1])
 	else:
 		ani_sprite.set_frame(icon_list[subtile_level])
 	add_child(ani_sprite)
