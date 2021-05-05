@@ -122,29 +122,35 @@ func find_turn_counter_maximums(enemies_list, player_speed):
 
 #check for deaths func's
 func check_player_death():
-	print("check player death")
+	if get_parent().player.is_dead:
+		complete_room()
 	return
 
 func check_enemies_death():
-	print("check enemies all dead")
+	var all_enemies_dead = true
+	for mob in enemies:
+		if mob.is_dead == false:
+			all_enemies_dead = false
+	if all_enemies_dead:
+		complete_room()
 	return
 
 func pass_battle_turn():
 	turn_counter -= 1
-	
+	randomize()
 	if turn_counter <= get_parent().player.stat_dict.speed:
-		get_parent().player.process_turn()
+		var player_target = enemies[int(rand_range(0,enemies.size()))]
+		get_parent().player.process_turn(player_target)
 	
 	for mob in enemies:
 		if turn_counter <= mob.stat_dict.speed:
-			mob.process_turn()
+			mob.process_turn(get_parent().player)
 			check_player_death()
 	
 	check_enemies_death()
 	print("turn passed")
 	if(turn_counter < turn_counter_min):
 		turn_counter = turn_counter_max
-		complete_room() #this is here to test, delete later
 	#if all enemies are dead:
 	#	complete room and give loot
 	return

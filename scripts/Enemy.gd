@@ -77,6 +77,7 @@ export(Dictionary) var stat_dict = {
 	"speed": 10,
 	"loot": 10
 }
+var is_dead = false
 
 var ani_sprite
 
@@ -107,11 +108,18 @@ func generate_enemy():
 	stat_dict = type_class.stat_dict
 	ani_sprite.set_frame(type_class.sprite_frame)
 
-func process_turn():
-	print("enemy " + str(type_class.name) + " turn")
-	type_class.attack()
+func process_turn(target):
+	if is_dead == false:
+		print("enemy " + str(type_class.name) + " turn")
+#		type_class.attack() #needed to play special animations
+		target.take_hit(stat_dict.speed)
 	return
 	
-func take_hit():
+func take_hit(damage):
 	type_class.hit()
+	stat_dict.health -= damage
+	print(str(type_class.name) + " health left: " + str(stat_dict.health))
+	if stat_dict.health <= 0:
+		is_dead = true
+		print(str(type_class.name) + " is dead")
 	return

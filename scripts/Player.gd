@@ -47,8 +47,9 @@ const walk_ani_pos_list = [
 
 var type_enum
 var type_class
-var stat_dict = {"attack": 10, "speed": 10, "equipment": {}}
-var vit_dict = {"health": 10, "food": 100}
+var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "equipment": {}}
+var vit_dict = {"health": 100, "food": 100}
+var is_dead = false
 var level
 var difficulty
 
@@ -58,8 +59,8 @@ var exit_tile_pos
 
 var can_walk = false
 var direction = Vector2(0,0)
+######################################################################suggestion!!!!!!!!!!!!!!!!!!!! make the movement speed tied to the combat speed
 var speed = .3
-
 const walk_interval = 16
 var walk_interval_count = walk_interval
 const walk_timer_wait_time = 0.04
@@ -103,7 +104,12 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_enum = new_type
 	level = set_level
 	difficulty = set_difficulty
-	stat_dict.equipment = set_equipment
+
+	player_stat_dict.attack = new_type.stat_dict.get("attack") + player_stat_dict.attack
+	player_stat_dict.speed = new_type.stat_dict.speed + player_stat_dict.speed
+	vit_dict.health = new_type.stat_dict.health + player_stat_dict.health
+	player_stat_dict.magic = new_type.stat_dict.magic + player_stat_dict.magic
+	player_stat_dict.equipment = set_equipment +  new_type.stat_dict.equipment
 	return
 
 func change_food(amt):
@@ -114,6 +120,7 @@ func check_food_level():
 	if vit_dict.food <= 0:
 		print("ded by food loss")
 		walk_toggle()
+		is_dead = true
 		print("Round End")
 	return
 
@@ -124,6 +131,8 @@ func change_dir(new_dir):
 	direction = Vector2(0,0)
 
 func walk_toggle():
+	if is_dead:
+		return
 	if can_walk:
 		can_walk = false
 		walk_timer.stop()
@@ -237,7 +246,6 @@ func generate_player():
 		type_enum = player_types_enum.soldier
 	type_class = player_types_dict.get(type_enum).new()
 	print(type_class.name)
-	stat_dict = type_class.stat_dict
 	ani_sprite.set_frame(type_class.sprite_frame)
 
 func turn_around():
@@ -248,9 +256,16 @@ func turn_around():
 func heal_player(new_health):
 	vit_dict.health += new_health
 
-func process_turn():
-	print("player turn")
-	type_class.special()
+func process_turn(target):
+	if is_dead == true:
+		print("player turn")
+		target.take_hit(player_stat_dict.attack)
+#		type_class.special() #needed to play special animations
 
-func take_hit():
-	type_class.hit()
+func take_hit(damage):
+	type_class.take_hit()
+	vit_dict.health -= damage
+	if vit_dict.health <= 0:
+		print("player dead")
+		is_dead = true
+	print("Player health: "+ str(vit_dict.health))
