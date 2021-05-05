@@ -108,6 +108,7 @@ func generate_enemy():
 	ani_sprite.set_frame(type_class.sprite_frame)
 
 func process_turn():
+	print("enemy " + str(type_class.name) + " turn")
 	type_class.attack()
 	return
 	

@@ -249,6 +249,7 @@ func heal_player(new_health):
 	vit_dict.health += new_health
 
 func process_turn():
+	print("player turn")
 	type_class.special()
 
 func take_hit():

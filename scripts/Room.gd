@@ -36,7 +36,7 @@ var xp_earned = 0
 var loot_pile = []
 var turn_counter_max
 var turn_counter_min
-var turnCounter
+var turn_counter
 
 var leave_time = 1.0
 var is_room_complete = false
@@ -120,13 +120,33 @@ func find_turn_counter_maximums(enemies_list, player_speed):
 		if (bad.stat_dict.speed < turn_counter_max):
 			turn_counter_min = bad.stat_dict.speed
 
+#check for deaths func's
+func check_player_death():
+	print("check player death")
+	return
+
+func check_enemies_death():
+	print("check enemies all dead")
+	return
+
 func pass_battle_turn():
-	turnCounter -= 1
+	turn_counter -= 1
+	
+	if turn_counter <= get_parent().player.stat_dict.speed:
+		get_parent().player.process_turn()
+	
+	for mob in enemies:
+		if turn_counter <= mob.stat_dict.speed:
+			mob.process_turn()
+			check_player_death()
+	
+	check_enemies_death()
 	print("turn passed")
-	if(turnCounter < turn_counter_min):
-		turnCounter = turn_counter_max
-		#give loot
-		complete_room()
+	if(turn_counter < turn_counter_min):
+		turn_counter = turn_counter_max
+		complete_room() #this is here to test, delete later
+	#if all enemies are dead:
+	#	complete room and give loot
 	return
 
 func battle_room():
@@ -145,7 +165,7 @@ func battle_room():
 	#set turn order
 	find_turn_counter_maximums(enemies, get_parent().player.stat_dict.speed)
 	#loop turn order until end
-	turnCounter = turn_counter_max #start the turn counter at the top
+	turn_counter = turn_counter_max #start the turn counter at the top
 	var battle_turn_timer = Timer.new()
 	battle_turn_timer.name = "Leave Timer"
 	battle_turn_timer.set_wait_time(1)
