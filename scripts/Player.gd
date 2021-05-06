@@ -49,6 +49,7 @@ var type_enum
 var type_class
 var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "equipment": {}}
 var vit_dict = {"health": 100, "food": 100}
+var class_stat_dict
 var is_dead = false
 var level
 var difficulty
@@ -104,13 +105,18 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_enum = new_type
 	level = set_level
 	difficulty = set_difficulty
-
-	player_stat_dict.attack = new_type.stat_dict.get("attack") + player_stat_dict.attack
-	player_stat_dict.speed = new_type.stat_dict.speed + player_stat_dict.speed
-	vit_dict.health = new_type.stat_dict.health + player_stat_dict.health
-	player_stat_dict.magic = new_type.stat_dict.magic + player_stat_dict.magic
-	player_stat_dict.equipment = set_equipment +  new_type.stat_dict.equipment
+	type_class = player_types_dict.get(type_enum).new()
+	class_stat_dict = type_class.stat_dict
+	player_stat_dict.attack = type_class.stat_dict.get("attack") + player_stat_dict.attack
+	player_stat_dict.speed = type_class.stat_dict.speed + player_stat_dict.speed
+	vit_dict.health = type_class.stat_dict.health + vit_dict.health
+	player_stat_dict.magic = type_class.stat_dict.magic + player_stat_dict.magic
+	merge_dir(player_stat_dict.equipment, type_class.stat_dict.equipment)
 	return
+
+func merge_dir(target, patch):
+	for key in patch:
+		target[key] = patch[key]
 
 func change_food(amt):
 	vit_dict.food += amt
@@ -242,9 +248,6 @@ func check_center_tile():
 	return
 
 func generate_player():
-	if type_enum == null:
-		type_enum = player_types_enum.soldier
-	type_class = player_types_dict.get(type_enum).new()
 	print(type_class.name)
 	ani_sprite.set_frame(type_class.sprite_frame)
 

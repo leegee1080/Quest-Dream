@@ -138,7 +138,7 @@ func check_enemies_death():
 func pass_battle_turn():
 	turn_counter -= 1
 	randomize()
-	if turn_counter <= get_parent().player.stat_dict.speed:
+	if turn_counter <= get_parent().player.player_stat_dict.speed:
 		var player_target = enemies[int(rand_range(0,enemies.size()))]
 		get_parent().player.process_turn(player_target)
 	
@@ -169,7 +169,7 @@ func battle_room():
 			new_enemy.position = spawn_pos #place the baddies at the right area in the room
 			new_enemy.z_index = get_parent().get_child_count()-1 #place baddies on the top layer
 	#set turn order
-	find_turn_counter_maximums(enemies, get_parent().player.stat_dict.speed)
+	find_turn_counter_maximums(enemies, get_parent().player.player_stat_dict.speed)
 	#loop turn order until end
 	turn_counter = turn_counter_max #start the turn counter at the top
 	var battle_turn_timer = Timer.new()
