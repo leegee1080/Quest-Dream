@@ -94,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Types/Golem_God.gd"
 }, {
+"base": "Node2D",
+"class": "Hit_Color_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animations/Hit_Color_Animation.gd"
+}, {
 "base": "Reference",
 "class": "Human_Jack",
 "language": "GDScript",
@@ -259,6 +264,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Types/Vines.gd"
 }, {
+"base": "Node2D",
+"class": "Walking_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animations/Walking_Animation.gd"
+}, {
 "base": "Reference",
 "class": "Wizard",
 "language": "GDScript",
@@ -282,6 +292,7 @@ _global_script_class_icons={
 "Goblin_Boss": "",
 "Goblin_Wizard": "",
 "Golem_God": "",
+"Hit_Color_Animation": "",
 "Human_Jack": "",
 "Human_King": "",
 "Human_Queen": "",
@@ -315,6 +326,7 @@ _global_script_class_icons={
 "Valkyrie": "",
 "Vampire": "",
 "Vines": "",
+"Walking_Animation": "",
 "Wizard": ""
 }
 

@@ -66,13 +66,12 @@ const walk_interval = 16
 var walk_interval_count = walk_interval
 const walk_timer_wait_time = 0.04
 var walk_timer
-var walk_animation_timer
-var walk_animation_step = (walk_ani_pos_list.size()-1)
 const center_interval = 3
 var center_interval_count = 2
 var current_tile
 
 var ani_sprite
+var walk_animation
 
 
 func _ready():
@@ -83,16 +82,11 @@ func _ready():
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
 	
-	walk_animation_timer = Timer.new()
-	add_child(walk_animation_timer)
-	walk_animation_timer.set_wait_time(.1)
-	walk_animation_timer.set_one_shot(false) # Make sure it loops
-	walk_animation_timer.connect("timeout", self, "walk_cycle")
-	walk_animation_timer.stop()
-	
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
+	walk_animation = Walking_Animation.new(ani_sprite, 0.1)
+	add_child(walk_animation)
 	generate_player()
 #	stat_dict["food"] = 10
 #	print(stat_dict.food)
@@ -142,14 +136,16 @@ func walk_toggle():
 	if can_walk:
 		can_walk = false
 		walk_timer.stop()
-		walk_animation_timer.stop()
+#		walk_animation_timer.stop()
+		walk_animation.stop_walk()
 		ani_sprite.position = Vector2.ZERO
 		ani_sprite.rotation = 0
 		return
 	elif !can_walk:
 		can_walk = true
 		walk_timer.start()
-		walk_animation_timer.start()
+		walk_animation.start_walk()
+#		walk_animation_timer.start()
 		return
 
 func walk():
@@ -166,14 +162,6 @@ func walk():
 	if walk_interval_count <= 0:
 		walk_interval_count = walk_interval
 		center_interval_count -= 1
-	return
-
-func walk_cycle():
-	ani_sprite.position = walk_ani_pos_list[walk_animation_step][0]
-	ani_sprite.rotation = walk_ani_pos_list[walk_animation_step][1]
-	walk_animation_step -= 1
-	if walk_animation_step < 0:
-		walk_animation_step = (walk_ani_pos_list.size()-1)
 	return
 
 func check_map_edge():
