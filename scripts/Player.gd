@@ -72,6 +72,7 @@ var current_tile
 
 var ani_sprite
 var walk_animation
+var hit_animation
 
 
 func _ready():
@@ -86,7 +87,9 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
 	walk_animation = Walking_Animation.new(ani_sprite, 0.1)
+	hit_animation = Hit_Color_Animation.new(ani_sprite, 0.1, 0.5)
 	add_child(walk_animation)
+	add_child(hit_animation)
 	generate_player()
 #	stat_dict["food"] = 10
 #	print(stat_dict.food)
@@ -106,6 +109,7 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	vit_dict.health = type_class.stat_dict.health + vit_dict.health
 	player_stat_dict.magic = type_class.stat_dict.magic + player_stat_dict.magic
 	merge_dir(player_stat_dict.equipment, type_class.stat_dict.equipment)
+	merge_dir(player_stat_dict.equipment, set_equipment)
 	return
 
 func merge_dir(target, patch):
@@ -136,7 +140,6 @@ func walk_toggle():
 	if can_walk:
 		can_walk = false
 		walk_timer.stop()
-#		walk_animation_timer.stop()
 		walk_animation.stop_walk()
 		ani_sprite.position = Vector2.ZERO
 		ani_sprite.rotation = 0
@@ -145,7 +148,6 @@ func walk_toggle():
 		can_walk = true
 		walk_timer.start()
 		walk_animation.start_walk()
-#		walk_animation_timer.start()
 		return
 
 func walk():
@@ -255,6 +257,7 @@ func process_turn(target):
 
 func take_hit(damage):
 	type_class.take_hit()
+	hit_animation.start_hit()
 	vit_dict.health -= damage
 	if vit_dict.health <= 0:
 		print("player dead")

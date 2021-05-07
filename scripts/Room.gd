@@ -137,6 +137,7 @@ func check_enemies_death():
 
 func pass_battle_turn():
 	turn_counter -= 1
+	print(turn_counter)
 	randomize()
 	if turn_counter <= get_parent().player.player_stat_dict.speed:
 		var player_target = enemies[int(rand_range(0,enemies.size()))]

@@ -80,11 +80,14 @@ export(Dictionary) var stat_dict = {
 var is_dead = false
 
 var ani_sprite
+var hit_animation
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/enemy_frames.tres"))
 	add_child(ani_sprite)
+	hit_animation = Hit_Color_Animation.new(ani_sprite, 0.1, 0.5)
+	add_child(hit_animation)
 	generate_enemy()
 
 func _init(new_type, power_boost:int):
@@ -117,6 +120,7 @@ func process_turn(target):
 	
 func take_hit(damage):
 	type_class.hit()
+	hit_animation.start_hit()
 	stat_dict.health -= damage
 	print(str(type_class.name) + " health left: " + str(stat_dict.health))
 	if stat_dict.health <= 0:
