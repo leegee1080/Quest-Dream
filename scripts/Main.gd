@@ -51,6 +51,13 @@ const room_screen_loc = Vector2(152,152)
 var player_room_screen_loc = Vector2(room_screen_loc[0]-40,room_screen_loc[1])
 var player_last_loc
 var content_room_screen_loc = Vector2(room_screen_loc[0]+20,room_screen_loc[1])
+var stage_enemies_dict = { #this dict is filled at start of the main class, there is a list of all possible enemies per level of this theme
+	0 : [],
+	1 : [],
+	2 : [],
+	3 : [],
+	4 : []
+}
 
 ##queue area vars
 const queue_length = 5
@@ -68,6 +75,9 @@ const queue_loc_dict = {
 func _ready():
 	#create UI
 	generate_ui()
+	
+	#setup dict for enemies
+	generate_enemies_dict()
 	
 	#setup start timer and player character
 	can_player_place_tiles = true
@@ -129,6 +139,27 @@ func ui_pause():
 func ui_menu():
 	current_game_state = game_state.pause
 	print("pop up menu")
+	return
+
+func generate_enemies_dict():
+	for test in Enemy_Enums.enemy_types_dict:
+		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
+		for theme in test_enemy.theme_list:
+			if theme == chosen_level_theme:
+				stage_enemies_dict[test_enemy.difficulty].append(Enemy_Enums.enemy_types_dict[test])
+		pass
+	
+	#print for debug
+	for list in stage_enemies_dict:
+		var test_list = stage_enemies_dict[list]
+		for test in test_list:
+			print("------------")
+			print("list")
+			var test_enemy = test.new()
+			print(list)
+			print(test_enemy.name)
+			print("------------")
+		pass
 	return
 
 func start_round(): #just for the first time start, can add more here if needed
