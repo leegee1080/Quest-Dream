@@ -49,7 +49,7 @@ var player_level #unused right now
 
 var type_enum
 var type_class
-var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "equipment": {}}
+var player_stat_dict = {"attack": 1, "speed": 10, "magic": 10, "equipment": {}}
 var vit_dict = {"health": 100, "food": 100}
 var class_stat_dict
 var is_dead = false

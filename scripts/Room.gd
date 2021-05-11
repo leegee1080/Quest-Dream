@@ -86,6 +86,7 @@ func generate_room():
 func complete_room():
 	is_room_complete = true
 	for obj in timer_group.get_children():
+		obj.stop()
 		obj.queue_free()
 	print("room complete")
 
@@ -124,7 +125,8 @@ func find_turn_counter_maximums(enemies_list, player_speed):
 func check_player_death():
 	if get_parent().player.is_dead:
 		complete_room()
-	return
+		return true
+	return false
 
 func check_enemies_death():
 	var all_enemies_dead = true
@@ -137,6 +139,10 @@ func check_enemies_death():
 
 func pass_battle_turn():
 	turn_counter -= 1
+	check_enemies_death()
+	check_player_death()
+	if is_room_complete:
+		return
 	print("Starting turn: " + str(turn_counter))
 	randomize()
 	if turn_counter <= get_parent().player.player_stat_dict.speed:
@@ -146,10 +152,10 @@ func pass_battle_turn():
 	for mob in enemies:
 		if turn_counter <= mob.stat_dict.speed:
 			mob.process_turn(get_parent().player)
-			check_player_death()
+			if check_player_death():
+				return
 			
 	print("turn passed")
-	check_enemies_death()
 	if(turn_counter < turn_counter_min):
 		turn_counter = turn_counter_max
 	#if all enemies are dead:

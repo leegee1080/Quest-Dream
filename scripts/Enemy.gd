@@ -57,6 +57,8 @@ func process_turn(target):
 	return
 	
 func take_hit(damage):
+	if is_dead:
+		return
 	type_class.hit()
 	hit_animation.start_hit()
 	stat_dict.health -= damage
