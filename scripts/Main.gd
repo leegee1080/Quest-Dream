@@ -5,7 +5,7 @@ class_name Main_Game
 var clicked #this var is used for all clicking
 
 var difficulty = 1
-var player_level = 1
+var stage_level = 1
 var player = Player.new(Player.player_types_enum.assassin, 0, difficulty, {})
 #var test_enemy = Enemy.new(null, difficulty)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
@@ -52,7 +52,7 @@ var player_room_screen_loc = Vector2(room_screen_loc[0]-40,room_screen_loc[1])
 var player_last_loc
 var content_room_screen_loc = Vector2(room_screen_loc[0]+20,room_screen_loc[1])
 var stage_enemies_dict = { #this dict is filled at start of the main class, there is a list of all possible enemies per level of this theme
-	0 : [],
+	0 : [],#this is the index of the boss enemies
 	1 : [],
 	2 : [],
 	3 : [],
@@ -121,6 +121,8 @@ func iu_func(new_name): #change this out for something unique to the button pres
 		return
 
 func ui_back():
+	print("back button")
+	print("Current Game state: " + str(current_game_state))
 	if current_game_state == game_state.room:
 		current_game_state = game_state.run
 		room_screen.leave_room()
@@ -146,20 +148,7 @@ func generate_enemies_dict():
 		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
 		for theme in test_enemy.theme_list:
 			if theme == chosen_level_theme:
-				stage_enemies_dict[test_enemy.difficulty].append(Enemy_Enums.enemy_types_dict[test])
-		pass
-	
-	#print for debug
-	for list in stage_enemies_dict:
-		var test_list = stage_enemies_dict[list]
-		for test in test_list:
-			print("------------")
-			print("list")
-			var test_enemy = test.new()
-			print(list)
-			print(test_enemy.name)
-			print("------------")
-		pass
+				stage_enemies_dict[test_enemy.difficulty].append(test)
 	return
 
 func start_round(): #just for the first time start, can add more here if needed
@@ -276,7 +265,7 @@ func generate_random_tile():
 	Tile_Enums.multi2.shuffle()
 	var chosen_tile_center = Tile_Enums.multi2[0]
 	#direction, theme, center, level, diff, deco amount, center level, chosen sprite(-1 for rand)
-	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, player_level, difficulty, 1, -1)
+	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, stage_level, difficulty, 1, -1)
 	return tile
 
 func setup_tile_dict():
@@ -343,7 +332,7 @@ func place_starting_tiles():
 	elif picked_coord[1].x == col_total:
 		start_tile_sprite_index = 1
 		player.direction = Vector2(1,0)
-	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, start_tile_sprite_index)
+	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, stage_level, difficulty, 0, start_tile_sprite_index)
 	start_tile.name = "Start Tile"
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0])
@@ -359,13 +348,13 @@ func place_starting_tiles():
 		end_tile_sprite_index = 1
 	elif picked_coord[1].x == col_total:
 		end_tile_sprite_index = 0
-	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, end_tile_sprite_index)
+	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, stage_level, difficulty, 0, end_tile_sprite_index)
 	end_tile.name = "End Tile"
 	add_child(end_tile)
 	end_tile.place_tile(picked_coord[0])
 	#place preplaced tiles
 	if gen_boss_tile == true:
-		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, -1)
+		tile = Tile.new(Tile_Enums.tile_directions_enum.boss, chosen_level_theme, Tile_Enums.center_type_enum.none, stage_level, difficulty, 0, -1)
 		tile.name = "Boss Tile"
 		picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 		tile_dict[picked_coord[2]] = tile
@@ -377,7 +366,7 @@ func place_starting_tiles():
 		while num_impass_tiles > 0:
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
-				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, player_level, difficulty, 0, -1)
+				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, stage_level, difficulty, 0, -1)
 				tile.name = "Impass Tile " + str(num_impass_tiles)
 				tile_dict[picked_coord[2]] = tile
 				$InGameTileGroup.add_child(tile)

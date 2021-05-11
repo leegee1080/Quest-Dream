@@ -11,7 +11,7 @@ var stat_dict = {
 }
 
 func special():
-	print("attacked")
+	print("player attacked")
 
 func take_hit():
-	print("took hit")
+	print("player took hit")

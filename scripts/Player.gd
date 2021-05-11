@@ -45,6 +45,8 @@ const walk_ani_pos_list = [
 	[Vector2(1,-2), -0.1]
 ]
 
+var player_level #unused right now
+
 var type_enum
 var type_class
 var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "equipment": {}}
@@ -250,7 +252,7 @@ func heal_player(new_health):
 	vit_dict.health += new_health
 
 func process_turn(target):
-	if is_dead == true:
+	if is_dead == false:
 		print("player turn")
 		target.take_hit(player_stat_dict.attack)
 #		type_class.special() #needed to play special animations

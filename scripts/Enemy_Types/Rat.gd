@@ -21,7 +21,7 @@ var stat_dict = {
 }
 
 func attack():
-	print("attacked")
+	print(name + " attacked")
 
 func hit():
-	print("taken hit")
+	print(name + " taken hit")

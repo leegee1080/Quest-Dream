@@ -16,6 +16,7 @@ var is_dead = false
 
 var ani_sprite
 var hit_animation
+var death_animation
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
@@ -23,9 +24,11 @@ func _ready():
 	add_child(ani_sprite)
 	hit_animation = Hit_Color_Animation.new(ani_sprite, 0.1, 0.5)
 	add_child(hit_animation)
+	death_animation = Death_Animation.new(ani_sprite)
+	add_child(death_animation)
 	generate_enemy()
 
-func _init(new_type, power_boost:int):
+func _init(new_type, power_boost:int): #power boost is derived from the level of the room that the enemy was spawned in
 	if new_type == null:
 		randomize()
 		var rand_pick = int(rand_range(0, (Enemy_Enums.enemy_types_enum.size()-1)))
@@ -61,4 +64,11 @@ func take_hit(damage):
 	if stat_dict.health <= 0:
 		is_dead = true
 		print(str(type_class.name) + " is dead")
+		kill_enemy()
+	return
+
+func kill_enemy():
+	#death animation
+	hit_animation.queue_free()
+	death_animation.play_death_animation()
 	return

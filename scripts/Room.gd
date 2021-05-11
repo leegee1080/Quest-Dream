@@ -137,7 +137,7 @@ func check_enemies_death():
 
 func pass_battle_turn():
 	turn_counter -= 1
-	print(turn_counter)
+	print("Starting turn: " + str(turn_counter))
 	randomize()
 	if turn_counter <= get_parent().player.player_stat_dict.speed:
 		var player_target = enemies[int(rand_range(0,enemies.size()))]
@@ -147,9 +147,9 @@ func pass_battle_turn():
 		if turn_counter <= mob.stat_dict.speed:
 			mob.process_turn(get_parent().player)
 			check_player_death()
-	
-	check_enemies_death()
+			
 	print("turn passed")
+	check_enemies_death()
 	if(turn_counter < turn_counter_min):
 		turn_counter = turn_counter_max
 	#if all enemies are dead:
@@ -159,11 +159,14 @@ func pass_battle_turn():
 func battle_room():
 	print("battle")
 	#generate enemies
-	randomize()
 	if is_saved_room == false:
-		var rand_num_enemies = int(rand_range(1, room_level+1))
+		randomize()
+		var rand_num_enemies = int(rand_range(1, room_level+2))
 		for i in rand_num_enemies:
-			var new_enemy = Enemy.new(null, room_level)
+			randomize()
+			var chosen_enemy_list = get_parent().stage_enemies_dict[int(rand_range(1,get_parent().stage_enemies_dict[room_level].size()))]
+			var chosen_enemy_type = chosen_enemy_list[int(rand_range(0,chosen_enemy_list.size()))]
+			var new_enemy = Enemy.new(chosen_enemy_type, room_level)
 			enemies.append(new_enemy)
 			get_parent().add_child(new_enemy)
 			var spawn_pos = Vector2(rand_range(get_parent().content_room_screen_loc.x - 20, get_parent().content_room_screen_loc.x + 20), rand_range(get_parent().content_room_screen_loc.y - 20, get_parent().content_room_screen_loc.y + 20))
@@ -174,7 +177,7 @@ func battle_room():
 	#loop turn order until end
 	turn_counter = turn_counter_max #start the turn counter at the top
 	var battle_turn_timer = Timer.new()
-	battle_turn_timer.name = "Leave Timer"
+	battle_turn_timer.name = "Battleturn Timer"
 	battle_turn_timer.set_wait_time(1)
 	battle_turn_timer.set_one_shot(false)
 	battle_turn_timer.connect("timeout", self, "pass_battle_turn")
