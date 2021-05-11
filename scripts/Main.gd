@@ -109,7 +109,7 @@ func generate_ui():
 		temp_btn.connect("ui_sig", self, "iu_func")
 	return
 
-func iu_func(new_name): #change this out for something unique to the button pressed
+func iu_func(new_name): #checks which button is pressed
 	if new_name == "back":
 		ui_back()
 		return
@@ -124,8 +124,9 @@ func ui_back():
 	print("back button")
 	print("Current Game state: " + str(current_game_state))
 	if current_game_state == game_state.room:
-		current_game_state = game_state.run
-		room_screen.leave_room()
+		if room_screen.is_room_complete == true:
+			current_game_state = game_state.run
+			room_screen.leave_room()
 		pass
 	return
 
