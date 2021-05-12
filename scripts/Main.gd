@@ -121,8 +121,6 @@ func iu_func(new_name): #checks which button is pressed
 		return
 
 func ui_back():
-	print("back button")
-	print("Current Game state: " + str(current_game_state))
 	if current_game_state == game_state.room:
 		if room_screen.is_room_complete == true:
 			current_game_state = game_state.run
