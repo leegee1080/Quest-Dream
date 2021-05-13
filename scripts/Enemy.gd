@@ -6,7 +6,7 @@ var type_enum
 
 
 var type_class
-export(Dictionary) var stat_dict = {
+var stat_dict = {
 	"health": 10,
 	"attack": 10,
 	"speed": 10,
@@ -36,24 +36,28 @@ func _init(new_type, power_boost:int): #power boost is derived from the level of
 		pass
 	else:
 		type_enum = new_type
-	stat_dict["health"] = stat_dict["health"] * power_boost
-	stat_dict["attack"] = stat_dict["attack"] * power_boost
-	stat_dict["speed"] = stat_dict["speed"] * power_boost
-	stat_dict["loot"] = stat_dict["loot"] * power_boost
+#	stat_dict["health"] = stat_dict["health"] * power_boost
+#	stat_dict["attack"] = stat_dict["attack"] * power_boost
+#	stat_dict["speed"] = stat_dict["speed"] * power_boost
+#	stat_dict["loot"] = stat_dict["loot"] * power_boost
 
 func generate_enemy():
 	if type_enum == null:
 		type_enum = Enemy_Enums.enemy_types_enum.rat
 	type_class = Enemy_Enums.enemy_types_dict.get(type_enum).new()
-	print(type_class.name)
-	stat_dict = type_class.stat_dict
+	merge_dir(stat_dict, type_class.stat_dict)
 	ani_sprite.set_frame(type_class.sprite_frame)
+
+func merge_dir(target, patch):
+	for key in patch:
+		var temp_val = target[key]
+		target[key] = temp_val + patch[key]
 
 func process_turn(target):
 	if is_dead == false:
 		print("enemy " + str(type_class.name) + " turn")
 #		type_class.attack() #needed to play special animations
-		target.take_hit(stat_dict.speed)
+		target.take_hit(stat_dict.attack)
 	return
 	
 func take_hit(damage):

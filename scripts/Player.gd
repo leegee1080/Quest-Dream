@@ -49,7 +49,7 @@ var player_level #unused right now
 
 var type_enum
 var type_class
-var player_stat_dict = {"attack": 1, "speed": 10, "magic": 10, "equipment": {}}
+var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "equipment": {}}
 var vit_dict = {"health": 100, "food": 100}
 var class_stat_dict
 var is_dead = false
@@ -116,7 +116,9 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 
 func merge_dir(target, patch):
 	for key in patch:
-		target[key] = patch[key]
+		var temp_val = target[key]
+		target[key] = temp_val + patch[key]
+	return
 
 func change_food(amt):
 	vit_dict.food += amt
@@ -135,6 +137,7 @@ func change_dir(new_dir):
 		direction = walk_dir_dict.get(new_dir)
 		return
 	direction = Vector2(0,0)
+	return
 
 func walk_toggle():
 	if is_dead:
@@ -253,7 +256,6 @@ func heal_player(new_health):
 
 func process_turn(target):
 	if is_dead == false:
-		print("player turn")
 		target.take_hit(player_stat_dict.attack)
 #		type_class.special() #needed to play special animations
 

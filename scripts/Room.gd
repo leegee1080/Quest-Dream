@@ -20,6 +20,7 @@ const room_type_dict = {
 	Tile_Enums.center_type_enum.silly: [0, 0, 0, 0, 0]
 }
 #generic room vars
+var player
 var type_enum
 var room_type_hash #stores the stats about the room type from the room_type_dict
 var theme_enum
@@ -37,6 +38,7 @@ var loot_pile = []
 var turn_counter_max
 var turn_counter_min
 var turn_counter
+var turn_order_list
 
 var leave_time = 1.0
 var is_room_complete = false
@@ -50,7 +52,7 @@ func _ready():
 	position = room_screen_loc
 	generate_room()
 
-func _init(new_type, new_theme, level, new_room_screen_loc, is_loaded_room: bool):
+func _init(new_type, new_theme, level, new_room_screen_loc, is_loaded_room: bool, passed_player_node):
 	theme_enum = new_theme
 	type_enum = new_type
 	room_level = level
@@ -58,6 +60,7 @@ func _init(new_type, new_theme, level, new_room_screen_loc, is_loaded_room: bool
 	room_theme_frame = room_theme_dict.get(new_theme)
 	room_screen_loc = new_room_screen_loc
 	is_saved_room = is_loaded_room
+	player = passed_player_node
 
 func process_room():
 	#if rest room, restore health
@@ -108,22 +111,24 @@ func rest_room():
 	leave_timer.set_one_shot(true)
 	leave_timer.connect("timeout", self, "complete_room")
 	leave_timer.start()
-	get_parent().player.heal_player(10*room_level)#add health based on the level of the room
+	player.heal_player(10*room_level)#add health based on the level of the room
 	print("heal")
 	return
 
-func find_turn_counter_maximums(enemies_list, player_speed):
+func find_turn_counter_maximums(player_speed):
 	turn_counter_max = player_speed + 1
 	turn_counter_min = player_speed
-	for bad in enemies_list:
+	for bad in enemies:
 		if (bad.stat_dict.speed > turn_counter_max):
 			turn_counter_max = bad.stat_dict.speed
 		if (bad.stat_dict.speed < turn_counter_max):
 			turn_counter_min = bad.stat_dict.speed
+		pass
+	return
 
 #check for deaths func's
 func check_player_death():
-	if get_parent().player.is_dead:
+	if player.is_dead:
 		complete_room()
 		return true
 	return false
@@ -135,29 +140,54 @@ func check_enemies_death():
 			all_enemies_dead = false
 	if all_enemies_dead:
 		complete_room()
+#	update_enemy_list()
+	return
+
+func create_turn_list():
+	var turn_list = []
+	var local_turn_counter = turn_counter_max + 1
+	while local_turn_counter > turn_counter_min:
+		local_turn_counter -= 1
+		if local_turn_counter <= player.player_stat_dict.speed:
+			turn_list.append(player)
+			pass
+		for mob in enemies:
+			if local_turn_counter <= mob.stat_dict.speed:
+				turn_list.append(mob)
+				pass
+		continue
+	turn_order_list = turn_list
+	return
+
+func update_enemy_list():
+	var temp_list = []
+	for item in enemies:
+		if item.is_dead == false:
+			temp_list.append(item)
+		pass
+	enemies = temp_list
 	return
 
 func pass_battle_turn():
-	turn_counter -= 1
-	check_enemies_death()
-	check_player_death()
+	var chosen_target = null
+	if turn_order_list[turn_counter] == null:
+		return
 	if is_room_complete:
 		return
 	print("Starting turn: " + str(turn_counter))
 	randomize()
-	if turn_counter <= get_parent().player.player_stat_dict.speed:
-		var player_target = enemies[int(rand_range(0,enemies.size()))]
-		get_parent().player.process_turn(player_target)
-	
-	for mob in enemies:
-		if turn_counter <= mob.stat_dict.speed:
-			mob.process_turn(get_parent().player)
-			if check_player_death():
-				return
-			
+	if turn_order_list[turn_counter] == player: #if its the player's turn choose random enemy
+		chosen_target = enemies[int(rand_range(0,enemies.size()))]
+	else:
+		chosen_target = player #else if its enemy's turn target player
+	turn_order_list[turn_counter].process_turn(chosen_target) #processes the turn of the chosen node
+	check_player_death()
+	check_enemies_death()
+	turn_counter += 1
 	print("turn passed")
-	if(turn_counter < turn_counter_min):
-		turn_counter = turn_counter_max
+	update_enemy_list()
+	if(turn_counter > turn_order_list.size()-1):
+		turn_counter = 0
 	#if all enemies are dead:
 	#	complete room and give loot
 	return
@@ -167,7 +197,7 @@ func battle_room():
 	#generate enemies
 	if is_saved_room == false:
 		randomize()
-		var rand_num_enemies = int(rand_range(1, room_level+2))
+		var rand_num_enemies = int(rand_range(1, room_level+3))
 		for i in rand_num_enemies:
 			randomize()
 			var chosen_enemy_list = get_parent().stage_enemies_dict[int(rand_range(1,get_parent().stage_enemies_dict[room_level].size()))]
@@ -179,9 +209,10 @@ func battle_room():
 			new_enemy.position = spawn_pos #place the baddies at the right area in the room
 			new_enemy.z_index = get_parent().get_child_count()-1 #place baddies on the top layer
 	#set turn order
-	find_turn_counter_maximums(enemies, get_parent().player.player_stat_dict.speed)
+	turn_counter = 0
+	find_turn_counter_maximums(player.player_stat_dict.speed)
+	create_turn_list()
 	#loop turn order until end
-	turn_counter = turn_counter_max #start the turn counter at the top
 	var battle_turn_timer = Timer.new()
 	battle_turn_timer.name = "Battleturn Timer"
 	battle_turn_timer.set_wait_time(1)

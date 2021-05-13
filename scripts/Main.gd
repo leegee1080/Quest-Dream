@@ -96,10 +96,6 @@ func _ready():
 	player.exit_tile_pos = end_tile.position
 	player.name = player.type_class.name
 	player.position = start_tile.position
-#	add_child(test_enemy)
-#	test_enemy.name = test_enemy.type_class.name
-#	test_enemy.position.x = 10
-#	test_enemy.position.y = 200
 
 func generate_ui():
 	for btn in button_loc_dict:
@@ -193,7 +189,7 @@ func open_room(current_tile):
 	var type = center_subtile.subtile_type_enum
 	var theme = center_subtile.subtile_theme_enum
 	var level = center_subtile.subtile_level
-	room_screen = Room.new(type, theme, level, room_screen_loc, false)
+	room_screen = Room.new(type, theme, level, room_screen_loc, false, player)
 	if saved_room != null:
 		room_screen = saved_room
 	room_screen.name = "room"
@@ -259,10 +255,10 @@ func slide_queue():
 func generate_random_tile():
 	var tile
 	randomize()
-	Tile_Enums.multi.shuffle()
-	var chosen_tile_type = Tile_Enums.multi[0]
-	Tile_Enums.multi2.shuffle()
-	var chosen_tile_center = Tile_Enums.multi2[0]
+	Tile_Enums.tile_chances.shuffle()
+	var chosen_tile_type = Tile_Enums.tile_chances[0]
+	Tile_Enums.center_tile_chances.shuffle()
+	var chosen_tile_center = Tile_Enums.center_tile_chances[0]
 	#direction, theme, center, level, diff, deco amount, center level, chosen sprite(-1 for rand)
 	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, stage_level, difficulty, 1, -1)
 	return tile

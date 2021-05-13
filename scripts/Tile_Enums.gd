@@ -28,7 +28,7 @@ enum center_type_enum{
 }
 
 #Chances To Spawn
-const multi = [
+const tile_chances = [
 	tile_directions_enum.cross,
 	tile_directions_enum.elbow,
 	tile_directions_enum.elbow,
@@ -38,15 +38,30 @@ const multi = [
 	tile_directions_enum.straight,
 	tile_directions_enum.straight
 ]
-const multi2 = [
+#const center_tile_chances = [
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.none,
+#	center_type_enum.rest,
+#	center_type_enum.battle,
+#	center_type_enum.treasure,
+#	center_type_enum.shop
+##	center_type_enum.silly
+#]
+const center_tile_chances = [
 	center_type_enum.none,
-	center_type_enum.none,
-	center_type_enum.none,
-	center_type_enum.none,
-	center_type_enum.none,
-	center_type_enum.none,
-	center_type_enum.none,
-	center_type_enum.none,
+	center_type_enum.battle,
+	center_type_enum.battle,
+	center_type_enum.battle,
+	center_type_enum.battle,
+	center_type_enum.battle,
+	center_type_enum.battle,
+	center_type_enum.battle,
 	center_type_enum.rest,
 	center_type_enum.battle,
 	center_type_enum.treasure,
