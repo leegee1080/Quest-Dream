@@ -253,6 +253,7 @@ func turn_around():
 
 func heal_player(new_health):
 	vit_dict.health += new_health
+	print("Player now has "+ str(vit_dict.health) + " health left.")
 
 func process_turn(target):
 	if is_dead == false:

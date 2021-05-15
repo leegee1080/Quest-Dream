@@ -1,7 +1,7 @@
 class_name Assassin
 
-export(String) var name = "Assassin"
-export(int) var sprite_frame = 6
+var name = "Assassin"
+var sprite_frame = 6
 var stat_dict = {
 	"health": 10,
 	"attack": 1,
