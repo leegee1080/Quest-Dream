@@ -197,13 +197,7 @@ func open_room(current_tile):
 	player.position = player_room_screen_loc
 	current_game_state = game_state.room
 #play animation for opening room.
-#show the correct theme for the room. (instance -> room object) pull room art based on subtile type
 #add deco using deco tiles based on room theme
-
-#room should allow player to choose to interact or run/leave
-#running from room would allow the player to return
-#interact would cause the room to be removed (shop interact does not get removed)
-#	current_tile.remove_center() ----------------------------add this line to remove the center when finished with the opened room
 	return
 
 func delete_centertile():

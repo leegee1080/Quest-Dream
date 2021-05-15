@@ -219,11 +219,9 @@ func check_center_tile():
 		return
 	position = current_tile.position #to make sure the grid stays aligned
 	direction = current_tile.rot_value_changer(direction)
-#	print("direction: " + str(direction))
 	if current_tile.center_subtile == null:
 		if current_tile.is_boss_tile == true:
 			print("boss battle")
-#			walk_toggle()
 			return
 #		print("no center tile " + 
 #		"|at:" + current_tile.name + 

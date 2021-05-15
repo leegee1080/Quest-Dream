@@ -11,11 +11,11 @@
       - [ ] armor
       - [ ] trinkets
 - [x] rest room func
-- [ ] battle room func
-   - [ ] enemies
-      - [ ] enemies' turn
-      - [ ] enemies' stats
-   - [ ] player's turn
+- [x] battle room func
+   - [x] enemies
+      - [x] enemies' turn
+      - [x] enemies' stats
+   - [x] player's turn
 
 ### art todo:
 - [ ] deco tiles to rooms
