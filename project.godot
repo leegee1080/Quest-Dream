@@ -165,9 +165,9 @@ _global_script_classes=[ {
 "path": "res://scripts/Player.gd"
 }, {
 "base": "Reference",
-"class": "Player_Type",
+"class": "Player_Enums",
 "language": "GDScript",
-"path": "res://DEP/Player_Type.gd"
+"path": "res://scripts/Player_Enums.gd"
 }, {
 "base": "Reference",
 "class": "Ranger",
@@ -316,7 +316,7 @@ _global_script_class_icons={
 "Monkey": "",
 "Necromancer": "",
 "Player": "",
-"Player_Type": "",
+"Player_Enums": "",
 "Ranger": "",
 "Rat": "",
 "Robber": "",

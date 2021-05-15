@@ -2,30 +2,6 @@ extends Node2D
 
 class_name Player
 
-enum player_types_enum{
-	soldier,
-	valkyrie,
-	ranger,
-	executioner,
-	berserker,
-	knight,
-	assassin,
-	wizard,
-	traveler,
-	necromancer
-}
-const player_types_dict = {
-	player_types_enum.soldier: Soldier,
-	player_types_enum.valkyrie: Valkyrie,
-	player_types_enum.ranger: Ranger,
-	player_types_enum.executioner: Executioner,
-	player_types_enum.berserker: Berserker,
-	player_types_enum.knight: Knight,
-	player_types_enum.assassin: Assassin,
-	player_types_enum.wizard: Wizard,
-	player_types_enum.traveler: Traveler,
-	player_types_enum.necromancer: Necromancer
-}
 enum walk_dir{
 	up,
 	down,
@@ -96,12 +72,12 @@ func _ready():
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
 	if new_type == null:
-		type_enum = player_types_enum.soldier
+		type_enum = Player_Enums.player_types_enum.soldier
 		return
 	type_enum = new_type
 	level = set_level
 	difficulty = set_difficulty
-	type_class = player_types_dict.get(type_enum).new()
+	type_class = Player_Enums.player_types_dict.get(type_enum).new()
 	class_stat_dict = type_class.stat_dict
 	player_stat_dict.attack = type_class.stat_dict.get("attack") + player_stat_dict.attack
 	player_stat_dict.speed = type_class.stat_dict.speed + player_stat_dict.speed
