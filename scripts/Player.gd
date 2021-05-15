@@ -49,8 +49,7 @@ var player_level #unused right now
 
 var type_enum
 var type_class
-var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "equipment": {}}
-var vit_dict = {"health": 100, "food": 100}
+var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100, "equipment": {}}
 var class_stat_dict
 var is_dead = false
 var level
@@ -93,8 +92,6 @@ func _ready():
 	add_child(walk_animation)
 	add_child(hit_animation)
 	generate_player()
-#	stat_dict["food"] = 10
-#	print(stat_dict.food)
 	return
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
@@ -108,7 +105,7 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	class_stat_dict = type_class.stat_dict
 	player_stat_dict.attack = type_class.stat_dict.get("attack") + player_stat_dict.attack
 	player_stat_dict.speed = type_class.stat_dict.speed + player_stat_dict.speed
-	vit_dict.health = type_class.stat_dict.health + vit_dict.health
+	player_stat_dict.health = type_class.stat_dict.health + player_stat_dict.health
 	player_stat_dict.magic = type_class.stat_dict.magic + player_stat_dict.magic
 	merge_dir(player_stat_dict.equipment, type_class.stat_dict.equipment)
 	merge_dir(player_stat_dict.equipment, set_equipment)
@@ -118,18 +115,6 @@ func merge_dir(target, patch):
 	for key in patch:
 		var temp_val = target[key]
 		target[key] = temp_val + patch[key]
-	return
-
-func change_food(amt):
-	vit_dict.food += amt
-	return
-
-func check_food_level():
-	if vit_dict.food <= 0:
-		print("ded by food loss")
-		walk_toggle()
-		is_dead = true
-		print("Round End")
 	return
 
 func change_dir(new_dir):
@@ -158,8 +143,6 @@ func walk_toggle():
 func walk():
 	translate(direction*speed)
 	walk_interval_count -= speed
-	change_food(walk_timer_wait_time * -1)
-	check_food_level()
 	if center_interval_count == 1:
 		check_map_edge()
 		check_tile()
@@ -247,11 +230,12 @@ func generate_player():
 func turn_around():
 	direction = (direction *-1) #turn the player around
 	center_interval_count = 2
+	take_hit(10)
 	return
 
 func heal_player(new_health):
-	vit_dict.health += new_health
-	print("Player now has "+ str(vit_dict.health) + " health left.")
+	player_stat_dict.health += new_health
+	print("Player now has "+ str(player_stat_dict.health) + " health left.")
 
 func process_turn(target):
 	if is_dead == false:
@@ -261,8 +245,8 @@ func process_turn(target):
 func take_hit(damage):
 	type_class.take_hit()
 	hit_animation.start_hit()
-	vit_dict.health -= damage
-	if vit_dict.health <= 0:
+	player_stat_dict.health -= damage
+	if player_stat_dict.health <= 0:
 		print("player dead")
 		is_dead = true
-	print("Player health: "+ str(vit_dict.health))
+	print("Player health: "+ str(player_stat_dict.health))
