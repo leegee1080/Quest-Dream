@@ -135,6 +135,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Enemy_Collection/Human_Wizard.gd"
 }, {
 "base": "Node2D",
+"class": "Item",
+"language": "GDScript",
+"path": "res://scripts/Item.gd"
+}, {
+"base": "Node2D",
 "class": "Item_Enums",
 "language": "GDScript",
 "path": "res://scripts/Item_Enums.gd"
@@ -239,6 +244,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Subtile_Types/Subtile_Deco.gd"
 }, {
+"base": "Reference",
+"class": "Sword",
+"language": "GDScript",
+"path": "res://scripts/Item_Collection/Sword.gd"
+}, {
 "base": "Node2D",
 "class": "Tile",
 "language": "GDScript",
@@ -310,6 +320,7 @@ _global_script_class_icons={
 "Human_Queen": "",
 "Human_Sorcerer": "",
 "Human_Wizard": "",
+"Item": "",
 "Item_Enums": "",
 "Knight": "",
 "Lich": "",
@@ -331,6 +342,7 @@ _global_script_class_icons={
 "Spider_Tiny": "",
 "Subtile_Center": "",
 "Subtile_Deco": "",
+"Sword": "",
 "Tile": "",
 "Tile_Enums": "",
 "Traveler": "",
