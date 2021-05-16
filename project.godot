@@ -134,6 +134,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Human_Wizard.gd"
 }, {
+"base": "Node2D",
+"class": "Item_Enums",
+"language": "GDScript",
+"path": "res://scripts/Item_Enums.gd"
+}, {
 "base": "Reference",
 "class": "Knight",
 "language": "GDScript",
@@ -305,6 +310,7 @@ _global_script_class_icons={
 "Human_Queen": "",
 "Human_Sorcerer": "",
 "Human_Wizard": "",
+"Item_Enums": "",
 "Knight": "",
 "Lich": "",
 "Main_Game": "",
