@@ -112,7 +112,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Fireball_Spell",
 "language": "GDScript",
-"path": "res://scripts/Item_Collection/Heal_Spell.gd"
+"path": "res://scripts/Item_Collection/Fireball_Spell.gd"
 }, {
 "base": "Reference",
 "class": "Food",
@@ -138,6 +138,11 @@ _global_script_classes=[ {
 "class": "Golem_God",
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Golem_God.gd"
+}, {
+"base": "Reference",
+"class": "Heal_Spell",
+"language": "GDScript",
+"path": "res://scripts/Item_Collection/Heal_Spell.gd"
 }, {
 "base": "Reference",
 "class": "Helmet",
@@ -386,6 +391,7 @@ _global_script_class_icons={
 "Goblin_Boss": "",
 "Goblin_Wizard": "",
 "Golem_God": "",
+"Heal_Spell": "",
 "Helmet": "",
 "Hit_Color_Animation": "",
 "Human_Jack": "",

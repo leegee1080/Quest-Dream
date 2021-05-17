@@ -1,6 +1,6 @@
-class_name Fireball_Spell
+class_name Heal_Spell
 
-var name = "Fireball_Spell"
+var name = "Heal_Spell"
 var sprite_frames = [72,72,72,72,76,76,76] #must be 7 items to match with the rarity
 
 var stat_dict = {
