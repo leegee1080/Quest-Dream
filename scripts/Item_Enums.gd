@@ -28,7 +28,7 @@ enum item_subtypes{
 	spell_stun
 }
 
-const enemy_types_dict = {
+const item_types_dict = {
 	item_subtypes.sword: Sword,
 	item_subtypes.axe: Axe,
 	item_subtypes.bow: Bow,
