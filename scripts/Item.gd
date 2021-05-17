@@ -6,6 +6,7 @@ var item_type #this is the enum of the item (ex. weapon, armor...)
 var item_rarity #this is the int of the stat boost, applied from the rarity enum (ex. 0, 1, ....)
 var item_subtype #this is the enum of the subtype (ex. sword, chest, helmet, food....)
 var item_subclass #this is the class of the instanced item based on the above enums
+var item_spritesheet = "res://assets/visuals/item_frames.tres"
 
 func _init(new_type, new_rarity, new_subtype):
 	item_type = new_subtype

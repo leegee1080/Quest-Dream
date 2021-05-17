@@ -29,21 +29,21 @@ enum item_subtypes{
 }
 
 const enemy_types_dict = {
-	item_subtypes.sword: Avatar,
-	item_subtypes.axe: Goblin,
-	item_subtypes.bow: Goblin_Wizard,
-	item_subtypes.shield: Monkey,
-	item_subtypes.chest: Robber,
-	item_subtypes.helmet: Human_Wizard,
-	item_subtypes.ring: Human_Sorcerer,
-	item_subtypes.amulet: Human_Jack,
-	item_subtypes.potion: Human_Queen,
-	item_subtypes.food: Human_King,
-	item_subtypes.money: Rat,
-	item_subtypes.spell_damage_single: Bat,
-	item_subtypes.spell_damage_many: Dog,
-	item_subtypes.spell_healing: Snake,
-	item_subtypes.spell_stun: Spider_Tiny
+	item_subtypes.sword: Sword,
+	item_subtypes.axe: Axe,
+	item_subtypes.bow: Bow,
+	item_subtypes.shield: Shield,
+	item_subtypes.chest: Chest,
+	item_subtypes.helmet: Helmet,
+	item_subtypes.ring: Ring,
+	item_subtypes.amulet: Amulet,
+	item_subtypes.potion: Potion,
+	item_subtypes.food: Food,
+	item_subtypes.money: Money,
+	item_subtypes.spell_damage_single: Bolt_Spell,
+	item_subtypes.spell_damage_many: Fireball_Spell,
+	item_subtypes.spell_healing: Heal_Spell,
+	item_subtypes.spell_stun: Stun_Spell
 }
 
 const item_subtype_cat = {
