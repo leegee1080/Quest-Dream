@@ -118,23 +118,31 @@ func iu_func(new_name): #checks which button is pressed
 func ui_back():
 	if current_game_state == game_state.room:
 		if room_screen.is_room_complete == true:
-			current_game_state = game_state.run
 			room_screen.leave_room()
-		pass
+			current_game_state = game_state.run
+			player.position = player_last_loc
+			player.walk_toggle()
+			can_player_place_tiles = true
 	return
 
 func ui_pause():
+	print("current game state " + str(current_game_state))
+	var timers = get_tree().get_nodes_in_group("timers")
 	if current_game_state == game_state.pause:
 		current_game_state = previous_game_state
+		for timer in timers:
+			timer.paused = false
 		print("unpause game")
 		return
 	previous_game_state = current_game_state
+	for timer in timers:
+		timer.paused = true
 	current_game_state = game_state.pause
 	print("pause game")
 
 func ui_menu():
-	current_game_state = game_state.pause
-	print("pop up menu")
+	ui_pause()
+#	print("pop up menu")
 	return
 
 func generate_enemies_dict():
@@ -146,8 +154,8 @@ func generate_enemies_dict():
 	return
 
 func start_round(): #just for the first time start, can add more here if needed
-	player.walk_toggle()
 	current_game_state = game_state.run
+	player.walk_toggle()
 	return
 
 func _input(event): #when the user clicks
@@ -202,26 +210,15 @@ func open_room(current_tile):
 func delete_centertile():
 	var current_tile = player.current_tile
 	current_tile.center_subtile.queue_free()
-	for enemy in room_screen.enemies:
+	for enemy in room_screen.original_enemies:
 		enemy.queue_free()
 	#play close room animation
-	#unfreeze player 
-	can_player_place_tiles = true
-	player.position = player_last_loc
-	player.walk_toggle()
-	current_game_state = game_state.run
 	return
 
 func save_centertile():
 	var current_tile = player.current_tile
 	current_tile.saved_center_room = room_screen
-	room_screen.is_saved_room = true
 	#play close room animation
-	#unfreeze player
-	can_player_place_tiles = true
-	player.position = player_last_loc
-	player.walk_toggle()
-	current_game_state = game_state.run
 	return
 
 func slide_queue():

@@ -19,6 +19,7 @@ var hit_animation
 var death_animation
 
 func _ready():
+	
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/enemy_frames.tres"))
 	add_child(ani_sprite)
@@ -27,6 +28,7 @@ func _ready():
 	death_animation = Death_Animation.new(ani_sprite)
 	add_child(death_animation)
 	generate_enemy()
+	name = type_class.name
 
 func _init(new_type, power_boost:int): #power boost is derived from the level of the room that the enemy was spawned in
 	if new_type == null:

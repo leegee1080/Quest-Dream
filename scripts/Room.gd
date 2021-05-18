@@ -32,6 +32,7 @@ var timer_group = Node2D.new() #a place to hold timers
 
 #battle vars
 var enemies = []
+var original_enemies = []#this is the list of enemies that wree created at the start of the room
 var turn_order = []
 var xp_earned = 0
 var loot_pile = []
@@ -212,6 +213,7 @@ func battle_room():
 	turn_counter = 0
 	find_turn_counter_maximums(player.player_stat_dict.speed)
 	create_turn_list()
+	original_enemies = enemies #update the static list of enemies to be deleted later
 	#loop turn order until end
 	var battle_turn_timer = Timer.new()
 	battle_turn_timer.name = "Battleturn Timer"
@@ -219,6 +221,7 @@ func battle_room():
 	battle_turn_timer.set_one_shot(false)
 	battle_turn_timer.connect("timeout", self, "pass_battle_turn")
 	timer_group.add_child(battle_turn_timer)
+	battle_turn_timer.add_to_group("timers")
 	battle_turn_timer.start()
 	return
 
@@ -229,6 +232,7 @@ func shop_room():
 	leave_timer.set_wait_time(leave_time)
 	leave_timer.set_one_shot(true)
 	leave_timer.connect("timeout", self, "complete_room")
+	leave_timer.add_to_group("timers")
 	leave_timer.start()
 	print("shop")
 	return
@@ -240,6 +244,7 @@ func treasure_room():
 	leave_timer.set_wait_time(leave_time)
 	leave_timer.set_one_shot(true)
 	leave_timer.connect("timeout", self, "complete_room")
+	leave_timer.add_to_group("timers")
 	leave_timer.start()
 	print("treasure")
 	return
@@ -251,6 +256,7 @@ func silly_room():
 	leave_timer.set_wait_time(leave_time)
 	leave_timer.set_one_shot(true)
 	leave_timer.connect("timeout", self, "complete_room")
+	leave_timer.add_to_group("timers")
 	leave_timer.start()
 	print("silly complete")
 	return

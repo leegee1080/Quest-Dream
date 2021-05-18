@@ -55,6 +55,7 @@ var hit_animation
 func _ready():
 	walk_timer = Timer.new()
 	add_child(walk_timer)
+	walk_timer.add_to_group("timers")
 	walk_timer.set_wait_time(walk_timer_wait_time)
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
@@ -163,7 +164,6 @@ func check_tile():
 						if current_tile_dict.get(loc[2]).rot_value_changer(direction) == null:
 							turn_around()
 							return
-#						current_tile_dict.get(loc[2]).is_locked = true
 						if current_tile_dict.get(loc[2]).is_locked != true:
 							current_tile_dict.get(loc[2]).lock_tile()
 						current_tile = current_tile_dict.get(loc[2])

@@ -23,6 +23,7 @@ func _init(new_ani_sprite, new_walk_speed):
 func _ready():
 	walk_animation_timer = Timer.new()
 	add_child(walk_animation_timer)
+	walk_animation_timer.add_to_group("timers")
 	walk_animation_timer.set_wait_time(walk_animation_speed)
 	walk_animation_timer.set_one_shot(false) # Make sure it loops
 	walk_animation_timer.connect("timeout", self, "walk_cycle")

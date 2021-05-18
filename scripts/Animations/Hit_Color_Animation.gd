@@ -24,12 +24,14 @@ func _init(new_ani_sprite, new_hit_speed, new_hit_time):
 func _ready():
 	hit_animation_total_timer = Timer.new()
 	add_child(hit_animation_total_timer)
+	hit_animation_total_timer.add_to_group("timers")
 	hit_animation_total_timer.set_wait_time(hit_animation_time)
 	hit_animation_total_timer.set_one_shot(true)
 	hit_animation_total_timer.connect("timeout", self, "stop_hit")
 	
 	hit_animation_timer = Timer.new()
 	add_child(hit_animation_timer)
+	hit_animation_timer.add_to_group("timers")
 	hit_animation_timer.set_wait_time(hit_animation_speed)
 	hit_animation_timer.set_one_shot(false) # Make sure it loops
 	hit_animation_timer.connect("timeout", self, "hit_cycle")

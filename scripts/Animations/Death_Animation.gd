@@ -7,6 +7,7 @@ const hit_ani_color_list = [
 	Color(1,0,0,1)
 ]
 
+#hit_animation_timer.add_to_group("timers") add this line for pause
 
 var ani_sprite
 
