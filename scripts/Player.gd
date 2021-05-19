@@ -38,7 +38,7 @@ var exit_tile_pos
 var can_walk = false
 var direction = Vector2(0,0)
 ######################################################################suggestion!!!!!!!!!!!!!!!!!!!! make the movement speed tied to the combat speed
-var speed = .3
+var map_move_speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
 const walk_timer_wait_time = 0.04
@@ -80,16 +80,15 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	difficulty = set_difficulty
 	type_class = Player_Enums.player_types_dict.get(type_enum).new()
 	class_stat_dict = type_class.stat_dict
-	player_stat_dict.attack = type_class.stat_dict.get("attack") + player_stat_dict.attack
-	player_stat_dict.speed = type_class.stat_dict.speed + player_stat_dict.speed
-	player_stat_dict.health = type_class.stat_dict.health + player_stat_dict.health
-	player_stat_dict.magic = type_class.stat_dict.magic + player_stat_dict.magic
+	merge_dir(player_stat_dict, type_class.stat_dict)
 	merge_dir(player_stat_dict.equipment, type_class.stat_dict.equipment)
 	merge_dir(player_stat_dict.equipment, set_equipment)
 	return
 
 func merge_dir(target, patch):
 	for key in patch:
+		if patch[key] is Dictionary:
+			continue
 		var temp_val = target[key]
 		target[key] = temp_val + patch[key]
 	return
@@ -118,8 +117,8 @@ func walk_toggle():
 		return
 
 func walk():
-	translate(direction*speed)
-	walk_interval_count -= speed
+	translate(direction*map_move_speed)
+	walk_interval_count -= map_move_speed
 	if center_interval_count == 1:
 		check_map_edge()
 		check_tile()

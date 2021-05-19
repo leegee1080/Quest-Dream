@@ -24,10 +24,16 @@ enum game_state{
 }
 
 #ui vars
-const button_loc_dict = {
+const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"back": [Vector2(111,307), 2, 3],
 	"menu": [Vector2(191,307), 4, 5]
+}
+const menu_button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"back": [Vector2(111,307), 2, 3],
+	"quit": [Vector2(191,307), 4, 5],
+	"fastforward": [Vector2(191,307), 4, 5]
 }
 
 ##play area vars
@@ -73,7 +79,7 @@ const queue_loc_dict = {
 
 func _ready():
 	#create UI
-	generate_ui()
+	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137))
 	
 	#setup dict for enemies
 	generate_enemies_dict()
@@ -83,28 +89,31 @@ func _ready():
 	var start_timer = Timer.new()
 	start_timer.name = "Start Timer"
 	add_child(start_timer)
+	start_timer.add_to_group("timers")
 	start_timer.set_wait_time(round_start_time)
 	start_timer.set_one_shot(true)
 	start_timer.connect("timeout", self, "start_round")
 	start_timer.start()
+	#setup the clickable play area and starting tiles
 	setup_coord_array()
 	setup_tile_dict()
 	place_starting_tiles()
+	#setup the player's character
 	add_child(player)
 	player.playarea = max_starting_playarea
 	player.exit_tile_pos = end_tile.position
 	player.name = player.type_class.name
 	player.position = start_tile.position
 
-func generate_ui():
+func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size):
 	for btn in button_loc_dict:
-		var temp_btn = Btn.new(button_loc_dict[btn][0], "res://assets/visuals/button_frames.tres", button_loc_dict[btn][1], button_loc_dict[btn][2], Vector2(66,137))
+		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
 		temp_btn.name = btn
 		add_child(temp_btn)
-		temp_btn.connect("ui_sig", self, "iu_func")
-	return
+		temp_btn.connect("ui_sig", self, "ui_func")
+	pass
 
-func iu_func(new_name): #checks which button is pressed
+func ui_func(new_name): #checks which button is pressed
 	if new_name == "back":
 		ui_back()
 		return
@@ -114,6 +123,21 @@ func iu_func(new_name): #checks which button is pressed
 	if new_name == "menu":
 		ui_menu()
 		return
+	if new_name == "quit":
+		ui_quit()
+		return
+	if new_name == "fastforward":
+		ui_fastforward()
+		return
+
+func ui_quit():
+	get_tree().quit()
+	pass
+
+func ui_fastforward():
+	var new_speed = 0.004
+	player.walk_timer.set_wait_time(new_speed)
+	pass
 
 func ui_back():
 	if current_game_state == game_state.room:
@@ -132,17 +156,18 @@ func ui_pause():
 		current_game_state = previous_game_state
 		for timer in timers:
 			timer.paused = false
+		can_player_place_tiles = true
 		print("unpause game")
 		return
 	previous_game_state = current_game_state
 	for timer in timers:
 		timer.paused = true
 	current_game_state = game_state.pause
+	can_player_place_tiles = false
 	print("pause game")
 
 func ui_menu():
 	ui_pause()
-#	print("pop up menu")
 	return
 
 func generate_enemies_dict():
