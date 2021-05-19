@@ -35,6 +35,8 @@ const menu_button_loc_dict = {
 	"quit": [Vector2(191,307), 4, 5],
 	"fastforward": [Vector2(191,307), 4, 5]
 }
+var pause_menu_sprite = load("res://assets/visuals/16x16_Jerom_CC-BY-SA-3.0.png")
+var pause_menu
 
 ##play area vars
 var can_player_place_tiles
@@ -167,6 +169,9 @@ func ui_pause():
 	print("pause game")
 
 func ui_menu():
+	pause_menu = Sprite.new()
+	pause_menu.texture = pause_menu_sprite
+	add_child(pause_menu)
 	ui_pause()
 	return
 
