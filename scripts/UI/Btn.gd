@@ -4,7 +4,7 @@ class_name Btn
 
 signal ui_sig(name)
 
-var clicked = false
+#var clicked = false
 var clickable = true
 var clickable_area_max
 
@@ -31,17 +31,16 @@ func _ready():
 	return
 
 func _input(event):
-	if event is InputEventMouseButton:
-		if event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:
-			if clicked == true:
-				clicked = false
+	if clickable:
+		if event is InputEventMouseButton:
+			if UiVars.clicked == true and event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:
 				ani_sprite.set_frame(neutral_frame)
+				click_btn()
 				return
-			clicked = true
-			click_btn()
-			return
+			if event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:
+				ani_sprite.set_frame(down_frame)
+				return
 
 func click_btn():
 	emit_signal("ui_sig", name)
-	ani_sprite.set_frame(down_frame)
 	return

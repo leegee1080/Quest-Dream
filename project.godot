@@ -444,6 +444,10 @@ config/name="Quest Dream"
 run/main_scene="res://nodes/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+UiVars="*res://scripts/UI/UI_Vars.gd"
+
 [display]
 
 window/size/width=304

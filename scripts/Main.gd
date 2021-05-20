@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Main_Game
 
-var clicked #this var is used for all clicking
+#var clicked #this var is used for all clicking
 
 var difficulty = 1
 var stage_level = 1
@@ -26,17 +26,21 @@ enum game_state{
 #ui vars
 const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"back": [Vector2(111,307), 2, 3],
 	"menu": [Vector2(191,307), 4, 5]
 }
 const menu_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"back": [Vector2(111,307), 2, 3],
-	"quit": [Vector2(191,307), 4, 5],
-	"fastforward": [Vector2(191,307), 4, 5]
+	"back": [Vector2(40,300), 0, 1],
+	"quit": [Vector2(110,300), 6, 7],
+	"fastforward": [Vector2(180,300), 2, 3]
 }
-var pause_menu_sprite = load("res://assets/visuals/16x16_Jerom_CC-BY-SA-3.0.png")
+const room_button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"back": [Vector2(111,307), 2, 3]
+}
+var pause_menu_sprite = load("res://assets/visuals/menu_bg.png")
 var pause_menu
+const pause_menu_loc = Vector2(150,270)
 
 ##play area vars
 var can_player_place_tiles
@@ -81,11 +85,7 @@ const queue_loc_dict = {
 
 func _ready():
 	#create UI
-	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137))
-	pause_menu = Sprite.new()
-	pause_menu.texture = pause_menu_sprite
-	pause_menu.visible = false
-	add_child(pause_menu)
+	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main")
 	
 	#setup dict for enemies
 	generate_enemies_dict()
@@ -111,12 +111,15 @@ func _ready():
 	player.name = player.type_class.name
 	player.position = start_tile.position
 
-func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size):
+func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name):
+	var temp_button_list = []
 	for btn in button_loc_dict:
 		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
 		temp_btn.name = btn
-		add_child(temp_btn)
 		temp_btn.connect("ui_sig", self, "ui_func")
+		temp_button_list.append(temp_btn)
+		add_child(temp_btn)
+	UiVars.buttons_dict[button_container_name] = temp_button_list
 	pass
 
 func ui_func(new_name): #checks which button is pressed
@@ -143,9 +146,17 @@ func ui_quit():
 func ui_fastforward():
 	var new_speed = 0.004
 	player.walk_timer.set_wait_time(new_speed)
+	print("fast forwarded")
 	pass
 
 func ui_back():
+	if current_game_state == game_state.pause:
+		pause_menu.queue_free()
+		for btn_list in UiVars.buttons_dict["pause_menu"]:
+			if btn_list != null:
+				btn_list.queue_free()
+		ui_pause()
+		return
 	if current_game_state == game_state.room:
 		if room_screen.is_room_complete == true:
 			room_screen.leave_room()
@@ -153,17 +164,15 @@ func ui_back():
 			player.position = player_last_loc
 			player.walk_toggle()
 			can_player_place_tiles = true
-	return
+		return
 
 func ui_pause():
-	print("current game state " + str(current_game_state))
 	var timers = get_tree().get_nodes_in_group("timers")
 	if current_game_state == game_state.pause:
 		current_game_state = previous_game_state
 		for timer in timers:
 			timer.paused = false
 		can_player_place_tiles = true
-		pause_menu.visible = true
 		print("unpause game")
 		return
 	previous_game_state = current_game_state
@@ -171,10 +180,16 @@ func ui_pause():
 		timer.paused = true
 	current_game_state = game_state.pause
 	can_player_place_tiles = false
-	pause_menu.visible = false
 	print("pause game")
 
 func ui_menu():
+	if current_game_state == game_state.pause:
+		return
+	pause_menu = Sprite.new()
+	pause_menu.position = pause_menu_loc
+	pause_menu.texture = pause_menu_sprite
+	add_child(pause_menu)
+	generate_ui(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu")
 	ui_pause()
 	return
 
@@ -193,10 +208,8 @@ func start_round(): #just for the first time start, can add more here if needed
 
 func _input(event): #when the user clicks
 	if event is InputEventMouseButton:
-		if clicked == true:
-			clicked = false
+		if UiVars.clicked == true:
 			return
-		clicked = true
 		if can_player_place_tiles:
 			for loc in clickable_coords_list:
 				var x_test = loc[0]
