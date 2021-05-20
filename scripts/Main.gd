@@ -82,6 +82,10 @@ const queue_loc_dict = {
 func _ready():
 	#create UI
 	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137))
+	pause_menu = Sprite.new()
+	pause_menu.texture = pause_menu_sprite
+	pause_menu.visible = false
+	add_child(pause_menu)
 	
 	#setup dict for enemies
 	generate_enemies_dict()
@@ -159,6 +163,7 @@ func ui_pause():
 		for timer in timers:
 			timer.paused = false
 		can_player_place_tiles = true
+		pause_menu.visible = true
 		print("unpause game")
 		return
 	previous_game_state = current_game_state
@@ -166,12 +171,10 @@ func ui_pause():
 		timer.paused = true
 	current_game_state = game_state.pause
 	can_player_place_tiles = false
+	pause_menu.visible = false
 	print("pause game")
 
 func ui_menu():
-	pause_menu = Sprite.new()
-	pause_menu.texture = pause_menu_sprite
-	add_child(pause_menu)
 	ui_pause()
 	return
 
