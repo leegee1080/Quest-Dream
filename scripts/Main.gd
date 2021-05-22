@@ -108,7 +108,7 @@ func _ready():
 	add_child(player)
 	player.playarea = max_starting_playarea
 	player.exit_tile_pos = end_tile.position
-	player.name = player.type_class.name
+	player.name = "Player"
 	player.position = start_tile.position
 
 func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name):
@@ -204,6 +204,18 @@ func generate_enemies_dict():
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run
 	player.walk_toggle()
+	return
+
+func lose_round():
+	player.walk_toggle()
+	print("Round Lost")
+	current_game_state = game_state.lose
+	return
+
+func win_round():
+	player.walk_toggle()
+	print("Round Win")
+	current_game_state = game_state.win
 	return
 
 func _input(event): #when the user clicks

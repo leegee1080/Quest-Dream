@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Item_Collection/Amulet.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Assassin",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Assassin.gd"
@@ -39,7 +39,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Bat.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Berserker",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Berserker.gd"
@@ -99,7 +99,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Enums.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Executioner",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Executioner.gd"
@@ -189,7 +189,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Item_Enums.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Knight",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Knight.gd"
@@ -214,7 +214,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Monkey.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Necromancer",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Necromancer.gd"
@@ -234,7 +234,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Item_Collection/Potion.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Ranger",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Ranger.gd"
@@ -284,7 +284,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Snake.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Soldier",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Soldier.gd"
@@ -329,7 +329,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Tile_Enums.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Traveler",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Traveler.gd"
@@ -339,7 +339,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Undead.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Valkyrie",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Valkyrie.gd"
@@ -359,7 +359,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Animations/Walking_Animation.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Wizard",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Wizard.gd"

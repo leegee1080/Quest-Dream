@@ -48,8 +48,6 @@ var center_interval_count = 2
 var current_tile
 
 var ani_sprite
-var walk_animation
-var hit_animation
 
 
 func _ready():
@@ -60,16 +58,7 @@ func _ready():
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
-	
-	ani_sprite = AnimatedSprite.new()
-	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
-	add_child(ani_sprite)
-	walk_animation = Walking_Animation.new(ani_sprite, 0.1)
-	hit_animation = Hit_Color_Animation.new(ani_sprite, 0.1, 0.5)
-	add_child(walk_animation)
-	add_child(hit_animation)
-	generate_player()
-	return
+	add_child(type_class)
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
 	if new_type == null:
@@ -78,12 +67,15 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_enum = new_type
 	level = set_level
 	difficulty = set_difficulty
-	type_class = Player_Enums.player_types_dict.get(type_enum).new()
+	ani_sprite = AnimatedSprite.new()
+	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
+	add_child(ani_sprite)
+	type_class = Player_Enums.player_types_dict.get(type_enum).new(ani_sprite)
 	class_stat_dict = type_class.stat_dict
+	ani_sprite.set_frame(type_class.sprite_frame)
 	merge_dir(player_stat_dict, type_class.stat_dict)
 	merge_dir(player_stat_dict.equipment, type_class.stat_dict.equipment)
 	merge_dir(player_stat_dict.equipment, set_equipment)
-	return
 
 func merge_dir(target, patch):
 	for key in patch:
@@ -106,14 +98,14 @@ func walk_toggle():
 	if can_walk:
 		can_walk = false
 		walk_timer.stop()
-		walk_animation.stop_walk()
+		type_class.walk_animation.stop_walk()
 		ani_sprite.position = Vector2.ZERO
 		ani_sprite.rotation = 0
 		return
 	elif !can_walk:
 		can_walk = true
 		walk_timer.start()
-		walk_animation.start_walk()
+		type_class.walk_animation.start_walk()
 		return
 
 func walk():
@@ -138,8 +130,7 @@ func check_map_edge():
 #	print(y_test)
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
 		if check_dist_exit():
-			walk_toggle()
-			print("Round End")
+			get_parent().win_round()
 			return
 		turn_around()
 	return
@@ -198,10 +189,6 @@ func check_center_tile():
 	get_parent().open_room(current_tile)
 	return
 
-func generate_player():
-	print(type_class.name)
-	ani_sprite.set_frame(type_class.sprite_frame)
-
 func turn_around():
 	direction = (direction *-1) #turn the player around
 	center_interval_count = 2
@@ -215,13 +202,14 @@ func heal_player(new_health):
 func process_turn(target):
 	if is_dead == false:
 		target.take_hit(player_stat_dict.attack)
-#		type_class.special() #needed to play special animations
+#		type_class.melee() #needed to play special animations (melee, ranged, or magic)
 
 func take_hit(damage):
 	type_class.take_hit()
-	hit_animation.start_hit()
 	player_stat_dict.health -= damage
 	if player_stat_dict.health <= 0:
 		print("player dead")
+		get_parent().lose_round()
+		type_class.die()
 		is_dead = true
 	print("Player health: "+ str(player_stat_dict.health))

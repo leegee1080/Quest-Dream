@@ -23,7 +23,7 @@ func _ready():
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/enemy_frames.tres"))
 	add_child(ani_sprite)
-	hit_animation = Hit_Color_Animation.new(ani_sprite, 0.1, 0.5)
+	hit_animation = Hit_Color_Animation.new(ani_sprite)
 	add_child(hit_animation)
 	death_animation = Death_Animation.new(ani_sprite)
 	add_child(death_animation)

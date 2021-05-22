@@ -13,13 +13,11 @@ var hit_animation_step = 0
 var hit_animation_timer
 var hit_animation_total_timer
 
-var hit_animation_speed
-var hit_animation_time
+var hit_animation_speed = .1
+var hit_animation_time = .5
 
-func _init(new_ani_sprite, new_hit_speed, new_hit_time):
+func _init(new_ani_sprite):
 	ani_sprite = new_ani_sprite
-	hit_animation_speed = new_hit_speed
-	hit_animation_time = new_hit_time
 
 func _ready():
 	hit_animation_total_timer = Timer.new()
@@ -47,5 +45,6 @@ func start_hit():
 	hit_animation_timer.start()
 
 func stop_hit():
+	hit_animation_total_timer.stop()
 	hit_animation_timer.stop()
 	ani_sprite.modulate = hit_ani_color_list[0]
