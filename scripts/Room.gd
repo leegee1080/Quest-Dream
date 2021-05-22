@@ -88,6 +88,7 @@ func generate_room():
 	return
 
 func complete_room():
+	get_parent().generate_ui(get_parent().room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", get_parent().room_button_z_index)
 	is_room_complete = true
 	for obj in timer_group.get_children():
 		obj.stop()

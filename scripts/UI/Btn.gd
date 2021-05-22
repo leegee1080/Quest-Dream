@@ -42,5 +42,5 @@ func _input(event):
 				return
 
 func click_btn():
-	emit_signal("ui_sig", name)
+	emit_signal("ui_sig", name, self)
 	return

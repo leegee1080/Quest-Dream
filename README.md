@@ -5,6 +5,7 @@
 
 
 ### prog todo:
+- [ ] boss room func
 - [ ] shop room func
     - [ ] items 
       - [ ] weapons

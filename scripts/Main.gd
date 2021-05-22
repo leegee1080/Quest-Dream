@@ -24,19 +24,22 @@ enum game_state{
 }
 
 #ui vars
+const main_button_z_index = 1
 const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"menu": [Vector2(191,307), 4, 5]
 }
+const menu_button_z_index = 15
 const menu_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"back": [Vector2(40,300), 0, 1],
 	"quit": [Vector2(110,300), 6, 7],
 	"fastforward": [Vector2(180,300), 2, 3]
 }
+const room_button_z_index = 5
 const room_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"back": [Vector2(111,307), 2, 3]
+	"back": [Vector2(111,207), 0, 1]
 }
 var pause_menu_sprite = load("res://assets/visuals/menu_bg.png")
 var pause_menu
@@ -45,7 +48,7 @@ const pause_menu_loc = Vector2(150,270)
 ##play area vars
 var can_player_place_tiles
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
-export(Array) var clickable_coords_list = []
+var clickable_coords_list = []
 var potential_terminal_locations = []
 var start_tile
 var end_tile
@@ -85,7 +88,7 @@ const queue_loc_dict = {
 
 func _ready():
 	#create UI
-	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main")
+	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index)
 	
 	#setup dict for enemies
 	generate_enemies_dict()
@@ -111,20 +114,21 @@ func _ready():
 	player.name = "Player"
 	player.position = start_tile.position
 
-func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name):
+func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
 	var temp_button_list = []
 	for btn in button_loc_dict:
 		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
 		temp_btn.name = btn
 		temp_btn.connect("ui_sig", self, "ui_func")
 		temp_button_list.append(temp_btn)
+		temp_btn.z_index = new_z_index
 		add_child(temp_btn)
 	UiVars.buttons_dict[button_container_name] = temp_button_list
 	pass
 
-func ui_func(new_name): #checks which button is pressed
+func ui_func(new_name, btn_node_ref): #checks which button is pressed
 	if new_name == "back":
-		ui_back()
+		ui_back(btn_node_ref)
 		return
 	if new_name == "pause":
 		ui_pause()
@@ -149,7 +153,7 @@ func ui_fastforward():
 	print("fast forwarded")
 	pass
 
-func ui_back():
+func ui_back(btn_node_ref):
 	if current_game_state == game_state.pause:
 		pause_menu.queue_free()
 		for btn_list in UiVars.buttons_dict["pause_menu"]:
@@ -160,6 +164,7 @@ func ui_back():
 	if current_game_state == game_state.room:
 		if room_screen.is_room_complete == true:
 			room_screen.leave_room()
+			btn_node_ref.queue_free()
 			current_game_state = game_state.run
 			player.position = player_last_loc
 			player.walk_toggle()
@@ -188,8 +193,9 @@ func ui_menu():
 	pause_menu = Sprite.new()
 	pause_menu.position = pause_menu_loc
 	pause_menu.texture = pause_menu_sprite
+	pause_menu.z_index = 15
 	add_child(pause_menu)
-	generate_ui(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu")
+	generate_ui(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index)
 	ui_pause()
 	return
 
