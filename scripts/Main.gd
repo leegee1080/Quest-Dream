@@ -113,6 +113,9 @@ func _ready():
 	player.exit_tile_pos = end_tile.position
 	player.name = "Player"
 	player.position = start_tile.position
+	#setup global refs
+	GlobalVars.main_node_ref = self
+	GlobalVars.player_node_ref = player
 
 func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
 	var temp_button_list = []

@@ -200,6 +200,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Enemy_Collection/Lich.gd"
 }, {
 "base": "Node2D",
+"class": "Loot",
+"language": "GDScript",
+"path": "res://scripts/Loot.gd"
+}, {
+"base": "Node2D",
 "class": "Main_Game",
 "language": "GDScript",
 "path": "res://scripts/Main.gd"
@@ -403,6 +408,7 @@ _global_script_class_icons={
 "Item_Enums": "",
 "Knight": "",
 "Lich": "",
+"Loot": "",
 "Main_Game": "",
 "Money": "",
 "Monkey": "",
@@ -447,6 +453,7 @@ config/icon="res://icon.png"
 [autoload]
 
 UiVars="*res://scripts/UI/UI_Vars.gd"
+GlobalVars="*res://scripts/Global_Vars.gd"
 
 [display]
 

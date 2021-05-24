@@ -2,6 +2,47 @@ extends Node2D
 
 class_name Item_Enums
 
+const enemy_item_gen_chance_table = [
+	"none",
+	"none",
+	"none",
+	"none",
+	"money",
+	"money",
+	"money",
+	"item"
+]
+const shop_item_gen_chance_table = [
+	"sword",
+	"axe",
+	"bow",
+	"shield",
+	"chest",
+	"helmet",
+	"ring",
+	"amulet",
+	"potion",
+	"food", #increase player level and small health
+	"spell_damage_single",
+	"spell_damage_many",
+	"spell_healing",
+	"spell_stun"
+]
+const boss_item_gen_chance_table = [
+	"sword",
+	"axe",
+	"bow",
+	"shield",
+	"chest",
+	"helmet",
+	"ring",
+	"amulet",
+	"spell_damage_single",
+	"spell_damage_many",
+	"spell_healing",
+	"spell_stun"
+]
+
 enum item_types{
 	armor,
 	weapon,
@@ -20,7 +61,7 @@ enum item_subtypes{
 	ring,
 	amulet,
 	potion,
-	food,
+	food, #increase player level and small health
 	money,
 	spell_damage_single,
 	spell_damage_many,

@@ -115,6 +115,7 @@ func rest_room():
 	leave_timer.start()
 	player.heal_player(10*room_level)#add health based on the level of the room
 	print("heal")
+	#ask player which skills to level up
 	return
 
 func find_turn_counter_maximums(player_speed):
@@ -218,7 +219,7 @@ func battle_room():
 	#loop turn order until end
 	var battle_turn_timer = Timer.new()
 	battle_turn_timer.name = "Battleturn Timer"
-	battle_turn_timer.set_wait_time(1)
+	battle_turn_timer.set_wait_time(1.5)
 	battle_turn_timer.set_one_shot(false)
 	battle_turn_timer.connect("timeout", self, "pass_battle_turn")
 	timer_group.add_child(battle_turn_timer)

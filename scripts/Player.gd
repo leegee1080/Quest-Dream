@@ -21,11 +21,12 @@ const walk_ani_pos_list = [
 	[Vector2(1,-2), -0.1]
 ]
 
-var player_level #unused right now
+var player_level = 0 #build this up and spend these points at a rest room for stat increases
 
 var type_enum
 var type_class
 var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100, "equipment": {}}
+var max_item_storage = 28
 var class_stat_dict
 var is_dead = false
 var level

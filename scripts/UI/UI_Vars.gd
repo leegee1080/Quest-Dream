@@ -11,4 +11,3 @@ func _input(event):
 		else:
 			clicked = true
 			return
-
