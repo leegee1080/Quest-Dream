@@ -2,47 +2,6 @@ extends Node2D
 
 class_name Item_Enums
 
-const enemy_item_gen_chance_table = [
-	"none",
-	"none",
-	"none",
-	"none",
-	"money",
-	"money",
-	"money",
-	"item"
-]
-const shop_item_gen_chance_table = [
-	"sword",
-	"axe",
-	"bow",
-	"shield",
-	"chest",
-	"helmet",
-	"ring",
-	"amulet",
-	"potion",
-	"food", #increase player level and small health
-	"spell_damage_single",
-	"spell_damage_many",
-	"spell_healing",
-	"spell_stun"
-]
-const boss_item_gen_chance_table = [
-	"sword",
-	"axe",
-	"bow",
-	"shield",
-	"chest",
-	"helmet",
-	"ring",
-	"amulet",
-	"spell_damage_single",
-	"spell_damage_many",
-	"spell_healing",
-	"spell_stun"
-]
-
 enum item_types{
 	armor,
 	weapon,
@@ -115,4 +74,65 @@ const item_stat_boost = {
 	quality_types.legendary: 7
 }
 
+const normal_item_gen_chance_table = {
+	0: [50, null],
+	1: [1, item_subtypes.sword],
+	2: [1, item_subtypes.axe],
+	3: [1, item_subtypes.bow],
+	4: [1, item_subtypes.shield],
+	5: [1, item_subtypes.chest],
+	6: [1, item_subtypes.helmet],
+	7: [1, item_subtypes.ring],
+	8: [1, item_subtypes.amulet],
+	9: [10, item_subtypes.potion],
+	10: [10, item_subtypes.food],
+	11: [50, item_subtypes.money],
+	12: [1, item_subtypes.spell_damage_single],
+	13: [1, item_subtypes.spell_damage_many],
+	14: [1, item_subtypes.spell_healing],
+	15: [1, item_subtypes.spell_stun]
+}
 
+const shop_item_gen_chance_table = {
+	0: [0, null],
+	1: [1, item_subtypes.sword],
+	2: [1, item_subtypes.axe],
+	3: [1, item_subtypes.bow],
+	4: [1, item_subtypes.shield],
+	5: [1, item_subtypes.chest],
+	6: [1, item_subtypes.helmet],
+	7: [1, item_subtypes.ring],
+	8: [1, item_subtypes.amulet],
+	9: [10, item_subtypes.potion],
+	10: [10, item_subtypes.food],
+	11: [0, item_subtypes.money],
+	12: [1, item_subtypes.spell_damage_single],
+	13: [1, item_subtypes.spell_damage_many],
+	14: [1, item_subtypes.spell_healing],
+	15: [1, item_subtypes.spell_stun]
+}
+
+const boss_item_gen_chance_table = {
+	0: [0, null],
+	1: [1, item_subtypes.sword],
+	2: [1, item_subtypes.axe],
+	3: [1, item_subtypes.bow],
+	4: [1, item_subtypes.shield],
+	5: [1, item_subtypes.chest],
+	6: [1, item_subtypes.helmet],
+	7: [1, item_subtypes.ring],
+	8: [1, item_subtypes.amulet],
+	9: [0, item_subtypes.potion],
+	10: [0, item_subtypes.food],
+	11: [0, item_subtypes.money],
+	12: [1, item_subtypes.spell_damage_single],
+	13: [1, item_subtypes.spell_damage_many],
+	14: [1, item_subtypes.spell_healing],
+	15: [1, item_subtypes.spell_stun]
+}
+
+enum loot_filter_enum{
+	boss,
+	shop,
+	normal
+}

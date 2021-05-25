@@ -88,7 +88,7 @@ func generate_room():
 	return
 
 func complete_room():
-	get_parent().generate_ui(get_parent().room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", get_parent().room_button_z_index)
+	GlobalVars.main_node_ref.generate_ui(GlobalVars.main_node_ref.room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", GlobalVars.main_node_ref.room_button_z_index)
 	is_room_complete = true
 	for obj in timer_group.get_children():
 		obj.stop()
@@ -98,11 +98,11 @@ func complete_room():
 func leave_room():
 	if is_room_complete == true:
 		if room_type_hash[3] == 0:
-			get_parent().delete_centertile()
+			GlobalVars.main_node_ref.delete_centertile()
 			queue_free()
 			return
 		#this saves the room for later
-		get_parent().save_centertile()
+		GlobalVars.main_node_ref.save_centertile()
 		queue_free()
 
 func rest_room():
@@ -203,14 +203,14 @@ func battle_room():
 		var rand_num_enemies = int(rand_range(1, room_level+3))
 		for i in rand_num_enemies:
 			randomize()
-			var chosen_enemy_list = get_parent().stage_enemies_dict[int(rand_range(1,get_parent().stage_enemies_dict[room_level].size()))]
+			var chosen_enemy_list = GlobalVars.stage_enemies_dict[int(rand_range(1,GlobalVars.stage_enemies_dict[room_level].size()))]
 			var chosen_enemy_type = chosen_enemy_list[int(rand_range(0,chosen_enemy_list.size()))]
 			var new_enemy = Enemy.new(chosen_enemy_type, room_level)
 			enemies.append(new_enemy)
-			get_parent().add_child(new_enemy)
-			var spawn_pos = Vector2(rand_range(get_parent().content_room_screen_loc.x - 20, get_parent().content_room_screen_loc.x + 20), rand_range(get_parent().content_room_screen_loc.y - 20, get_parent().content_room_screen_loc.y + 20))
+			GlobalVars.main_node_ref.add_child(new_enemy)
+			var spawn_pos = Vector2(rand_range(GlobalVars.main_node_ref.content_room_screen_loc.x - 20, GlobalVars.main_node_ref.content_room_screen_loc.x + 20), rand_range(GlobalVars.main_node_ref.content_room_screen_loc.y - 20, GlobalVars.main_node_ref.content_room_screen_loc.y + 20))
 			new_enemy.position = spawn_pos #place the baddies at the right area in the room
-			new_enemy.z_index = get_parent().get_child_count()-1 #place baddies on the top layer
+			new_enemy.z_index = GlobalVars.main_node_ref.get_child_count()-1 #place baddies on the top layer
 	#set turn order
 	turn_counter = 0
 	find_turn_counter_maximums(player.player_stat_dict.speed)

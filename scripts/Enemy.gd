@@ -78,9 +78,13 @@ func take_hit(damage):
 func kill_enemy():
 	#pay the player exp points based on difficulty of the enemy
 	#drop loot
+	var temp_loot
 	if type_class.is_boss:
 		GlobalVars.player_node_ref.player_level += 20
-	GlobalVars.player_node_ref.player_level += type_class.difficulty
+		temp_loot = Loot.new(type_class.stat_dict.loot, Item_Enums.loot_filter_enum.boss)
+	else:
+		GlobalVars.player_node_ref.player_level += type_class.difficulty
+		temp_loot = Loot.new(type_class.stat_dict.loot, Item_Enums.loot_filter_enum.normal)
 	#death animation
 	hit_animation.queue_free()
 	death_animation.play_death_animation()
