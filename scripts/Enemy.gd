@@ -85,6 +85,7 @@ func kill_enemy():
 	else:
 		GlobalVars.player_node_ref.player_level += type_class.difficulty
 		temp_loot = Loot.new(type_class.stat_dict.loot, Item_Enums.loot_filter_enum.normal)
+	add_child(temp_loot)
 	#death animation
 	hit_animation.queue_free()
 	death_animation.play_death_animation()

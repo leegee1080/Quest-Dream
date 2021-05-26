@@ -27,4 +27,5 @@ func _ready():
 			continue
 		item_list.append(temp_item_enum)
 		pass
+	print(item_list)
 	return
