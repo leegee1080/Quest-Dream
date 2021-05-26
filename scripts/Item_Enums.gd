@@ -75,7 +75,7 @@ const item_stat_boost = {
 }
 
 const normal_item_gen_chance_table = {
-	0: [50, null],
+	0: [1000, null],
 	1: [1, item_subtypes.sword],
 	2: [1, item_subtypes.axe],
 	3: [1, item_subtypes.bow],
@@ -85,8 +85,8 @@ const normal_item_gen_chance_table = {
 	7: [1, item_subtypes.ring],
 	8: [1, item_subtypes.amulet],
 	9: [10, item_subtypes.potion],
-	10: [10, item_subtypes.food],
-	11: [50, item_subtypes.money],
+	10: [30, item_subtypes.food],
+	11: [100, item_subtypes.money],
 	12: [1, item_subtypes.spell_damage_single],
 	13: [1, item_subtypes.spell_damage_many],
 	14: [1, item_subtypes.spell_healing],

@@ -19,13 +19,15 @@ func _init(new_loot_amount, new_filter): #loot filter must be Item_Enums.loot_fi
 func _ready():
 	#boss guaranteed loot, boosted loot_str value
 	var temp_item_enum
-	for num in range(loot_amt, 0,-1):
+	for num in range(0, loot_amt):
 		randomize()
 		#one roll for loot
-		temp_item_enum =  GlobalVars.loot_tables[loot_filter][0][rand_range(0, GlobalVars.loot_tables[loot_filter].size())]
-		if temp_item_enum == null:
-			continue
-		item_list.append(temp_item_enum)
-		pass
-	print(item_list)
+		temp_item_enum =  GlobalVars.loot_tables[loot_filter][int(rand_range(0, GlobalVars.loot_tables[loot_filter].size()))]
+		if temp_item_enum != null:
+			print(Item_Enums.item_subtypes.keys()[temp_item_enum])
+			item_list.append(temp_item_enum)
+		continue
+#	for item in item_list:
+#		print(Item_Enums.item_subtypes.keys()[item])
+#		pass
 	return

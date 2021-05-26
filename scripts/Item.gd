@@ -13,6 +13,7 @@ func _init(new_type, new_rarity, new_subtype):
 	item_rarity = Item_Enums.item_stat_boost.get(new_rarity)
 	item_subtype = new_subtype
 	item_subclass = Item_Enums.item_types_dict.get(new_subtype)
+	
 	return
 
 func _ready():
