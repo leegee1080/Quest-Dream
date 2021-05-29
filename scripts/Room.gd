@@ -103,6 +103,7 @@ func leave_room():
 			return
 		#this saves the room for later
 		GlobalVars.main_node_ref.save_centertile()
+		GlobalVars.player_node_ref.available_loot = [] #clear loot on the floor after leaving room
 		queue_free()
 
 func rest_room():

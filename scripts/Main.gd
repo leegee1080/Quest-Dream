@@ -217,7 +217,7 @@ func loot_table_generator(table_to_use):
 	for index in table_to_use:
 		if table_to_use[index][0] == 0:
 			continue
-		for num in range(0, table_to_use[index][0]):
+		for _num in range(0, table_to_use[index][0]):
 			templist.append(table_to_use[index][1])
 			pass
 		pass

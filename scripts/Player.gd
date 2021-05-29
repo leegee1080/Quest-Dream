@@ -27,6 +27,7 @@ var type_enum
 var type_class
 var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100, "equipment": {}}
 var max_item_storage = 28
+var available_loot = []
 var class_stat_dict
 var is_dead = false
 var level
@@ -214,3 +215,9 @@ func take_hit(damage):
 		type_class.die()
 		is_dead = true
 	print("Player health: "+ str(player_stat_dict.health))
+
+func check_available_loot():
+	#go up to each lootable item and pick it up
+	#check that the item is worth picking up
+	#use item if appropriate
+	pass

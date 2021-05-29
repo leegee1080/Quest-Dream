@@ -87,6 +87,10 @@ func kill_enemy():
 		temp_loot = Loot.new(type_class.stat_dict.loot, Item_Enums.loot_filter_enum.normal)
 	add_child(temp_loot)
 	#give loot
+	for item in temp_loot.item_list:
+		print("Dropped: " + item.item_name)
+		GlobalVars.player_node_ref.available_loot.append(item)
+		pass
 	#death animation
 	hit_animation.queue_free()
 	death_animation.play_death_animation()

@@ -14,7 +14,7 @@ func _init(new_loot_amount, new_filter): #loot filter must be Item_Enums.loot_fi
 	loot_filter = new_filter
 	loot_table = GlobalVars.loot_tables[new_filter]
 	loot_str = GlobalVars.player_node_ref.player_stat_dict.speed + GlobalVars.player_node_ref.player_stat_dict.magic
-	return
+	pass
 
 func _ready():
 	#boss guaranteed loot, boosted loot_str value
@@ -24,10 +24,8 @@ func _ready():
 		#one roll for loot
 		temp_item_enum =  GlobalVars.loot_tables[loot_filter][int(rand_range(0, GlobalVars.loot_tables[loot_filter].size()))]
 		if temp_item_enum != null:
-			print(Item_Enums.item_subtypes.keys()[temp_item_enum])
-			item_list.append(temp_item_enum)
-		continue
-#	for item in item_list:
-#		print(Item_Enums.item_subtypes.keys()[item])
-#		pass
-	return
+#			print(Item_Enums.item_subtypes.keys()[temp_item_enum])
+			for rarity in Item_Enums.item_stat_rarity_weight:
+					if Item_Enums.item_stat_rarity_weight[rarity] > loot_str:
+						item_list.append(Item.new(temp_item_enum, rarity))
+						break

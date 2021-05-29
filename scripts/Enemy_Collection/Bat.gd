@@ -1,17 +1,17 @@
 class_name Bat
 
-export(String) var name = "Bat"
-export(int) var sprite_frame = 11
+const name = "Bat"
+const sprite_frame = 11
 
-var theme_list = [
+const theme_list = [
 	Tile_Enums.tile_themes_enum.castle,
 	Tile_Enums.tile_themes_enum.forest,
 	Tile_Enums.tile_themes_enum.swamp,
 	Tile_Enums.tile_themes_enum.grave,
 	Tile_Enums.tile_themes_enum.mountain
 ]
-var is_boss = false
-var difficulty = 1
+const is_boss = false
+const difficulty = 1
 
 var stat_dict = {
 	"health": 1,

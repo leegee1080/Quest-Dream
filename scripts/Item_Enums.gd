@@ -74,6 +74,17 @@ const item_stat_boost = {
 	quality_types.legendary: 7
 }
 
+const item_stat_rarity_weight = { 
+	quality_types.trash: 47,
+	quality_types.common: 94,
+	quality_types.uncommon: 141,
+	quality_types.rare: 188,
+	quality_types.unique: 235,
+	quality_types.masterwork: 282,
+	quality_types.legendary: 329
+}
+#these numbers are created by looking at the maximum a player could get after one level then multiplying it by the number of levels and then dividing it by the number tiers of rarity (3 rounds in a level) (level is a whole theme)
+
 const normal_item_gen_chance_table = {
 	0: [1000, null],
 	1: [1, item_subtypes.sword],
