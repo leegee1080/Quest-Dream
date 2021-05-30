@@ -34,10 +34,10 @@ func walk_cycle():
 	if walk_animation_step < 0:
 		walk_animation_step = (walk_ani_pos_list.size()-1)
 
-func start_walk():
+func play_animation():
 	walk_animation_timer.start()
 
-func stop_walk():
+func stop_animation():
 	walk_animation_timer.stop()
 	ani_sprite.position = walk_ani_pos_list[0][0]
 	ani_sprite.rotation = walk_ani_pos_list[0][1]

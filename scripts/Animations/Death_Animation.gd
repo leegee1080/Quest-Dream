@@ -17,6 +17,6 @@ func _init(new_ani_sprite):
 func _ready():
 	return
 
-func play_death_animation():
+func play_animation():
 	ani_sprite.modulate = Color(1,0,0,1)
 	ani_sprite.rotation = 90

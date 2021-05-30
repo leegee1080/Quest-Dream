@@ -25,7 +25,7 @@ func _ready():
 	hit_animation_total_timer.add_to_group("timers")
 	hit_animation_total_timer.set_wait_time(hit_animation_time)
 	hit_animation_total_timer.set_one_shot(true)
-	hit_animation_total_timer.connect("timeout", self, "stop_hit")
+	hit_animation_total_timer.connect("timeout", self, "stop_animation")
 	
 	hit_animation_timer = Timer.new()
 	add_child(hit_animation_timer)
@@ -40,11 +40,11 @@ func hit_cycle():
 	if hit_animation_step < 0:
 		hit_animation_step = (hit_ani_color_list.size()-1)
 
-func start_hit():
+func play_animation():
 	hit_animation_total_timer.start()
 	hit_animation_timer.start()
 
-func stop_hit():
+func stop_animation():
 	hit_animation_total_timer.stop()
 	hit_animation_timer.stop()
 	ani_sprite.modulate = hit_ani_color_list[0]

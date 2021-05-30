@@ -13,64 +13,15 @@ var stat_dict = {
 	"equipment": {},
 }
 
-const ani_dict = {
-	"walk" : Walking_Animation,
-	"melee" : null,
-	"range" : null,
-	"magic" : null,
-	"hit" : Hit_Color_Animation,
-	"death" : Death_Animation
+var special_animations_dict = {
+	"walk": GlobalVars.ani_dict.wiggle_in_place,
+	"melee": GlobalVars.ani_dict.melee_tackle,
+	"ranged": null,
+	"magic": null,
+	"injure": GlobalVars.ani_dict.hit_color_change,
+	"death": GlobalVars.ani_dict.death_flip_red,
+	"happy": null
 }
-
-var walk_animation
-var melee_animation
-var ranged_animation
-var magic_animation
-var hit_animation
-var death_animation
 
 func _init(ani_sprite):
 	name = string_name
-	
-	walk_animation = ani_dict.walk.new(ani_sprite)
-	walk_animation.name = "walk_ani"
-	
-	#melee_animation
-	
-	#range_animation
-	
-	#magic_animation
-	
-	hit_animation = ani_dict.hit.new(ani_sprite)
-	hit_animation.name = "hit_ani"
-	
-	death_animation = ani_dict.death.new(ani_sprite)
-	death_animation.name = "death_ani"
-	pass
-
-func _ready():
-	add_child(walk_animation)
-	add_child(hit_animation)
-	#melee_animation
-	#range_animation
-	#magic_animation
-	add_child(death_animation)
-	pass
-
-func melee_attack():
-	print("player melee")
-
-func ranged_attack():
-	print("player melee")
-
-func magic_attack():
-	print("player melee")
-
-func take_hit():
-	hit_animation.start_hit()
-	print("player took hit")
-
-func die():
-	hit_animation.stop_hit()
-	death_animation.play_death_animation()
-	print("player dead")

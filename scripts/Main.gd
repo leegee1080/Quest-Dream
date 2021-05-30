@@ -117,7 +117,8 @@ func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_co
 	var temp_button_list = []
 	for btn in button_loc_dict:
 		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
-		temp_btn.name = btn
+		temp_btn.local_name = btn
+#		temp_btn.name = btn
 		temp_btn.connect("ui_sig", self, "ui_func")
 		temp_button_list.append(temp_btn)
 		temp_btn.z_index = new_z_index
@@ -147,8 +148,8 @@ func ui_quit():
 	pass
 
 func ui_fastforward():
-	var new_speed = 0.004
-	player.walk_timer.set_wait_time(new_speed)
+	var new_speed = 8
+	player.map_move_speed = new_speed
 	print("fast forwarded")
 	pass
 

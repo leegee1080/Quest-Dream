@@ -2,6 +2,7 @@ extends Node2D
 
 class_name Btn
 
+var local_name
 signal ui_sig(name)
 
 #var clicked = false
@@ -42,5 +43,6 @@ func _input(event):
 				return
 
 func click_btn():
-	emit_signal("ui_sig", name, self)
+	print("Button pressed: " + local_name)
+	emit_signal("ui_sig", local_name, self)
 	return

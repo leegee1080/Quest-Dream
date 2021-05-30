@@ -2,6 +2,16 @@ extends Node2D
 
 class_name Player
 
+var ani_dict = {
+	"walk": null,
+	"melee": null,
+	"ranged": null,
+	"magic": null,
+	"injure": null,
+	"death": null,
+	"happy": null
+}
+
 enum walk_dir{
 	up,
 	down,
@@ -61,6 +71,7 @@ func _ready():
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
 	add_child(type_class)
+	setup_animations()
 
 func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
 	if new_type == null:
@@ -75,17 +86,29 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_class = Player_Enums.player_types_dict.get(type_enum).new(ani_sprite)
 	class_stat_dict = type_class.stat_dict
 	ani_sprite.set_frame(type_class.sprite_frame)
-	merge_dir(player_stat_dict, type_class.stat_dict)
-	merge_dir(player_stat_dict.equipment, type_class.stat_dict.equipment)
-	merge_dir(player_stat_dict.equipment, set_equipment)
+	merge_dict(player_stat_dict, type_class.stat_dict)
+	merge_dict(player_stat_dict.equipment, type_class.stat_dict.equipment)
+	merge_dict(player_stat_dict.equipment, set_equipment)
 
-func merge_dir(target, patch):
+func merge_dict(target, patch):
 	for key in patch:
 		if patch[key] is Dictionary:
 			continue
 		var temp_val = target[key]
 		target[key] = temp_val + patch[key]
 	return
+
+func setup_animations():
+	for ani in type_class.special_animations_dict:
+		if type_class.special_animations_dict[ani] == null:
+			continue
+		var temp_ani_class
+		temp_ani_class = type_class.special_animations_dict[ani].new(ani_sprite)
+		temp_ani_class.name = ani
+		add_child(temp_ani_class)
+		ani_dict[ani] = temp_ani_class
+		pass
+	pass
 
 func change_dir(new_dir):
 	if new_dir >= 0 and new_dir < walk_dir.size():
@@ -100,14 +123,14 @@ func walk_toggle():
 	if can_walk:
 		can_walk = false
 		walk_timer.stop()
-		type_class.walk_animation.stop_walk()
+		ani_dict.walk.stop_animation()
 		ani_sprite.position = Vector2.ZERO
 		ani_sprite.rotation = 0
 		return
 	elif !can_walk:
 		can_walk = true
 		walk_timer.start()
-		type_class.walk_animation.start_walk()
+		ani_dict.walk.play_animation()
 		return
 
 func walk():
@@ -203,16 +226,16 @@ func heal_player(new_health):
 
 func process_turn(target):
 	if is_dead == false:
-		target.take_hit(player_stat_dict.attack)
-#		type_class.melee() #needed to play special animations (melee, ranged, or magic)
+		ani_dict.melee.play_animation(target, player_stat_dict.attack)#needed to play special animations (melee, ranged, or magic)
 
 func take_hit(damage):
-	type_class.take_hit()
+#	type_class.take_hit()
+	ani_dict.injure.play_animation()
 	player_stat_dict.health -= damage
 	if player_stat_dict.health <= 0:
 		print("player dead")
 		get_parent().lose_round()
-		type_class.die()
+		ani_dict.death.play_animation()
 		is_dead = true
 	print("Player health: "+ str(player_stat_dict.health))
 
