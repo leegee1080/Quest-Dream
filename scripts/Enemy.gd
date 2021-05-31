@@ -75,6 +75,10 @@ func generate_enemy():
 
 func merge_dict(target, patch):
 	for key in patch:
+		if patch[key] == null:
+			continue
+		if patch[key] is Dictionary:
+			continue
 		var temp_val = target[key]
 		target[key] = temp_val + patch[key]
 
@@ -84,7 +88,7 @@ func process_turn(target):
 		ani_dict.melee.play_animation(target, stat_dict.attack)#needed to play special animations (melee, ranged, or magic)
 #		target.take_hit(stat_dict.attack)
 	return
-	
+
 func take_hit(damage):
 	if is_dead:
 		return
@@ -114,10 +118,10 @@ func kill_enemy():
 	#give loot
 	for item in temp_loot.item_list:
 		print("Dropped: " + item.item_name)
-		GlobalVars.player_node_ref.available_loot.append(item)
+		GlobalVars.temp_loot_pool.append(item)
+		GlobalVars.main_node_ref.add_child(item)
 		pass
 	#death animation
-
 	ani_dict.death.play_animation()
 #	hit_animation.queue_free()
 #	death_animation.play_animation()

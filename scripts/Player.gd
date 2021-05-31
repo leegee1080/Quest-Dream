@@ -35,10 +35,9 @@ var player_level = 0 #build this up and spend these points at a rest room for st
 
 var type_enum
 var type_class
-var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100, "equipment": {}}
+var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100}
+var player_equip_dict = {"l_hand": null, "r_hand": null, "head": null, "body": null, "bag": [], "money": 0}
 var max_item_storage = 28
-var available_loot = []
-var class_stat_dict
 var is_dead = false
 var level
 var difficulty
@@ -58,7 +57,6 @@ var walk_timer
 const center_interval = 3
 var center_interval_count = 2
 var current_tile
-
 var ani_sprite
 
 
@@ -84,14 +82,15 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
 	type_class = Player_Enums.player_types_dict.get(type_enum).new(ani_sprite)
-	class_stat_dict = type_class.stat_dict
 	ani_sprite.set_frame(type_class.sprite_frame)
-	merge_dict(player_stat_dict, type_class.stat_dict)
-	merge_dict(player_stat_dict.equipment, type_class.stat_dict.equipment)
-	merge_dict(player_stat_dict.equipment, set_equipment)
+	merge_dict(player_stat_dict, type_class.starting_class_dict)
+	merge_dict(player_equip_dict, type_class.starting_class_equip_dict)
+	merge_dict(player_equip_dict, set_equipment)
 
 func merge_dict(target, patch):
 	for key in patch:
+		if patch[key] == null:
+			continue
 		if patch[key] is Dictionary:
 			continue
 		var temp_val = target[key]
@@ -238,9 +237,3 @@ func take_hit(damage):
 		ani_dict.death.play_animation()
 		is_dead = true
 	print("Player health: "+ str(player_stat_dict.health))
-
-func check_available_loot():
-	#go up to each lootable item and pick it up
-	#check that the item is worth picking up
-	#use item if appropriate
-	pass

@@ -90,6 +90,7 @@ export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_t
 var center_subtile
 var current_tileset: Dictionary
 var saved_center_room = null
+var saved_loot_pool = null
 
 var is_locked = false
 

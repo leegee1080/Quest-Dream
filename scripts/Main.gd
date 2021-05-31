@@ -148,8 +148,8 @@ func ui_quit():
 	pass
 
 func ui_fastforward():
-	var new_speed = 8
-	player.map_move_speed = new_speed
+	var new_speed = 0.0001
+	player.walk_timer.set_wait_time(new_speed)
 	print("fast forwarded")
 	pass
 
@@ -299,6 +299,8 @@ func delete_centertile():
 func save_centertile():
 	var current_tile = player.current_tile
 	current_tile.saved_center_room = room_screen
+	current_tile.saved_loot_pool = GlobalVars.temp_loot_pool
+	GlobalVars.temp_loot_pool.clear()
 	#play close room animation
 	return
 

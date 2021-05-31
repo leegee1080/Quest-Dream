@@ -14,7 +14,7 @@ var loot_tables = {#this is the dict of the loot tables organized by loot filter
 	Item_Enums.loot_filter_enum.shop: [],
 	Item_Enums.loot_filter_enum.normal: []
 }
-
+var temp_loot_pool = [] #filled and cleared during each room event
 const ani_dict = {#dictionary of all the animation classes
 	"wiggle_in_place" : Walking_Animation,
 	"melee_tackle" : Melee_Animation,

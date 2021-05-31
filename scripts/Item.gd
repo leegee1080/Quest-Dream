@@ -15,6 +15,7 @@ func _init(new_subtype, new_rarity):
 	item_name = str(Item_Enums.quality_types.keys()[new_rarity])  + " " +  str(Item_Enums.item_subtypes.keys()[new_subtype])
 
 func _ready():
+	
 	return
 
 func use_item():  #use weapon- deal damage, use armor- reduce damage, use jewelry - apply stat bonus, use spell - cast spell, use consumable - apply effect

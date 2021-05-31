@@ -29,21 +29,21 @@ var room_screen_loc #the location the room will appear on the player's screen
 var room_level
 var is_saved_room
 var timer_group = Node2D.new() #a place to hold timers
+var leave_time = 1.0
+var is_room_complete = false
+var ani_sprite
 
 #battle vars
 var enemies = []
 var original_enemies = []#this is the list of enemies that wree created at the start of the room
 var turn_order = []
-var xp_earned = 0
-var loot_pile = []
 var turn_counter_max
 var turn_counter_min
 var turn_counter
 var turn_order_list
 
-var leave_time = 1.0
-var is_room_complete = false
-var ani_sprite
+#loot vars
+
 
 func _ready():
 	add_child(timer_group) #a place to hold timers
@@ -99,11 +99,11 @@ func leave_room():
 	if is_room_complete == true:
 		if room_type_hash[3] == 0:
 			GlobalVars.main_node_ref.delete_centertile()
+			GlobalVars.temp_loot_pool.clear()
 			queue_free()
 			return
 		#this saves the room for later
 		GlobalVars.main_node_ref.save_centertile()
-		GlobalVars.player_node_ref.available_loot = [] #clear loot on the floor after leaving room
 		queue_free()
 
 func rest_room():
