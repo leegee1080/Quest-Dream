@@ -16,8 +16,7 @@ var starting_class_equip_dict = {
 	"r_hand": null, 
 	"head": null, 
 	"body": null, 
-	"bag": [], 
-	"money": 0
+	"bag": [],
 }
 var special_animations_dict = {
 	"walk": GlobalVars.ani_dict.wiggle_in_place,

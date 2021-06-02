@@ -36,7 +36,7 @@ var player_level = 0 #build this up and spend these points at a rest room for st
 var type_enum
 var type_class
 var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100}
-var player_equip_dict = {"l_hand": null, "r_hand": null, "head": null, "body": null, "bag": [], "money": 0}
+var player_equip_dict = {"l_hand": null, "r_hand": null, "head": null, "body": null, "bag": []}
 var max_item_storage = 28
 var is_dead = false
 var level

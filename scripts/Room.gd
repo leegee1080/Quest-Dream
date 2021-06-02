@@ -15,9 +15,9 @@ const room_theme_dict = {
 const room_type_dict = {
 	Tile_Enums.center_type_enum.battle: [1, 1, 0, 0, 0],
 	Tile_Enums.center_type_enum.treasure: [0, 1, 0, 1, 0],
-	Tile_Enums.center_type_enum.shop: [0, 0, 1, 1, 0],
-	Tile_Enums.center_type_enum.rest: [0, 0, 0, 0, 1],
-	Tile_Enums.center_type_enum.silly: [0, 0, 0, 0, 0]
+#	Tile_Enums.center_type_enum.shop: [0, 0, 1, 1, 0],
+	Tile_Enums.center_type_enum.rest: [0, 0, 0, 0, 1]
+#	Tile_Enums.center_type_enum.silly: [0, 0, 0, 0, 0]
 }
 #generic room vars
 var player
@@ -71,15 +71,15 @@ func process_room():
 	if type_enum == Tile_Enums.center_type_enum.treasure:
 		treasure_room()
 		return
-	if type_enum == Tile_Enums.center_type_enum.shop:
-		shop_room()
-		return
+#	if type_enum == Tile_Enums.center_type_enum.shop:
+#		shop_room()
+#		return
 	if type_enum == Tile_Enums.center_type_enum.rest:
 		rest_room()
 		return
-	if type_enum == Tile_Enums.center_type_enum.silly:
-		silly_room()
-		return
+#	if type_enum == Tile_Enums.center_type_enum.silly:
+#		silly_room()
+#		return
 
 func generate_room():
 	add_child(ani_sprite)
@@ -228,17 +228,17 @@ func battle_room():
 	battle_turn_timer.start()
 	return
 
-func shop_room():
-	var leave_timer = Timer.new()
-	leave_timer.name = "Leave Timer"
-	timer_group.add_child(leave_timer)
-	leave_timer.set_wait_time(leave_time)
-	leave_timer.set_one_shot(true)
-	leave_timer.connect("timeout", self, "complete_room")
-	leave_timer.add_to_group("timers")
-	leave_timer.start()
-	print("shop")
-	return
+#func shop_room():
+#	var leave_timer = Timer.new()
+#	leave_timer.name = "Leave Timer"
+#	timer_group.add_child(leave_timer)
+#	leave_timer.set_wait_time(leave_time)
+#	leave_timer.set_one_shot(true)
+#	leave_timer.connect("timeout", self, "complete_room")
+#	leave_timer.add_to_group("timers")
+#	leave_timer.start()
+#	print("shop")
+#	return
 
 func treasure_room():
 	var leave_timer = Timer.new()
@@ -252,14 +252,14 @@ func treasure_room():
 	print("treasure")
 	return
 
-func silly_room():
-	var leave_timer = Timer.new()
-	leave_timer.name = "Leave Timer"
-	timer_group.add_child(leave_timer)
-	leave_timer.set_wait_time(leave_time)
-	leave_timer.set_one_shot(true)
-	leave_timer.connect("timeout", self, "complete_room")
-	leave_timer.add_to_group("timers")
-	leave_timer.start()
-	print("silly complete")
-	return
+#func silly_room():
+#	var leave_timer = Timer.new()
+#	leave_timer.name = "Leave Timer"
+#	timer_group.add_child(leave_timer)
+#	leave_timer.set_wait_time(leave_time)
+#	leave_timer.set_one_shot(true)
+#	leave_timer.connect("timeout", self, "complete_room")
+#	leave_timer.add_to_group("timers")
+#	leave_timer.start()
+#	print("silly complete")
+#	return

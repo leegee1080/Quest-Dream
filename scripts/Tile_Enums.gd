@@ -22,9 +22,9 @@ enum center_type_enum{
 	none,
 	rest,
 	battle,
-	treasure,
-	shop,
-	silly
+	treasure
+#	shop,#no longer used
+#	silly #no longer used
 }
 
 #Chances To Spawn
@@ -50,7 +50,6 @@ const tile_chances = [
 #	center_type_enum.rest,
 #	center_type_enum.battle,
 #	center_type_enum.treasure,
-#	center_type_enum.shop
 ##	center_type_enum.silly
 #]
 const center_tile_chances = [
@@ -65,6 +64,5 @@ const center_tile_chances = [
 	center_type_enum.rest,
 	center_type_enum.battle,
 	center_type_enum.treasure,
-	center_type_enum.shop
 #	center_type_enum.silly
 ]

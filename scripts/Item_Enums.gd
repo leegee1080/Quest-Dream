@@ -21,7 +21,7 @@ enum item_subtypes{
 	amulet,
 	potion,
 	food, #increase player level and small health
-	money,
+#	money,
 	spell_damage_single,
 	spell_damage_many,
 	spell_healing,
@@ -39,7 +39,7 @@ const item_types_dict = {
 	item_subtypes.amulet: Amulet,
 	item_subtypes.potion: Potion,
 	item_subtypes.food: Food,
-	item_subtypes.money: Money,
+#	item_subtypes.money: Money,
 	item_subtypes.spell_damage_single: Bolt_Spell,
 	item_subtypes.spell_damage_many: Fireball_Spell,
 	item_subtypes.spell_healing: Heal_Spell,
@@ -51,7 +51,7 @@ const item_subtype_cat = {
 	item_types.weapon: [item_subtypes.sword, item_subtypes.axe, item_subtypes.bow, item_subtypes.shield],
 	item_types.jewelry: [item_subtypes.ring, item_subtypes.amulet],
 	item_types.spell: [item_subtypes.spell_damage_single, item_subtypes.spell_damage_many, item_subtypes.spell_healing, item_subtypes.spell_stun],
-	item_types.consumable: [item_subtypes.potion, item_subtypes.food, item_subtypes.money]
+	item_types.consumable: [item_subtypes.potion, item_subtypes.food]
 }
 
 enum quality_types{
@@ -97,11 +97,10 @@ const normal_item_gen_chance_table = {
 	8: [1, item_subtypes.amulet],
 	9: [10, item_subtypes.potion],
 	10: [30, item_subtypes.food],
-	11: [100, item_subtypes.money],
-	12: [1, item_subtypes.spell_damage_single],
-	13: [1, item_subtypes.spell_damage_many],
-	14: [1, item_subtypes.spell_healing],
-	15: [1, item_subtypes.spell_stun]
+	11: [1, item_subtypes.spell_damage_single],
+	12: [1, item_subtypes.spell_damage_many],
+	13: [1, item_subtypes.spell_healing],
+	14: [1, item_subtypes.spell_stun]
 }
 
 const shop_item_gen_chance_table = {
@@ -116,11 +115,10 @@ const shop_item_gen_chance_table = {
 	8: [1, item_subtypes.amulet],
 	9: [10, item_subtypes.potion],
 	10: [10, item_subtypes.food],
-	11: [0, item_subtypes.money],
-	12: [1, item_subtypes.spell_damage_single],
-	13: [1, item_subtypes.spell_damage_many],
-	14: [1, item_subtypes.spell_healing],
-	15: [1, item_subtypes.spell_stun]
+	11: [1, item_subtypes.spell_damage_single],
+	12: [1, item_subtypes.spell_damage_many],
+	13: [1, item_subtypes.spell_healing],
+	14: [1, item_subtypes.spell_stun]
 }
 
 const boss_item_gen_chance_table = {
@@ -135,11 +133,10 @@ const boss_item_gen_chance_table = {
 	8: [1, item_subtypes.amulet],
 	9: [0, item_subtypes.potion],
 	10: [0, item_subtypes.food],
-	11: [0, item_subtypes.money],
-	12: [1, item_subtypes.spell_damage_single],
-	13: [1, item_subtypes.spell_damage_many],
-	14: [1, item_subtypes.spell_healing],
-	15: [1, item_subtypes.spell_stun]
+	11: [1, item_subtypes.spell_damage_single],
+	12: [1, item_subtypes.spell_damage_many],
+	13: [1, item_subtypes.spell_healing],
+	14: [1, item_subtypes.spell_stun]
 }
 
 enum loot_filter_enum{
