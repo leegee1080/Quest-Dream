@@ -11,18 +11,14 @@ var starting_class_dict = {
 	"speed": 10,
 	"magic" : 10
 }
-var starting_class_equip_dict = {
-	"l_hand": null, 
-	"r_hand": null, 
-	"head": null, 
-	"body": null, 
-	"bag": [],
-}
+var starting_items = []
+var attack_class
+var defend_class
+
 var special_animations_dict = {
 	"walk": GlobalVars.ani_dict.wiggle_in_place,
-	"melee": GlobalVars.ani_dict.melee_tackle,
-	"ranged": null,
-	"magic": null,
+	"attack": GlobalVars.ani_dict.melee_tackle,
+	"defend": null,
 	"injure": GlobalVars.ani_dict.hit_color_change,
 	"death": GlobalVars.ani_dict.death_flip_red,
 	"happy": null

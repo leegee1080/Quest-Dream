@@ -164,16 +164,6 @@ func place_deco():
 		deco.translate(Vector2(rngx,rngy))
 	return
 
-#i think i am going to remove this and just allow the player to delete the tile until the character walks over the tile
-#func rotate_tile():
-#	return
-#
-#func flip_tile():
-#	return
-#
-#func pick_tile()
-#	return
-
 func lock_tile():
 	if is_locked == true:
 		return

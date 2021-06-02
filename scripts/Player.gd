@@ -36,8 +36,7 @@ var player_level = 0 #build this up and spend these points at a rest room for st
 var type_enum
 var type_class
 var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100}
-var player_equip_dict = {"l_hand": null, "r_hand": null, "head": null, "body": null, "bag": []}
-var max_item_storage = 28
+var items = []
 var is_dead = false
 var level
 var difficulty
@@ -71,7 +70,7 @@ func _ready():
 	add_child(type_class)
 	setup_animations()
 
-func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Dictionary):
+func _init(new_type, set_level: int, set_difficulty: int, new_items: Array):
 	if new_type == null:
 		type_enum = Player_Enums.player_types_enum.soldier
 		return
@@ -84,8 +83,7 @@ func _init(new_type, set_level: int, set_difficulty: int, set_equipment: Diction
 	type_class = Player_Enums.player_types_dict.get(type_enum).new(ani_sprite)
 	ani_sprite.set_frame(type_class.sprite_frame)
 	merge_dict(player_stat_dict, type_class.starting_class_dict)
-	merge_dict(player_equip_dict, type_class.starting_class_equip_dict)
-	merge_dict(player_equip_dict, set_equipment)
+	items = items + new_items + type_class.starting_items
 
 func merge_dict(target, patch):
 	for key in patch:
@@ -225,7 +223,7 @@ func heal_player(new_health):
 
 func process_turn(target):
 	if is_dead == false:
-		ani_dict.melee.play_animation(target, player_stat_dict.attack)#needed to play special animations (melee, ranged, or magic)
+		ani_dict.attack.play_animation(target, player_stat_dict.attack)#needed to play special animations (melee, ranged, or magic)
 
 func take_hit(damage):
 #	type_class.take_hit()

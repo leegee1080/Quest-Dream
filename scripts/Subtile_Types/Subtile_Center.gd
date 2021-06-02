@@ -6,37 +6,27 @@ class_name Subtile_Center
 const subtile_castle_type_dict = {
 	Tile_Enums.center_type_enum.battle: [0, 1, 2, 3],
 	Tile_Enums.center_type_enum.treasure: [9, 10, 12],
-	Tile_Enums.center_type_enum.shop: [6, 7, 8],
-	Tile_Enums.center_type_enum.rest: [11, 13],
-	Tile_Enums.center_type_enum.silly: [4, 5]
+	Tile_Enums.center_type_enum.rest: [11, 13]
 }
 const subtile_forest_type_dict = {
 	Tile_Enums.center_type_enum.battle: [0, 1, 2, 3],
 	Tile_Enums.center_type_enum.treasure: [9, 10, 12],
-	Tile_Enums.center_type_enum.shop: [6, 7, 8],
-	Tile_Enums.center_type_enum.rest: [11, 13],
-	Tile_Enums.center_type_enum.silly: [4, 5]
+	Tile_Enums.center_type_enum.rest: [11, 13]
 }
 const subtile_grave_type_dict = {
 	Tile_Enums.center_type_enum.battle: [0, 1, 2, 3],
 	Tile_Enums.center_type_enum.treasure: [9, 10, 12],
-	Tile_Enums.center_type_enum.shop: [6, 7, 8],
-	Tile_Enums.center_type_enum.rest: [11, 13],
-	Tile_Enums.center_type_enum.silly: [4, 5]
+	Tile_Enums.center_type_enum.rest: [11, 13]
 }
 const subtile_mountain_type_dict = {
 	Tile_Enums.center_type_enum.battle: [0, 1, 2, 3],
 	Tile_Enums.center_type_enum.treasure: [9, 10, 12],
-	Tile_Enums.center_type_enum.shop: [6, 7, 8],
-	Tile_Enums.center_type_enum.rest: [11, 13],
-	Tile_Enums.center_type_enum.silly: [4, 5]
+	Tile_Enums.center_type_enum.rest: [11, 13]
 }
 const subtile_swamp_type_dict = {
 	Tile_Enums.center_type_enum.battle: [0, 1, 2, 3],
 	Tile_Enums.center_type_enum.treasure: [9, 10, 12],
-	Tile_Enums.center_type_enum.shop: [6, 7, 8],
-	Tile_Enums.center_type_enum.rest: [11, 13],
-	Tile_Enums.center_type_enum.silly: [4, 5]
+	Tile_Enums.center_type_enum.rest: [11, 13]
 }
 const subtile_theme_dict = {
 	Tile_Enums.tile_themes_enum.castle: subtile_castle_type_dict,

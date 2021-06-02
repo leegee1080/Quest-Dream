@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Loot
+class_name LootZ
 
 var loot_amt
 var loot_str #used to gen the rarity
@@ -17,7 +17,6 @@ func _init(new_loot_amount, new_filter): #loot filter must be Item_Enums.loot_fi
 	pass
 
 func _ready():
-	#boss guaranteed loot, boosted loot_str value
 	var temp_item_enum
 	for num in range(0, loot_amt):
 		randomize()
@@ -27,5 +26,5 @@ func _ready():
 #			print(Item_Enums.item_subtypes.keys()[temp_item_enum])
 			for rarity in Item_Enums.item_stat_rarity_weight:
 					if Item_Enums.item_stat_rarity_weight[rarity] > loot_str:
-						item_list.append(Item.new(temp_item_enum, rarity))
+#						item_list.append(Item.new(temp_item_enum, rarity))
 						break

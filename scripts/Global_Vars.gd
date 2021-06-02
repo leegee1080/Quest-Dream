@@ -9,12 +9,8 @@ var stage_enemies_dict = { #this dict is filled at start of the main class, ther
 	3 : [],
 	4 : []
 }
-var loot_tables = {#this is the dict of the loot tables organized by loot filter(boss, shop, normal)
-	Item_Enums.loot_filter_enum.boss: [],
-	Item_Enums.loot_filter_enum.shop: [],
-	Item_Enums.loot_filter_enum.normal: []
-}
-var temp_loot_pool = [] #filled and cleared during each room event
+var tile_path_type_chance_array = []
+var tile_center_chance_array = []
 const ani_dict = {#dictionary of all the animation classes
 	"wiggle_in_place" : Walking_Animation,
 	"melee_tackle" : Melee_Animation,

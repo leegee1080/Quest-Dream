@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Item_Collection/Bolt_Spell.gd"
 }, {
+"base": "Node2D",
+"class": "Boss_Room",
+"language": "GDScript",
+"path": "res://scripts/Room_Classes/Boss_Room.gd"
+}, {
 "base": "Reference",
 "class": "Bow",
 "language": "GDScript",
@@ -108,6 +113,11 @@ _global_script_classes=[ {
 "class": "Eye",
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Eye.gd"
+}, {
+"base": "Node2D",
+"class": "Fight_Room",
+"language": "GDScript",
+"path": "res://scripts/Room_Classes/Fight_Room.gd"
 }, {
 "base": "Reference",
 "class": "Fireball_Spell",
@@ -200,7 +210,7 @@ _global_script_classes=[ {
 "path": "res://scripts/Enemy_Collection/Lich.gd"
 }, {
 "base": "Node2D",
-"class": "Loot",
+"class": "LootZ",
 "language": "GDScript",
 "path": "res://scripts/Loot.gd"
 }, {
@@ -254,6 +264,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Rat.gd"
 }, {
+"base": "Node2D",
+"class": "Rest_Room",
+"language": "GDScript",
+"path": "res://scripts/Room_Classes/Rest_Room.gd"
+}, {
 "base": "Reference",
 "class": "Ring",
 "language": "GDScript",
@@ -268,6 +283,11 @@ _global_script_classes=[ {
 "class": "Room",
 "language": "GDScript",
 "path": "res://scripts/Room.gd"
+}, {
+"base": "Node2D",
+"class": "Room_Enums",
+"language": "GDScript",
+"path": "res://scripts/Room_Enums.gd"
 }, {
 "base": "Reference",
 "class": "Shield",
@@ -344,6 +364,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Traveler.gd"
 }, {
+"base": "Node2D",
+"class": "Treasure_Room",
+"language": "GDScript",
+"path": "res://scripts/Room_Classes/Treasure_Room.gd"
+}, {
 "base": "Reference",
 "class": "Undead",
 "language": "GDScript",
@@ -383,6 +408,7 @@ _global_script_class_icons={
 "Bat": "",
 "Berserker": "",
 "Bolt_Spell": "",
+"Boss_Room": "",
 "Bow": "",
 "Btn": "",
 "Bull_God": "",
@@ -395,6 +421,7 @@ _global_script_class_icons={
 "Enemy_Enums": "",
 "Executioner": "",
 "Eye": "",
+"Fight_Room": "",
 "Fireball_Spell": "",
 "Food": "",
 "Goblin": "",
@@ -413,7 +440,7 @@ _global_script_class_icons={
 "Item_Enums": "",
 "Knight": "",
 "Lich": "",
-"Loot": "",
+"LootZ": "",
 "Main_Game": "",
 "Melee_Animation": "",
 "Money": "",
@@ -424,9 +451,11 @@ _global_script_class_icons={
 "Potion": "",
 "Ranger": "",
 "Rat": "",
+"Rest_Room": "",
 "Ring": "",
 "Robber": "",
 "Room": "",
+"Room_Enums": "",
 "Shield": "",
 "Slime_Big": "",
 "Slime_Boss": "",
@@ -442,6 +471,7 @@ _global_script_class_icons={
 "Tile": "",
 "Tile_Enums": "",
 "Traveler": "",
+"Treasure_Room": "",
 "Undead": "",
 "Valkyrie": "",
 "Vampire": "",

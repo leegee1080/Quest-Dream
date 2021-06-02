@@ -15,9 +15,8 @@ var stat_dict = {
 }
 var ani_dict = {
 	"walk": null,
-	"melee": null,
-	"ranged": null,
-	"magic": null,
+	"attack": null,
+	"defend": null,
 	"injure": null,
 	"death": null,
 	"happy": null
@@ -40,7 +39,7 @@ func _ready():
 	string_name = type_class.name
 	setup_animations()
 
-func _init(new_type, power_boost:int): #power boost is derived from the level of the room that the enemy was spawned in
+func _init(new_type):
 	if new_type == null:
 		randomize()
 		var rand_pick = int(rand_range(0, (Enemy_Enums.enemy_types_enum.size()-1)))
@@ -48,10 +47,6 @@ func _init(new_type, power_boost:int): #power boost is derived from the level of
 		pass
 	else:
 		type_enum = new_type
-	stat_dict["health"] = stat_dict["health"] * power_boost
-	stat_dict["attack"] = stat_dict["attack"] * power_boost
-	stat_dict["speed"] = stat_dict["speed"] * power_boost
-	stat_dict["loot"] = stat_dict["loot"] * power_boost
 
 func setup_animations():
 	for ani in type_class.special_animations_dict:
@@ -106,21 +101,10 @@ func take_hit(damage):
 func kill_enemy():
 	ani_dict.injure.stop_animation()
 	#pay the player exp points based on difficulty of the enemy
-	#drop loot
-	var temp_loot = null
 	if type_class.is_boss:
 		GlobalVars.player_node_ref.player_level += 20
-		temp_loot = Loot.new(type_class.stat_dict.loot, Item_Enums.loot_filter_enum.boss)
 	else:
 		GlobalVars.player_node_ref.player_level += type_class.difficulty
-		temp_loot = Loot.new(type_class.stat_dict.loot, Item_Enums.loot_filter_enum.normal)
-	add_child(temp_loot)
-	#give loot
-	for item in temp_loot.item_list:
-		print("Dropped: " + item.item_name)
-		GlobalVars.temp_loot_pool.append(item)
-		GlobalVars.main_node_ref.add_child(item)
-		pass
 	#death animation
 	ani_dict.death.play_animation()
 #	hit_animation.queue_free()

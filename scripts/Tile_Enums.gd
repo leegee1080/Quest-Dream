@@ -22,12 +22,17 @@ enum center_type_enum{
 	none,
 	rest,
 	battle,
-	treasure
-#	shop,#no longer used
-#	silly #no longer used
+	treasure,
+	boss
 }
 
 #Chances To Spawn
+#const center_tile_chances = [
+#	[1, tile_directions_enum.cross],
+#	[3, tile_directions_enum.elbow],
+#	[2, tile_directions_enum.tee],
+#	[2, tile_directions_enum.straight]
+#]
 const tile_chances = [
 	tile_directions_enum.cross,
 	tile_directions_enum.elbow,
@@ -39,18 +44,10 @@ const tile_chances = [
 	tile_directions_enum.straight
 ]
 #const center_tile_chances = [
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.none,
-#	center_type_enum.rest,
-#	center_type_enum.battle,
-#	center_type_enum.treasure,
-##	center_type_enum.silly
+#	[10, center_type_enum.none],
+#	[1, center_type_enum.rest],
+#	[1, center_type_enum.battle],
+#	[1, center_type_enum.treasure]
 #]
 const center_tile_chances = [
 	center_type_enum.none,
@@ -63,6 +60,5 @@ const center_tile_chances = [
 	center_type_enum.battle,
 	center_type_enum.rest,
 	center_type_enum.battle,
-	center_type_enum.treasure,
-#	center_type_enum.silly
+	center_type_enum.treasure
 ]

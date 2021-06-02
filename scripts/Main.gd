@@ -6,7 +6,7 @@ class_name Main_Game
 
 var difficulty = 1
 var stage_level = 1
-var player = Player.new(Player_Enums.player_types_enum.assassin, 0, difficulty, {})
+var player = Player.new(Player_Enums.player_types_enum.assassin, 0, difficulty, [])
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var round_start_time = 5.0
@@ -86,8 +86,8 @@ func _ready():
 	#setup dict for enemies
 	generate_enemies_dict()
 	
-	#setup dict for loot
-	generate_loot_tables()
+#	#setup dict for loot
+#	generate_loot_tables()
 	
 	#setup start timer and player character
 	can_player_place_tiles = true
