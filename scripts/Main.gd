@@ -2,11 +2,10 @@ extends Node2D
 
 class_name Main_Game
 
-#var clicked #this var is used for all clicking
 
 var difficulty = 1
 var stage_level = 1
-var player = Player.new(Player_Enums.player_types_enum.assassin, 0, difficulty, [])
+var player = Player.new(Player_Enums.player_types_enum.assassin, [])
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var round_start_time = 5.0
@@ -166,7 +165,6 @@ func ui_back(btn_node_ref):
 			room_screen.leave_room()
 			btn_node_ref.queue_free()
 			current_game_state = game_state.run
-			player.position = player_last_loc
 			player.walk_toggle()
 			can_player_place_tiles = true
 		return
@@ -265,8 +263,6 @@ func _input(event): #when the user clicks
 
 func open_room(current_tile):
 	can_player_place_tiles = false
-	player_last_loc = player.position #grab pos to later return the player to last tile
-	player.z_index = get_child_count()-1 #make sure the player sprite is on top
 	var center_subtile = current_tile.center_subtile
 	var saved_room = current_tile.saved_center_room
 	print(
@@ -277,12 +273,11 @@ func open_room(current_tile):
 	var type = center_subtile.subtile_type_enum
 	var theme = center_subtile.subtile_theme_enum
 	var level = center_subtile.subtile_level
-	room_screen = Room.new(type, theme, level, room_screen_loc, false, player)
+	room_screen = Room.new(type, theme, level, room_screen_loc, false)
 	if saved_room != null:
 		room_screen = saved_room
 	room_screen.name = "room"
 	add_child(room_screen)
-	player.position = player_room_screen_loc
 	current_game_state = game_state.room
 #play animation for opening room.
 #add deco using deco tiles based on room theme
@@ -299,8 +294,6 @@ func delete_centertile():
 func save_centertile():
 	var current_tile = player.current_tile
 	current_tile.saved_center_room = room_screen
-	current_tile.saved_loot_pool = GlobalVars.temp_loot_pool
-	GlobalVars.temp_loot_pool.clear()
 	#play close room animation
 	return
 

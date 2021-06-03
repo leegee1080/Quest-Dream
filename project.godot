@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Item_Collection/Amulet.gd"
 }, {
+"base": "Reference",
+"class": "Animation_Enums",
+"language": "GDScript",
+"path": "res://scripts/Animation_Enums.gd"
+}, {
 "base": "Node2D",
 "class": "Assassin",
 "language": "GDScript",
@@ -38,6 +43,11 @@ _global_script_classes=[ {
 "class": "Bat",
 "language": "GDScript",
 "path": "res://scripts/Enemy_Collection/Bat.gd"
+}, {
+"base": "Reference",
+"class": "Battle_Enums",
+"language": "GDScript",
+"path": "res://scripts/Battle_Enums.gd"
 }, {
 "base": "Node2D",
 "class": "Berserker",
@@ -289,10 +299,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Room_Enums.gd"
 }, {
+"base": "Node2D",
+"class": "Room_Player",
+"language": "GDScript",
+"path": "res://scripts/Room_Player.gd"
+}, {
 "base": "Reference",
 "class": "Shield",
 "language": "GDScript",
 "path": "res://scripts/Item_Collection/Shield.gd"
+}, {
+"base": "Node",
+"class": "Simple_Attack_Turn",
+"language": "GDScript",
+"path": "res://scripts/Turn_Classes/Simple_Attack_Turn.gd"
 }, {
 "base": "Reference",
 "class": "Slime_Big",
@@ -349,6 +369,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Item_Collection/Sword.gd"
 }, {
+"base": "Node",
+"class": "Tackle_Attack_1",
+"language": "GDScript",
+"path": "res://scripts/Attack_Classes/Tackle_Attack_1.gd"
+}, {
 "base": "Node2D",
 "class": "Tile",
 "language": "GDScript",
@@ -394,6 +419,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Animations/Walking_Animation.gd"
 }, {
+"base": "Node",
+"class": "Weak_Defend",
+"language": "GDScript",
+"path": "res://scripts/Defend_Classes/Weak_Defend.gd"
+}, {
 "base": "Node2D",
 "class": "Wizard",
 "language": "GDScript",
@@ -402,10 +432,12 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Alien_God": "",
 "Amulet": "",
+"Animation_Enums": "",
 "Assassin": "",
 "Avatar": "",
 "Axe": "",
 "Bat": "",
+"Battle_Enums": "",
 "Berserker": "",
 "Bolt_Spell": "",
 "Boss_Room": "",
@@ -456,7 +488,9 @@ _global_script_class_icons={
 "Robber": "",
 "Room": "",
 "Room_Enums": "",
+"Room_Player": "",
 "Shield": "",
+"Simple_Attack_Turn": "",
 "Slime_Big": "",
 "Slime_Boss": "",
 "Slime_Tiny": "",
@@ -468,6 +502,7 @@ _global_script_class_icons={
 "Subtile_Center": "",
 "Subtile_Deco": "",
 "Sword": "",
+"Tackle_Attack_1": "",
 "Tile": "",
 "Tile_Enums": "",
 "Traveler": "",
@@ -477,6 +512,7 @@ _global_script_class_icons={
 "Vampire": "",
 "Vines": "",
 "Walking_Animation": "",
+"Weak_Defend": "",
 "Wizard": ""
 }
 

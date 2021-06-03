@@ -3,10 +3,6 @@ extends Node2D
 class_name Player
 
 var ani_dict = {
-	"walk": null,
-	"melee": null,
-	"ranged": null,
-	"magic": null,
 	"injure": null,
 	"death": null,
 	"happy": null
@@ -31,15 +27,12 @@ const walk_ani_pos_list = [
 	[Vector2(1,-2), -0.1]
 ]
 
-var player_level = 0 #build this up and spend these points at a rest room for stat increases
-
 var type_enum
 var type_class
-var player_stat_dict = {"attack": 10, "speed": 10, "magic": 10, "health": 100}
+var health = 0
 var items = []
 var is_dead = false
 var level
-var difficulty
 
 
 var playarea
@@ -67,33 +60,20 @@ func _ready():
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
-	add_child(type_class)
 	setup_animations()
 
-func _init(new_type, set_level: int, set_difficulty: int, new_items: Array):
+func _init(new_type, new_items: Array):
 	if new_type == null:
 		type_enum = Player_Enums.player_types_enum.soldier
 		return
 	type_enum = new_type
-	level = set_level
-	difficulty = set_difficulty
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
-	type_class = Player_Enums.player_types_dict.get(type_enum).new(ani_sprite)
+	type_class = Player_Enums.player_types_dict[type_enum].new()
 	ani_sprite.set_frame(type_class.sprite_frame)
-	merge_dict(player_stat_dict, type_class.starting_class_dict)
 	items = items + new_items + type_class.starting_items
-
-func merge_dict(target, patch):
-	for key in patch:
-		if patch[key] == null:
-			continue
-		if patch[key] is Dictionary:
-			continue
-		var temp_val = target[key]
-		target[key] = temp_val + patch[key]
-	return
+	health += type_class.starting_health
 
 func setup_animations():
 	for ani in type_class.special_animations_dict:
@@ -214,24 +194,15 @@ func check_center_tile():
 func turn_around():
 	direction = (direction *-1) #turn the player around
 	center_interval_count = 2
-	take_hit(10)
+	take_hit(1)
 	return
 
-func heal_player(new_health):
-	player_stat_dict.health += new_health
-	print("Player now has "+ str(player_stat_dict.health) + " health left.")
-
-func process_turn(target):
-	if is_dead == false:
-		ani_dict.attack.play_animation(target, player_stat_dict.attack)#needed to play special animations (melee, ranged, or magic)
-
 func take_hit(damage):
-#	type_class.take_hit()
 	ani_dict.injure.play_animation()
-	player_stat_dict.health -= damage
-	if player_stat_dict.health <= 0:
+	health -= damage
+	if health <= 0:
 		print("player dead")
-		get_parent().lose_round()
+		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
 		is_dead = true
-	print("Player health: "+ str(player_stat_dict.health))
+	print("Player health: "+ str(health))
