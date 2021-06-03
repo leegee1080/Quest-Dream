@@ -25,3 +25,9 @@ var special_animations_dict = {
 }
 func _init(ani_sprite):
 	name = string_name
+
+func attack():
+	attack_class.attack()
+
+func defend():
+	defend_class.defend()

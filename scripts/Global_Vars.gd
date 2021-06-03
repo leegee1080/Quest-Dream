@@ -1,5 +1,8 @@
 extends Node
 
+var current_stage = 1
+var current_theme = Tile_Enums.tile_themes_enum.castle
+
 var main_node_ref
 var player_node_ref
 var stage_enemies_dict = { #this dict is filled at start of the main class, there is a list of all possible enemies per level of this theme
