@@ -27,3 +27,10 @@
 - [ ] rest room
    - [ ] screen to level up stats
       - [ ] up arrows to perm raise stat of choice
+
+Last redo!
+- No items
+- characters has unique attack and defence
+- each battle room allows the player to upgrade character once, depending on character this could just be damage upgrade or something else (necro, summon more skell)
+- Treasure rooms just give gold to unlock more characters
+- rest room only refills health
