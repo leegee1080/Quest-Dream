@@ -205,23 +205,6 @@ func generate_enemies_dict():
 				GlobalVars.stage_enemies_dict[test_enemy.difficulty].append(test)
 	return
 
-func generate_loot_tables():
-	GlobalVars.loot_tables[Item_Enums.loot_filter_enum.normal] = loot_table_generator(Item_Enums.normal_item_gen_chance_table)
-	GlobalVars.loot_tables[Item_Enums.loot_filter_enum.shop] = loot_table_generator(Item_Enums.shop_item_gen_chance_table)
-	GlobalVars.loot_tables[Item_Enums.loot_filter_enum.boss] = loot_table_generator(Item_Enums.boss_item_gen_chance_table)
-	pass
-
-func loot_table_generator(table_to_use):
-	var templist = []
-	for index in table_to_use:
-		if table_to_use[index][0] == 0:
-			continue
-		for _num in range(0, table_to_use[index][0]):
-			templist.append(table_to_use[index][1])
-			pass
-		pass
-	return templist
-
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run
 	player.walk_toggle()
