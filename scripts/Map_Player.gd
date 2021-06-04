@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Player
+class_name Map_Player
 
 var ani_dict = {
 	"injure": null,

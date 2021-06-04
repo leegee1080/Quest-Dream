@@ -170,6 +170,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Main.gd"
 }, {
 "base": "Node2D",
+"class": "Map_Player",
+"language": "GDScript",
+"path": "res://scripts/Map_Player.gd"
+}, {
+"base": "Node2D",
 "class": "Melee_Animation",
 "language": "GDScript",
 "path": "res://scripts/Animations/Melee_Animation.gd"
@@ -183,11 +188,6 @@ _global_script_classes=[ {
 "class": "Necromancer",
 "language": "GDScript",
 "path": "res://scripts/Player_Classes/Necromancer.gd"
-}, {
-"base": "Node2D",
-"class": "Player",
-"language": "GDScript",
-"path": "res://scripts/Player.gd"
 }, {
 "base": "Reference",
 "class": "Player_Enums",
@@ -372,10 +372,10 @@ _global_script_class_icons={
 "Knight": "",
 "Lich": "",
 "Main_Game": "",
+"Map_Player": "",
 "Melee_Animation": "",
 "Monkey": "",
 "Necromancer": "",
-"Player": "",
 "Player_Enums": "",
 "Ranger": "",
 "Rat": "",
