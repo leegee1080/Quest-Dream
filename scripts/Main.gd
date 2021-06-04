@@ -85,6 +85,10 @@ func _ready():
 	#setup dict for enemies
 	generate_enemies_dict()
 	
+	#setup the chances to pull a certain tile for the queue
+	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
+	generate_tile_chance_arrays(Tile_Enums.tile_center_chances, GlobalVars.tile_center_chance_array)
+	
 	#setup start timer and player character
 	can_player_place_tiles = true
 	var start_timer = Timer.new()
@@ -192,7 +196,6 @@ func ui_menu():
 	add_child(pause_menu)
 	generate_ui(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index)
 	ui_pause()
-	return
 
 func generate_enemies_dict():
 	for test in Enemy_Enums.enemy_types_dict:
@@ -200,7 +203,17 @@ func generate_enemies_dict():
 		for theme in test_enemy.theme_list:
 			if theme == chosen_level_theme:
 				GlobalVars.stage_enemies_dict[test_enemy.difficulty].append(test)
-	return
+
+func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
+	for test in array_to_check:
+		if test[0] == 0:
+			continue
+		if test[0] == 1:
+			chance_array_to_build.append(test[1])
+			continue
+		for num in range(0, test[0]):
+			chance_array_to_build.append(test[1])
+			continue
 
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run
@@ -292,10 +305,10 @@ func slide_queue():
 func generate_random_tile():
 	var tile
 	randomize()
-	Tile_Enums.tile_chances.shuffle()
-	var chosen_tile_type = Tile_Enums.tile_chances[0]
-	Tile_Enums.center_tile_chances.shuffle()
-	var chosen_tile_center = Tile_Enums.center_tile_chances[0]
+	GlobalVars.tile_path_type_chance_array.shuffle()
+	var chosen_tile_type = GlobalVars.tile_path_type_chance_array[0]
+	GlobalVars.tile_center_chance_array.shuffle()
+	var chosen_tile_center = GlobalVars.tile_center_chance_array[0]
 	#direction, theme, center, level, diff, deco amount, center level, chosen sprite(-1 for rand)
 	tile = Tile.new(chosen_tile_type, chosen_level_theme, chosen_tile_center, stage_level, difficulty, 1, -1)
 	return tile
