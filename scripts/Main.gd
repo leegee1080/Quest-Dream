@@ -85,9 +85,6 @@ func _ready():
 	#setup dict for enemies
 	generate_enemies_dict()
 	
-#	#setup dict for loot
-#	generate_loot_tables()
-	
 	#setup start timer and player character
 	can_player_place_tiles = true
 	var start_timer = Timer.new()
@@ -247,7 +244,6 @@ func _input(event): #when the user clicks
 func open_room(current_tile):
 	can_player_place_tiles = false
 	var center_subtile = current_tile.center_subtile
-	var saved_room = current_tile.saved_center_room
 	print(
 	"|level:" + str(center_subtile.subtile_level) + 
 	"|type:" + Tile_Enums.center_type_enum.keys()[center_subtile.subtile_type_enum] +
@@ -256,9 +252,7 @@ func open_room(current_tile):
 	var type = center_subtile.subtile_type_enum
 	var theme = center_subtile.subtile_theme_enum
 	var level = center_subtile.subtile_level
-	room_screen = Room.new(type, theme, level, room_screen_loc, false)
-	if saved_room != null:
-		room_screen = saved_room
+	room_screen = Room.new(type, theme, level, room_screen_loc)
 	room_screen.name = "room"
 	add_child(room_screen)
 	current_game_state = game_state.room
@@ -271,12 +265,6 @@ func delete_centertile():
 	current_tile.center_subtile.queue_free()
 	for enemy in room_screen.original_enemies:
 		enemy.queue_free()
-	#play close room animation
-	return
-
-func save_centertile():
-	var current_tile = player.current_tile
-	current_tile.saved_center_room = room_screen
 	#play close room animation
 	return
 

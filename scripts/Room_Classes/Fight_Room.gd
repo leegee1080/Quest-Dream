@@ -2,8 +2,6 @@ extends Node2D
 
 class_name Fight_Room
 
-const can_return_to_room = false
-
 var battle_player
 var enemies = []
 var turn_order_array = []
