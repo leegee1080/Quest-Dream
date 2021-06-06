@@ -1,4 +1,5 @@
 extends Node
+var money_gained_this_run = 0
 
 var current_stage = 1
 var current_theme = Tile_Enums.tile_themes_enum.castle

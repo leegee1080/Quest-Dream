@@ -5,32 +5,23 @@
 
 
 ### prog todo:
+- [x] hitting the edge of the map hurts the player (every class has 3 health(consumable) to start)
 - [ ] create set of attack classes
 - [ ] create set of defend classes
-- [ ] boss room (gets its own class) just like battle room but with only one enemy and will drop boss level item)
-- [ ] rest room (rest room will have random food just for art) (gets its own class)
-- [ ] battle room func (complete redo, needs its own class)
-   - [ ] enemies
-      - [ ] enemies' turn (make the enemies's attack based on speed of a count down not wait on turn)
-   - [ ] player's turn
+- [x] collectables around the map randomly generates on tiles
+   - [x] the collectable is different per player class, they will increase the players (consumable) stat (health for the warrior, skulls for the nec)
+   - [x] collectable gold for the player to unlock more heros at the end of the run
+- [ ] boss battle room func
+   - [ ] Will level up the player (allowing them to choose between two rewards, dependant on the class chosen)
+   - [ ] take turns
       - [ ] redo to make the player class have one attack move and one def move
-   - [ ] turn counter is random. speed doesn't matter any more unless an item changes it. turn is just an array
-   - [ ] battle room drops 1 item	
-- [ ] treasure room (gets its own class)
-   - [ ] treasure room drops 1 item and player can come back for it (drops items from its own list)
-   - [ ] items (the player can only have 5 items at a time) (items work like LOL items: increase stats, change the way attack/def moves work, change how the player character interacts with the map, change how enemies interact during attacks)
+- [ ] Macro Game
+   - [ ] At the end of each level is a boss room
+   - [ ] 4 mini boss rooms and a main boss at the end of a set
+   - [ ] 5 levels in a set for each theme, forest -> mountains -> swamp -> grave -> castle
+   - [ ] after castle is the final level with a super boss(demi-god?) at the end
 
 ### art todo:
 - [ ] art for attack damage telegraph, 3 skulls for 3 damage
 - [ ] deco tiles to rooms
 - [ ] change outer walls and the premade tiles to be spikes
-- [ ] rest room
-   - [ ] screen to level up stats
-      - [ ] up arrows to perm raise stat of choice
-
-Last redo!
-- No items
-- characters has unique attack and defence
-- each battle room allows the player to upgrade character once, depending on character this could just be damage upgrade or something else (necro, summon more skell)
-- Treasure rooms just give gold to unlock more characters
-- rest room only refills health
