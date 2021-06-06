@@ -23,7 +23,6 @@ var is_room_complete = false
 var ani_sprite
 var room_class
 
-
 #battle vars
 var enemies = []
 var original_enemies = []#this is the list of enemies that wree created at the start of the room
