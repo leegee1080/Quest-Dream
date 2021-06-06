@@ -11,15 +11,8 @@ const room_theme_dict = {
 	Tile_Enums.tile_themes_enum.swamp: 4
 }
 
-#[0base enemies to gen, 1base loot to gen, 2base number of shopkeep items, 3can return to room true1/false0, 4can rest true1/false0]
-const room_type_dict = {
-	Tile_Enums.center_type_enum.battle: [1, 1, 0, 0, 0],
-	Tile_Enums.center_type_enum.treasure: [0, 1, 0, 1, 0],
-	Tile_Enums.center_type_enum.rest: [0, 0, 0, 0, 1]
-}
 #generic room vars
 var type_enum
-var room_type_hash #stores the stats about the room type from the room_type_dict
 var theme_enum
 var room_theme_frame #stores the frame number of the room theme
 var room_screen_loc #the location the room will appear on the player's screen
@@ -55,7 +48,6 @@ func _init(new_type, new_theme, level, new_room_screen_loc):
 	theme_enum = new_theme
 	type_enum = new_type
 	room_level = level
-	room_type_hash = room_type_dict.get(new_type)
 	room_theme_frame = room_theme_dict.get(new_theme)
 	room_screen_loc = new_room_screen_loc
 
@@ -91,18 +83,9 @@ func leave_room():
 		queue_free()
 
 func rest_room():
-	var room_player = Room_Player.new()
-	add_child(room_player)
-	var leave_timer = Timer.new()
-	leave_timer.name = "Leave Timer"
-	timer_group.add_child(leave_timer)
-	leave_timer.set_wait_time(leave_time)
-	leave_timer.set_one_shot(true)
-	leave_timer.connect("timeout", self, "complete_room")
-	leave_timer.start()
-	room_player.health = GlobalVars.player_node_ref.type_class.starting_health
 	print("heal")
-	return
+	room_class =  Rest_Room.new()
+	add_child(room_class)
 
 func battle_room():
 	print("battle")
@@ -113,5 +96,4 @@ func treasure_room():
 	print("treasure")
 	room_class = Treasure_Room.new()
 	add_child(room_class)
-	return
 

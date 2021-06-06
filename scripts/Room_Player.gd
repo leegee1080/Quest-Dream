@@ -3,6 +3,7 @@ extends Node2D
 class_name Room_Player
 
 var ani_dict = {
+	"walk": null,
 	"injure": null,
 	"death": null,
 	"happy": null
