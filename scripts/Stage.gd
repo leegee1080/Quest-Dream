@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Main_Game
+class_name Stage
 
 
 var difficulty = 1
@@ -199,9 +199,10 @@ func ui_menu():
 func generate_enemies_dict():
 	for test in Enemy_Enums.enemy_types_dict:
 		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
-		for theme in test_enemy.theme_list:
-			if theme == chosen_level_theme:
-				GlobalVars.stage_enemies_dict[test_enemy.difficulty].append(test)
+		if test_enemy.is_final_boss:
+			GlobalVars.stage_enemies_dict[test_enemy.theme][1].append(Enemy_Enums.enemy_types_dict[test])
+		else:
+			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
 
 func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	for test in array_to_check:
@@ -210,7 +211,7 @@ func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 		if test[0] == 1:
 			chance_array_to_build.append(test[1])
 			continue
-		for num in range(0, test[0]):
+		for _num in range(0, test[0]):
 			chance_array_to_build.append(test[1])
 			continue
 

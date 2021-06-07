@@ -7,12 +7,12 @@ var current_theme = Tile_Enums.tile_themes_enum.castle
 var main_node_ref
 var player_node_ref
 
-var stage_enemies_dict = { #this dict is filled at start of the main class, there is a list of all possible enemies per level of this theme
-	0 : [],#this is the index of the boss enemies
-	1 : [],
-	2 : [],
-	3 : [],
-	4 : []
+var stage_enemies_dict = { #this dict is filled at start of the main class, there is an array for each them of sub_boss[0] and bosses[1]
+	Tile_Enums.tile_themes_enum.forest : [[],[]],
+	Tile_Enums.tile_themes_enum.mountain : [[],[]],
+	Tile_Enums.tile_themes_enum.swamp : [[],[]],
+	Tile_Enums.tile_themes_enum.grave : [[],[]],
+	Tile_Enums.tile_themes_enum.castle : [[],[]]
 }
 
 var battle_participants_node_array

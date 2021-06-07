@@ -1,17 +1,10 @@
 class_name Avatar
 
-var name = "Avatar of Death"
+var string_name = "Avatar of Death"
 var sprite_frame = 0
 
-var theme_list = [
-	Tile_Enums.tile_themes_enum.castle,
-	Tile_Enums.tile_themes_enum.forest,
-	Tile_Enums.tile_themes_enum.swamp,
-	Tile_Enums.tile_themes_enum.grave,
-	Tile_Enums.tile_themes_enum.mountain
-]
-var is_boss = true
-var difficulty = 0
+var theme = Tile_Enums.tile_themes_enum.castle
+var is_final_boss = true
 
 var special_animations_dict = {
 	"walk": Animation_Enums.ani_dict.wiggle_in_place,
