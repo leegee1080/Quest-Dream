@@ -25,6 +25,7 @@ var is_dead = false
 
 
 func _ready():
+	z_index = 12 #place baddies on the top layer
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/enemy_frames.tres"))
 	add_child(ani_sprite)
@@ -33,7 +34,7 @@ func _ready():
 #	death_animation = Death_Animation.new(ani_sprite)
 #	add_child(death_animation)
 	generate_enemy()
-	string_name = type_class.name
+	string_name = type_class.string_name
 	setup_animations()
 
 func _init(new_type):
@@ -54,14 +55,11 @@ func setup_animations():
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-		pass
-	print(ani_dict)
-	pass
 
 func generate_enemy():
 	if type_enum == null:
 		type_enum = Enemy_Enums.enemy_types_enum.rat
-	type_class = Enemy_Enums.enemy_types_dict.get(type_enum).new()
+	type_class = type_enum.new()
 	ani_sprite.set_frame(type_class.sprite_frame)
 
 func process_turn(target):

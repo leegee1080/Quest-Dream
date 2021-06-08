@@ -185,11 +185,6 @@ _global_script_classes=[ {
 "path": "res://scripts/Player/Map_Player.gd"
 }, {
 "base": "Node2D",
-"class": "Melee_Animation",
-"language": "GDScript",
-"path": "res://scripts/Animations/Melee_Animation.gd"
-}, {
-"base": "Node2D",
 "class": "Money_Coins",
 "language": "GDScript",
 "path": "res://scripts/Player/Item_Classes/Money/Money_Coins.gd"
@@ -380,7 +375,6 @@ _global_script_class_icons={
 "Level_Up_Swap_Ability": "",
 "Lich": "",
 "Map_Player": "",
-"Melee_Animation": "",
 "Money_Coins": "",
 "Monkey": "",
 "Necromancer": "",

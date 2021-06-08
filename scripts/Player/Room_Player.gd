@@ -24,7 +24,7 @@ var turn_class
 func _ready():
 	z_index = 12 #make sure the player sprite is on top
 	type_class = GlobalVars.player_node_ref.type_class
-	health = GlobalVars.player_node_ref.health
+	health = GlobalVars.player_node_ref.consumable_amt
 	ani_dict = GlobalVars.player_node_ref.ani_dict
 	level_hash = GlobalVars.player_node_ref.level_hash
 	ani_sprite = AnimatedSprite.new()

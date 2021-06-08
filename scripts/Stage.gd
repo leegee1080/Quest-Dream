@@ -14,6 +14,7 @@ var num_impass_tiles = 2
 var current_game_state
 var previous_game_state
 enum game_state{
+	setup,
 	run,
 	pause,
 	boss,
@@ -78,6 +79,7 @@ const queue_loc_dict = {
 
 
 func _ready():
+	current_game_state = game_state.setup
 	#setup global refs
 	GlobalVars.main_node_ref = self
 	GlobalVars.player_node_ref = player
@@ -160,7 +162,7 @@ func ui_back(btn_node_ref):
 				btn_list.queue_free()
 		ui_pause()
 		return
-	if current_game_state == game_state.room:
+	if current_game_state == game_state.boss:
 		if room_screen.is_room_complete == true:
 			room_screen.leave_room()
 			btn_node_ref.queue_free()
@@ -236,7 +238,7 @@ func _input(event): #when the user clicks
 	if event is InputEventMouseButton:
 		if UiVars.clicked == true:
 			return
-		if can_player_place_tiles:
+		if can_player_place_tiles and (current_game_state == game_state.run or current_game_state == game_state.setup):
 			for loc in clickable_coords_list:
 				var x_test = loc[0]
 				var y_test = loc[1]
