@@ -16,8 +16,8 @@ func _ready():
 func pick_up():
 	#play sound
 	#play animation
-	print("money")
-	GlobalVars.money_gained_this_run += 1
+	print("consumable")
+	GlobalVars.player_node_ref.consumable_amt += 1
 	finish_pickup_animation()
 
 func finish_pickup_animation():
