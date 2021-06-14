@@ -14,7 +14,7 @@ var special_animations_dict = {
 
 #battle vars
 var starting_consumable_amt = 3
-var consumable_class = Comsume_Hearts
+var consumable_class = Consume_Hearts
 var money_class = Money_Coins
 var speed = 0.5
 var starting_items = []

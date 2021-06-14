@@ -76,8 +76,6 @@ const queue_loc_dict = {
 	"4":Vector2(216,492)
 }
 
-
-
 func _ready():
 	current_game_state = game_state.setup
 	#setup global refs
@@ -113,6 +111,10 @@ func _ready():
 	player.exit_tile_pos = end_tile.position
 	player.name = "Player"
 	player.position = start_tile.position
+	
+	var temp_player_consumable = player.type_class.consumable_class.new()
+	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame)
+	add_child(temp_ui_player_info)
 
 func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
 	var temp_button_list = []

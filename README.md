@@ -5,7 +5,8 @@
 
 
 ### prog todo:
-- [x] hitting the edge of the map hurts the player (every class has 3 health(consumable) to start)
+- [x] hitting the edge of the map hurts the player (every class has 3 health (consumable) to start)
+- [ ] consumable and money counter in the middle of the map screen
 - [ ] create set of attack classes
 - [ ] create set of defend classes
 - [x] collectables around the map randomly generates on tiles
@@ -25,3 +26,4 @@
 - [ ] art for attack damage telegraph, 3 skulls for 3 damage
 - [ ] deco tiles to rooms
 - [ ] change outer walls and the premade tiles to be spikes
+- [ ] consumable and money counter in the middle of the map screen

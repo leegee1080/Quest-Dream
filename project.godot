@@ -60,9 +60,9 @@ _global_script_classes=[ {
 "path": "res://scripts/Enemy/Enemy_Collection/Bull_God.gd"
 }, {
 "base": "Node2D",
-"class": "Comsume_Hearts",
+"class": "Consume_Hearts",
 "language": "GDScript",
-"path": "res://scripts/Player/Item_Classes/Comsumables/Comsume_Hearts.gd"
+"path": "res://scripts/Player/Item_Classes/Consumables/Consume_Hearts.gd"
 }, {
 "base": "Node2D",
 "class": "Death_Animation",
@@ -304,6 +304,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Player/Player_Classes/Traveler.gd"
 }, {
+"base": "Node",
+"class": "UI_Player_Info",
+"language": "GDScript",
+"path": "res://scripts/UI/UI_Player_Info.gd"
+}, {
 "base": "Reference",
 "class": "Undead",
 "language": "GDScript",
@@ -350,7 +355,7 @@ _global_script_class_icons={
 "Boss_Room": "",
 "Btn": "",
 "Bull_God": "",
-"Comsume_Hearts": "",
+"Consume_Hearts": "",
 "Death_Animation": "",
 "Demon": "",
 "Dog": "",
@@ -399,6 +404,7 @@ _global_script_class_icons={
 "Tile": "",
 "Tile_Enums": "",
 "Traveler": "",
+"UI_Player_Info": "",
 "Undead": "",
 "Valkyrie": "",
 "Vampire": "",

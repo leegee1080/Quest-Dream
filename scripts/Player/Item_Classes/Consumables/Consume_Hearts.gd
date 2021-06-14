@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Comsume_Hearts
+class_name Consume_Hearts
 
 var sound
 
