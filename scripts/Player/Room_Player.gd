@@ -56,6 +56,7 @@ func heal_player(new_health):
 	print("Player now has "+ str(health) + " health left.")
 
 func take_hit(damage):
+	get_tree().call_group("UI_Player_Info", "update_consumable")
 	ani_dict.injure.play_animation()
 	health -= damage
 	if health <= 0:

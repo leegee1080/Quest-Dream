@@ -17,6 +17,8 @@ func pick_up():
 	#play sound
 	#play animation
 	print("money")
+	get_tree().call_group("UI_Player_Info", "update_money")
+	emit_signal("ui_update_money", self)
 	GlobalVars.money_gained_this_run += 1
 	finish_pickup_animation()
 

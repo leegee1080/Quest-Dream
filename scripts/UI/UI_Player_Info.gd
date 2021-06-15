@@ -1,47 +1,65 @@
-extends Node
+extends Node2D
 
 class_name UI_Player_Info
 
-const ui_pos = Vector2(0,0)
+const ui_pos = Vector2(110,315)
 const item_spritesheet = "res://assets/visuals/item_frames.tres"
 
 #vars for the consumable UI element
 var consumable_sprite_frame
-const consumable_sprite_pos = Vector2(110,350)
+const consumable_sprite_pos = Vector2(0,0)
 var consumable_sprite_node
 
 #vars for the money UI element
 const money_sprite_frame = 60
-const money_sprite_pos = Vector2(110,400)
+const money_sprite_pos = Vector2(0,50)
 var money_sprite_node
 
 #vars for text elements
 var rtl_node_consumable
 var rtl_node_money
+const rect_size = Vector2(50,50)
+const font = "res://assets/new_dynamicfont.tres"
+const text_scale = 0.1
+
 
 func _ready():
+	var loaded_font = load(font)
+	add_to_group("UI_Player_Info")
+	position = ui_pos
+	
 	consumable_sprite_node = AnimatedSprite.new()
 	consumable_sprite_node.set_sprite_frames(load(item_spritesheet))
 	add_child(consumable_sprite_node)
 	consumable_sprite_node.set_frame(consumable_sprite_frame)
 	consumable_sprite_node.position = consumable_sprite_pos
-	rtl_node_consumable = RichTextLabel.new()
+	rtl_node_consumable = Label.new()
 	add_child(rtl_node_consumable)
-#	rtl_node_consumable.rect.position = Vector2(consumable_sprite_pos.x + 20, consumable_sprite_pos.y)
+	rtl_node_consumable.rect_position = Vector2(consumable_sprite_pos.x + 20, consumable_sprite_pos.y - 15)
+	rtl_node_consumable.rect_scale = Vector2(text_scale,text_scale)
+	rtl_node_consumable.rect_size = rect_size
+	rtl_node_consumable.text = str(GlobalVars.player_node_ref.consumable_amt)
+	rtl_node_consumable.add_font_override("font", load(font))
 	
 	money_sprite_node = AnimatedSprite.new()
 	money_sprite_node.set_sprite_frames(load(item_spritesheet))
 	add_child(money_sprite_node)
 	money_sprite_node.set_frame(money_sprite_frame)
 	money_sprite_node.position = money_sprite_pos
-	rtl_node_money = RichTextLabel.new()
+	rtl_node_money = Label.new()
 	add_child(rtl_node_money)
-#	rtl_node_money.rect.position = Vector2(money_sprite_pos.x + 20, money_sprite_pos.y)
+	rtl_node_money.rect_position = Vector2(money_sprite_pos.x + 20, money_sprite_pos.y - 15)
+	rtl_node_money.rect_scale = Vector2(text_scale,text_scale)
+	rtl_node_money.rect_size = rect_size
+	rtl_node_money.text = str(GlobalVars.money_gained_this_run)
+	rtl_node_money.add_font_override("font", load(font))
 	pass
 
 func _init(player_consumable_frame):
 	consumable_sprite_frame = player_consumable_frame
 
-#func _process(_delta):
-#	rtl_node_consumable.text = GlobalVars.player_node_ref.consumable
-#	rtl_node_money.text = GlobalVars.money_gained_this_run
+func update_consumable():
+	rtl_node_consumable.text = str(GlobalVars.player_node_ref.consumable_amt)
+
+func update_money():
+	rtl_node_money.text = str(GlobalVars.money_gained_this_run)

@@ -17,6 +17,7 @@ func pick_up():
 	#play sound
 	#play animation
 	print("consumable")
+	get_tree().call_group("UI_Player_Info", "update_consumable")
 	GlobalVars.player_node_ref.consumable_amt += 1
 	finish_pickup_animation()
 

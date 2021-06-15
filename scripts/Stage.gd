@@ -112,6 +112,7 @@ func _ready():
 	player.name = "Player"
 	player.position = start_tile.position
 	
+	#generate the heads-up for collectables
 	var temp_player_consumable = player.type_class.consumable_class.new()
 	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame)
 	add_child(temp_ui_player_info)
