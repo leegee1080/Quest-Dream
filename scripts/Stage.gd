@@ -2,6 +2,7 @@ extends Node2D
 
 class_name Stage
 
+var cheats_on = true
 
 var difficulty = 1
 var stage_level = 1
@@ -238,6 +239,10 @@ func win_round():
 	return
 
 func _input(event): #when the user clicks
+	if event is InputEventKey: #this is a cheat for opening the boss room instantly
+		if event.pressed and event.scancode == KEY_SPACE and current_game_state != game_state.boss and current_game_state == game_state.run and cheats_on == true:
+			open_boss_room()
+			return
 	if event is InputEventMouseButton:
 		if UiVars.clicked == true:
 			return
@@ -260,6 +265,7 @@ func _input(event): #when the user clicks
 						return
 
 func open_boss_room():
+	player.walk_toggle()
 	can_player_place_tiles = false
 	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, stage_level, room_screen_loc)
 	room_screen.name = "boss battle"

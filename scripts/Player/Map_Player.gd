@@ -130,7 +130,6 @@ func check_map_edge():
 #	print(y_test)
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
 		if check_dist_exit():
-			walk_toggle()
 			get_parent().open_boss_room()
 			return
 		turn_around()
