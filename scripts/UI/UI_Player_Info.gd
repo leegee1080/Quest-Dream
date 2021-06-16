@@ -2,7 +2,7 @@ extends Node2D
 
 class_name UI_Player_Info
 
-const ui_pos = Vector2(110,315)
+const ui_pos = Vector2(115,320)
 const item_spritesheet = "res://assets/visuals/item_frames.tres"
 
 #vars for the consumable UI element
@@ -35,7 +35,7 @@ func _ready():
 	consumable_sprite_node.position = consumable_sprite_pos
 	rtl_node_consumable = Label.new()
 	add_child(rtl_node_consumable)
-	rtl_node_consumable.rect_position = Vector2(consumable_sprite_pos.x + 20, consumable_sprite_pos.y - 5)
+	rtl_node_consumable.rect_position = Vector2(consumable_sprite_pos.x, consumable_sprite_pos.y + 5)
 	rtl_node_consumable.rect_scale = Vector2(text_scale,text_scale)
 	rtl_node_consumable.rect_size = rect_size
 	rtl_node_consumable.text = str(GlobalVars.player_node_ref.consumable_amt)
@@ -50,7 +50,7 @@ func _ready():
 	money_sprite_node.position = money_sprite_pos
 	rtl_node_money = Label.new()
 	add_child(rtl_node_money)
-	rtl_node_money.rect_position = Vector2(money_sprite_pos.x + 20, money_sprite_pos.y - 5)
+	rtl_node_money.rect_position = Vector2(money_sprite_pos.x, money_sprite_pos.y + 5)
 	rtl_node_money.rect_scale = Vector2(text_scale,text_scale)
 	rtl_node_money.rect_size = rect_size
 	rtl_node_money.text = str(GlobalVars.money_gained_this_run)
