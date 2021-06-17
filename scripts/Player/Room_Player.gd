@@ -31,9 +31,6 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
 	ani_sprite.set_frame(type_class.sprite_frame)
-	attack_class = type_class.attack_class.new()
-	defend_class = type_class.defend_class.new()
-	turn_class = type_class.turn_class.new()
 	setup_animations()
 
 func setup_animations():
@@ -46,9 +43,6 @@ func setup_animations():
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
 		pass
-	add_child(attack_class)
-	add_child(defend_class)
-	add_child(turn_class)
 	pass
 
 func heal_player(new_health):
