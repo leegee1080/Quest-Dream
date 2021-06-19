@@ -219,6 +219,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enemy/Enemy_Collection/Robber.gd"
 }, {
+"base": "Node",
+"class": "Roll_Dodge_1",
+"language": "GDScript",
+"path": "res://scripts/Battle_Classes/Defend_Classes/Roll_Dodge_1.gd"
+}, {
 "base": "Node2D",
 "class": "Room",
 "language": "GDScript",
@@ -387,6 +392,7 @@ _global_script_class_icons={
 "Ranger": "",
 "Rat": "",
 "Robber": "",
+"Roll_Dodge_1": "",
 "Room": "",
 "Room_Enums": "",
 "Room_Player": "",

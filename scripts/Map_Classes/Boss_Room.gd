@@ -5,10 +5,10 @@ class_name Boss_Room
 var battle_player
 var boss
 var enemies = []
-var turn_order_array = []
-var turn_index = 0
-const turn_counter_time = 1
-var turn_timer
+#var turn_order_array = []
+#var turn_index = 0
+#const turn_counter_time = 1
+#var turn_timer
 
 var ani_sprite
 
@@ -21,12 +21,12 @@ func _ready():
 	add_child(ani_sprite)
 	ani_sprite.set_frame(Room_Enums.room_theme_dict[GlobalVars.current_theme])
 	
-	turn_timer = Timer.new()
-	turn_timer.name = "Leave Timer"
-	get_parent().timer_group.add_child(turn_timer)
-	turn_timer.set_wait_time(turn_counter_time)
-	turn_timer.set_one_shot(false)
-	turn_timer.connect("timeout", self, "turn_timer_tick")
+#	turn_timer = Timer.new()
+#	turn_timer.name = "Leave Timer"
+#	get_parent().timer_group.add_child(turn_timer)
+#	turn_timer.set_wait_time(turn_counter_time)
+#	turn_timer.set_one_shot(false)
+#	turn_timer.connect("timeout", self, "turn_timer_tick")
 	setup_battle()
 
 func setup_battle():
@@ -39,8 +39,8 @@ func setup_battle():
 	boss = Enemy.new(GlobalVars.stage_enemies_dict[GlobalVars.current_theme][boss_stage_index][boss_index])
 	battle_player = Room_Player.new()
 
-	turn_order_array.append(battle_player)
-	turn_order_array.append(boss)
+#	turn_order_array.append(battle_player)
+#	turn_order_array.append(boss)
 	
 	GlobalVars.main_node_ref.add_child(boss)
 	boss.position = GlobalVars.main_node_ref.content_room_screen_loc
@@ -48,46 +48,30 @@ func setup_battle():
 	GlobalVars.main_node_ref.add_child(battle_player)
 	battle_player.position = GlobalVars.main_node_ref.player_room_screen_loc
 	
-	turn_timer.start()
+#	turn_timer.start()
 
-
-func turn_timer_tick():
-	process_turn(turn_order_array[turn_index])
-	turn_index += 1
-	if turn_index >= turn_order_array.size():
-		turn_index = 0
-
-func refresh_enemy_array():
-	var temp_list = turn_order_array
-	for item in turn_order_array:
-		if item.is_dead == false:
-			temp_list.append(item)
-		pass
-	turn_order_array = temp_list
-	pass
-
-func process_turn(participant_node):
-#	participant_node.process_turn(turn_order_array)
-#	if check_player_death():
-#		turn_timer.stop()
-#	check_enemies_death()
-#	refresh_enemy_array()
-#	#complete one turn
-	pass
-
-#check for deaths func's
-func check_player_death():
-	if battle_player.is_dead:
-		return true
-	return false
-
-func check_enemies_death():
-	var all_enemies_dead = true
-	for test in enemies:
-		if test.is_dead == false:
-			all_enemies_dead = false
-	if all_enemies_dead:
-		complete_battle()
+#func refresh_enemy_array():
+#	var temp_list = turn_order_array
+#	for item in turn_order_array:
+#		if item.is_dead == false:
+#			temp_list.append(item)
+#		pass
+#	turn_order_array = temp_list
+#	pass
+#
+##check for deaths func's
+#func check_player_death():
+#	if battle_player.is_dead:
+#		return true
+#	return false
+#
+#func check_enemies_death():
+#	var all_enemies_dead = true
+#	for test in enemies:
+#		if test.is_dead == false:
+#			all_enemies_dead = false
+#	if all_enemies_dead:
+#		complete_battle()
 
 func complete_battle():
 	get_parent().complete_room()

@@ -115,7 +115,7 @@ func _ready():
 	
 	#generate the heads-up for collectables
 	var temp_player_consumable = player.type_class.consumable_class.new()
-	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame)
+	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame, player.type_class.attack_sprite_frame, player.type_class.dodge_sprite_frame)
 	add_child(temp_ui_player_info)
 
 func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
@@ -238,12 +238,14 @@ func win_round():
 	current_game_state = game_state.win
 	return
 
-func _input(event): #when the user clicks
-	if event is InputEventKey: #this is a cheat for opening the boss room instantly
-		if event.pressed and event.scancode == KEY_SPACE and current_game_state != game_state.boss and current_game_state == game_state.run and cheats_on == true:
-			open_boss_room()
-			return
-	if event is InputEventMouseButton:
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed:
+			if cheats_on: #this is a cheat for opening the boss room instantly
+				if event.scancode == KEY_SPACE and current_game_state != game_state.boss and current_game_state == game_state.run:
+					open_boss_room()
+					return
+	if event is InputEventMouseButton: #when the user clicks
 		if UiVars.clicked == true:
 			return
 		if can_player_place_tiles and (current_game_state == game_state.run or current_game_state == game_state.setup):

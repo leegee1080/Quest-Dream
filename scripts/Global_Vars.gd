@@ -6,6 +6,7 @@ var current_theme = Tile_Enums.tile_themes_enum.castle
 
 var main_node_ref
 var player_node_ref
+var room_player_node_ref
 
 var stage_enemies_dict = { #this dict is filled at start of the main class, there is an array for each them of sub_boss[0] and bosses[1]
 	Tile_Enums.tile_themes_enum.forest : [[],[]],

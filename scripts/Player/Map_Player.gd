@@ -31,8 +31,6 @@ var type_enum
 var type_class
 var consumable_amt = 0
 var is_dead = false
-var level_hash = []
-
 
 var playarea
 var exit_tile_pos
