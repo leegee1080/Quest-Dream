@@ -28,23 +28,14 @@ var max_attack_charges
 var current_attack_charges = 0
 var attack_charge_timer
 
-var attack_class
-var dodge_class
+var current_battle_state
+var previous_battle_state
 
-var current_player_state
-var previous_player_state
-enum game_state{
-	setup,
-	ready,
-	attack,
-	dodge,
-	dead,
-	win
-}
+var lane_index = 2 #this stores a number (0-4) that indicates the lane the player is in for battle
 
 func _ready():
 	GlobalVars.room_player_node_ref = self
-	current_player_state = game_state.setup
+	current_battle_state = Battle_Enums.battle_states.setup
 	z_index = 12 #make sure the player sprite is on top
 	type_class = GlobalVars.player_node_ref.type_class
 	health = GlobalVars.player_node_ref.consumable_amt
@@ -62,7 +53,7 @@ func _ready():
 
 func ready_up_player():
 	print("player ready")
-	current_player_state = game_state.ready
+	current_battle_state = Battle_Enums.battle_states.ready
 
 func setup_timers():
 	dodge_charge_timer = Timer.new()
@@ -85,7 +76,6 @@ func setup_timers():
 	pass
 
 func recharge_attack():
-	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 	if current_attack_charges < max_attack_charges:
 		if current_attack_charges + type_class.starting_attack_recharge_amount > max_attack_charges:
 			current_attack_charges = max_attack_charges
@@ -93,9 +83,9 @@ func recharge_attack():
 			current_attack_charges += type_class.starting_attack_recharge_amount
 	if current_attack_charges >= max_attack_charges:
 		attack_charge_timer.stop()
+	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 
 func recharge_dodge():
-	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 	if current_dodge_charges < max_dodge_charges:
 		if current_dodge_charges + type_class.starting_dodge_recharge_amount > max_dodge_charges:
 			current_dodge_charges = max_dodge_charges
@@ -103,26 +93,27 @@ func recharge_dodge():
 			current_dodge_charges += type_class.starting_dodge_recharge_amount
 	if current_dodge_charges >= max_dodge_charges:
 		dodge_charge_timer.stop()
+	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 
 func _input(event):
-	if current_player_state != game_state.ready:
+	if current_battle_state != Battle_Enums.battle_states.ready:
 		return
 	if event is InputEventKey:
 		if event.pressed:
 			if event.scancode == KEY_A:
-				current_player_state = game_state.attack
+				current_battle_state = Battle_Enums.battle_states.attack
 				attack()
 				#tell player to attack
 				get_tree().call_group("UI_Player_Info", "update_battle_charges")
 				return
 			if event.scancode == KEY_UP:
-				current_player_state = game_state.dodge
+				current_battle_state = Battle_Enums.battle_states.dodge
 				dodge("up")
 				#tell player to dodge up
 				get_tree().call_group("UI_Player_Info", "update_battle_charges")
 				return
 			if event.scancode == KEY_DOWN:
-				current_player_state = game_state.dodge
+				current_battle_state = Battle_Enums.battle_states.dodge
 				dodge("down")
 				#tell player to dodge down
 				get_tree().call_group("UI_Player_Info", "update_battle_charges")
@@ -130,7 +121,7 @@ func _input(event):
 			
 
 func setup_animations():
-	for ani in type_class.special_animations_dict:
+	for ani in ani_dict:
 		if type_class.special_animations_dict[ani] == null:
 			continue
 		var temp_ani_class
@@ -140,6 +131,10 @@ func setup_animations():
 		ani_dict[ani] = temp_ani_class
 		pass
 	pass
+	battle_dict.attack = type_class.special_moves_dict.attack.new(ani_dict)
+	add_child(battle_dict.attack)
+	battle_dict.dodge = type_class.special_moves_dict.dodge.new(ani_dict)
+	add_child(battle_dict.dodge)
 
 func heal_player(new_health):
 	health += new_health
@@ -151,24 +146,24 @@ func take_hit(damage):
 	health -= damage
 	if health <= 0:
 		print("player dead")
-		current_player_state = game_state.dead
+		current_battle_state = Battle_Enums.battle_states.dead
 		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
 		is_dead = true
 	print("Player health: "+ str(health))
 
 func attack():
-	attack_charge_timer.start()
-	print("player attack")
-	current_player_state = game_state.ready
 	if current_attack_charges > 0:
+		attack_charge_timer.start()
 		current_attack_charges -= 1
-#	attack_class.attack()
+		battle_dict.attack.attack()
+	else:
+		current_battle_state = Battle_Enums.battle_states.ready
 
 func dodge(direction):
-	dodge_charge_timer.start()
-	print("player dodge " + direction)
-	current_player_state = game_state.ready
 	if current_dodge_charges > 0:
+		dodge_charge_timer.start()
 		current_dodge_charges -= 1
-#	dodge_class.dodge(direction)
+		battle_dict.dodge.dodge(direction)
+	else:
+		current_battle_state = Battle_Enums.battle_states.ready

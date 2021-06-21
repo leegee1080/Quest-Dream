@@ -4,7 +4,6 @@ class_name Tackle_Attack_1
 
 var animation_class = GlobalVars.ani_dict.melee_tackle
 
-var ani_sprite
 var sprite_frame = 2
 var melee_attack_animation_timer
 var melee_return_animation_timer
@@ -15,6 +14,12 @@ const speed = 10
 
 var damage_on_strike = 1
 var target
+
+var ani_sprite
+
+func _init(new_ani_sprite):
+	ani_sprite = new_ani_sprite
+	pass
 
 #func _ready():
 #	ani_sprite = get_parent().ani_sprite
@@ -33,9 +38,12 @@ var target
 #	melee_return_animation_timer.set_one_shot(false)
 #	melee_return_animation_timer.connect("timeout", self, "return_step")
 #
-#func attack(new_target):
+func attack():
+	print("tackle attack")
 #	target = new_target
 #	melee_attack_animation_timer.start()
+	get_parent().current_battle_state = Battle_Enums.battle_states.ready
+	pass
 #
 #func attack_step():
 #	var yeet = (ani_sprite.global_position - target.position)/ (-speed)

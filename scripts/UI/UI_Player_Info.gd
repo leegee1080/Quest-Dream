@@ -36,7 +36,6 @@ const text_scale = 0.1
 
 
 func _ready():
-	var loaded_font = load(font)
 	add_to_group("UI_Player_Info")
 	position = ui_pos
 	

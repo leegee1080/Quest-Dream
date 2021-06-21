@@ -12,11 +12,12 @@ var special_animations_dict = {
 	"injure": Animation_Enums.ani_dict.hit_color_change,
 	"happy": null
 }
+var special_moves_dict = {
+	"attack": Animation_Enums.attack_dict.Tackle,
+	"defend" : Animation_Enums.defend_dict.Weak,
+	"turn" : Animation_Enums.turn_dict.Simple_Attack
+}
 
 #battle vars
 var starting_health = 10
 var speed = 0.5
-var starting_items = []
-var attack_class = Battle_Enums.attack_dict.Tackle
-var defend_class = Battle_Enums.defend_dict.Weak
-var turn_class = Battle_Enums.turn_dict.Simple_Attack

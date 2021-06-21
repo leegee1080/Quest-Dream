@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Animation_Enums",
 "language": "GDScript",
-"path": "res://scripts/Animations/Animation_Enums.gd"
+"path": "res://scripts/Animation_Classes/Animation_Enums.gd"
 }, {
 "base": "Node2D",
 "class": "Assassin",
@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Battle_Enums",
 "language": "GDScript",
-"path": "res://scripts/Battle_Classes/Battle_Enums.gd"
+"path": "res://scripts/Animation_Classes/Battle_Enums.gd"
 }, {
 "base": "Node2D",
 "class": "Berserker",
@@ -67,7 +67,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Death_Animation",
 "language": "GDScript",
-"path": "res://scripts/Animations/Death_Animation.gd"
+"path": "res://scripts/Animation_Classes/Death_Classes/Death_Animation.gd"
 }, {
 "base": "Reference",
 "class": "Demon",
@@ -127,7 +127,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Hit_Color_Animation",
 "language": "GDScript",
-"path": "res://scripts/Animations/Hit_Color_Animation.gd"
+"path": "res://scripts/Animation_Classes/Hit_Classes/Hit_Color_Animation.gd"
 }, {
 "base": "Reference",
 "class": "Human_Jack",
@@ -222,7 +222,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Roll_Dodge_1",
 "language": "GDScript",
-"path": "res://scripts/Battle_Classes/Defend_Classes/Roll_Dodge_1.gd"
+"path": "res://scripts/Animation_Classes/Defend_Classes/Roll_Dodge_1.gd"
 }, {
 "base": "Node2D",
 "class": "Room",
@@ -242,7 +242,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Simple_Attack_Turn",
 "language": "GDScript",
-"path": "res://scripts/Battle_Classes/Turn_Classes/Simple_Attack_Turn.gd"
+"path": "res://scripts/Animation_Classes/Turn_Classes/Simple_Attack_Turn.gd"
 }, {
 "base": "Reference",
 "class": "Slime_Big",
@@ -292,7 +292,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Tackle_Attack_1",
 "language": "GDScript",
-"path": "res://scripts/Battle_Classes/Attack_Classes/Tackle_Attack_1.gd"
+"path": "res://scripts/Animation_Classes/Attack_Classes/Tackle_Attack_1.gd"
 }, {
 "base": "Node2D",
 "class": "Tile",
@@ -337,12 +337,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Walking_Animation",
 "language": "GDScript",
-"path": "res://scripts/Animations/Walking_Animation.gd"
+"path": "res://scripts/Animation_Classes/Walking_Classes/Walking_Animation.gd"
 }, {
 "base": "Node",
 "class": "Weak_Defend",
 "language": "GDScript",
-"path": "res://scripts/Battle_Classes/Defend_Classes/Weak_Defend.gd"
+"path": "res://scripts/Animation_Classes/Defend_Classes/Weak_Defend.gd"
 }, {
 "base": "Node2D",
 "class": "Wizard",
