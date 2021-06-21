@@ -73,7 +73,7 @@ func setup_timers():
 	dodge_charge_timer.set_one_shot(false)
 	dodge_charge_timer.connect("timeout", self, "recharge_dodge")
 	dodge_charge_timer.start()
-	
+
 	attack_charge_timer = Timer.new()
 	attack_charge_timer.name = "Attack Timer"
 	add_child(attack_charge_timer)
@@ -91,6 +91,8 @@ func recharge_attack():
 			current_attack_charges = max_attack_charges
 		else:
 			current_attack_charges += type_class.starting_attack_recharge_amount
+	if current_attack_charges >= max_attack_charges:
+		attack_charge_timer.stop()
 
 func recharge_dodge():
 	get_tree().call_group("UI_Player_Info", "update_battle_charges")
@@ -99,6 +101,8 @@ func recharge_dodge():
 			current_dodge_charges = max_dodge_charges
 		else:
 			current_dodge_charges += type_class.starting_dodge_recharge_amount
+	if current_dodge_charges >= max_dodge_charges:
+		dodge_charge_timer.stop()
 
 func _input(event):
 	if current_player_state != game_state.ready:
@@ -154,6 +158,7 @@ func take_hit(damage):
 	print("Player health: "+ str(health))
 
 func attack():
+	attack_charge_timer.start()
 	print("player attack")
 	current_player_state = game_state.ready
 	if current_attack_charges > 0:
@@ -161,6 +166,7 @@ func attack():
 #	attack_class.attack()
 
 func dodge(direction):
+	dodge_charge_timer.start()
 	print("player dodge " + direction)
 	current_player_state = game_state.ready
 	if current_dodge_charges > 0:
