@@ -16,3 +16,11 @@ enum battle_states{
 	dead,
 	win
 }
+
+const room_screen_y_levels_array = [
+	112,
+	132,
+	152,
+	172,
+	192
+]

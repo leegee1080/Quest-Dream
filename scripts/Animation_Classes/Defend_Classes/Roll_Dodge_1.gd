@@ -20,9 +20,11 @@ func dodge(direction):
 		get_parent().lane_index += 1
 		print("dodge " + direction)
 		get_parent().current_battle_state = Battle_Enums.battle_states.ready
+		get_parent().position = Vector2(get_parent().position.x, Battle_Enums.room_screen_y_levels_array[get_parent().lane_index])
 		return
 	if direction == "up":
 		get_parent().lane_index -= 1
 		print("dodge " + direction)
 		get_parent().current_battle_state = Battle_Enums.battle_states.ready
+		get_parent().position = Vector2(get_parent().position.x, Battle_Enums.room_screen_y_levels_array[get_parent().lane_index])
 		return

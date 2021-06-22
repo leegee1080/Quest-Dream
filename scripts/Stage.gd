@@ -65,13 +65,6 @@ const room_screen_loc = Vector2(152,152)
 var player_room_screen_loc = Vector2(room_screen_loc[0]-40,room_screen_loc[1])
 var player_last_loc
 var content_room_screen_loc = Vector2(room_screen_loc[0]+20,room_screen_loc[1])
-const room_screen_y_levels_array = [
-	132,
-	142,
-	152,
-	162,
-	172
-]
 
 ##queue area vars
 const queue_length = 5

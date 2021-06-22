@@ -47,6 +47,7 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
 	ani_sprite.set_frame(type_class.sprite_frame)
+	position = Vector2(position.x - type_class.starting_attack_range, position.y)
 	setup_animations()
 	setup_timers()
 	ready_up_player()
