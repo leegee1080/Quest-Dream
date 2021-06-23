@@ -33,6 +33,8 @@ var previous_battle_state
 
 var lane_index = 2 #this stores a number (0-4) that indicates the lane the player is in for battle
 
+var players_team #a list of the current player's nodes, including: player and all player's summons
+
 func _ready():
 	GlobalVars.room_player_node_ref = self
 	current_battle_state = Battle_Enums.battle_states.setup
@@ -55,6 +57,7 @@ func _ready():
 func ready_up_player():
 	print("player ready")
 	current_battle_state = Battle_Enums.battle_states.ready
+	players_team = [self]
 
 func setup_timers():
 	dodge_charge_timer = Timer.new()
@@ -156,15 +159,12 @@ func take_hit(damage):
 func attack():
 	if current_attack_charges > 0:
 		attack_charge_timer.start()
-		current_attack_charges -= 1
 		battle_dict.attack.attack()
 	else:
 		current_battle_state = Battle_Enums.battle_states.ready
 
 func dodge(direction):
 	if current_dodge_charges > 0:
-		dodge_charge_timer.start()
-		current_dodge_charges -= 1
 		battle_dict.dodge.dodge(direction)
 	else:
 		current_battle_state = Battle_Enums.battle_states.ready

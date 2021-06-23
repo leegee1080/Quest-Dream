@@ -222,7 +222,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Roll_Dodge_1",
 "language": "GDScript",
-"path": "res://scripts/Animation_Classes/Defend_Classes/Roll_Dodge_1.gd"
+"path": "res://scripts/Animation_Classes/Dodge_Classes/Roll_Dodge_1.gd"
 }, {
 "base": "Node2D",
 "class": "Room",
@@ -342,7 +342,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Weak_Defend",
 "language": "GDScript",
-"path": "res://scripts/Animation_Classes/Defend_Classes/Weak_Defend.gd"
+"path": "res://scripts/Animation_Classes/Defend_CLasses/Weak_Defend.gd"
 }, {
 "base": "Node2D",
 "class": "Wizard",
