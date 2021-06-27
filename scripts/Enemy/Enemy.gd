@@ -54,12 +54,10 @@ func setup_animations():
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-		pass
-	pass
-	battle_dict.attack = type_class.special_moves_dict.attack.new(ani_dict)
+	battle_dict.attack = type_class.special_moves_dict.attack.new(ani_sprite)
 	add_child(battle_dict.attack)
-	battle_dict.dodge = type_class.special_moves_dict.dodge.new(ani_dict)
-	add_child(battle_dict.dodge)
+	battle_dict.defend = type_class.special_moves_dict.defend.new()
+	add_child(battle_dict.defend)
 
 func generate_enemy():
 	if type_enum == null:
