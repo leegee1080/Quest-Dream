@@ -44,6 +44,7 @@ func setup_battle():
 	
 	GlobalVars.main_node_ref.add_child(boss)
 	boss.position = GlobalVars.main_node_ref.content_room_screen_loc
+	GlobalVars.battle_participants_node_array.append(boss)
 	
 	GlobalVars.main_node_ref.add_child(battle_player)
 	battle_player.position = GlobalVars.main_node_ref.player_room_screen_loc

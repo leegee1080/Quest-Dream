@@ -19,6 +19,7 @@ var is_dead = false
 
 var type_class
 var health
+var attack_power
 
 var max_dodge_charges
 var current_dodge_charges = 0
@@ -41,6 +42,7 @@ func _ready():
 	z_index = 12 #make sure the player sprite is on top
 	type_class = GlobalVars.player_node_ref.type_class
 	health = GlobalVars.player_node_ref.consumable_amt
+	attack_power = type_class.starting_attack_power
 	ani_dict = type_class.special_animations_dict
 	battle_dict = type_class.special_moves_dict
 	max_dodge_charges = type_class.starting_dodge_charges
@@ -133,8 +135,6 @@ func setup_animations():
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-		pass
-	pass
 	battle_dict.attack = type_class.special_moves_dict.attack.new(ani_dict)
 	add_child(battle_dict.attack)
 	battle_dict.dodge = type_class.special_moves_dict.dodge.new(ani_dict)
@@ -159,7 +159,7 @@ func take_hit(damage):
 func attack():
 	if current_attack_charges > 0:
 		attack_charge_timer.start()
-		battle_dict.attack.attack()
+		battle_dict.attack.attack(lane_index, attack_power)
 	else:
 		current_battle_state = Battle_Enums.battle_states.ready
 

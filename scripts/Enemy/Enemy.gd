@@ -20,9 +20,10 @@ var battle_dict = {
 	"defend" : Animation_Enums.defend_dict.Weak,
 	"turn" : Animation_Enums.turn_dict.Simple_Attack
 }
-var health
+var health = 1
 var speed
 var is_dead = false
+var lane_index = 2 #this stores a number (0-4) that indicates the lane the player is in for battle
 
 var current_target_list
 
@@ -64,20 +65,22 @@ func generate_enemy():
 		type_enum = Enemy_Enums.enemy_types_enum.rat
 	type_class = type_enum.new()
 	ani_sprite.set_frame(type_class.sprite_frame)
+	health = type_class.starting_health
 
 func process_turn():
 	if is_dead == false:
-		print("enemy " + str(type_class.name) + " turn")
+		print("enemy " + str(type_class.string_name) + " turn")
 		battle_dict.turn.process_turn(GlobalVars.room_player_node_ref.players_team)
 
 func take_hit(damage):
+	print("enemy took hit, damage: " + str(damage))
 	if is_dead:
 		return
 	ani_dict.injure.play_animation()
 	battle_dict.defend.defend(damage)
 	if health <= 0:
 		is_dead = true
-		print(str(type_class.name) + " is dead")
+		print(str(type_class.string_name) + " is dead")
 		kill_enemy()
 
 func kill_enemy():
