@@ -73,9 +73,9 @@ func process_turn():
 		battle_dict.turn.process_turn(GlobalVars.room_player_node_ref.players_team)
 
 func take_hit(damage):
-	print("enemy took hit, damage: " + str(damage))
 	if is_dead:
 		return
+	print("enemy took hit, damage: " + str(damage))
 	ani_dict.injure.play_animation()
 	battle_dict.defend.defend(damage)
 	if health <= 0:

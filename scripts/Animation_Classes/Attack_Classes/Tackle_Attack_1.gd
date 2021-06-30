@@ -8,8 +8,8 @@ var sprite_frame = 2
 var melee_attack_animation_timer
 var melee_return_animation_timer
 
-const attack_step = 0.01
-const return_step = 0.01
+const attack_step_time = 0.01
+const return_step_time = 0.01
 const speed = 5
 
 var damage_on_strike = 1
@@ -28,14 +28,14 @@ func _ready():
 	melee_attack_animation_timer = Timer.new()
 	add_child(melee_attack_animation_timer)
 	melee_attack_animation_timer.add_to_group("timers")
-	melee_attack_animation_timer.set_wait_time(attack_step)
+	melee_attack_animation_timer.set_wait_time(attack_step_time)
 	melee_attack_animation_timer.set_one_shot(false)
 	melee_attack_animation_timer.connect("timeout", self, "attack_step")
 
 	melee_return_animation_timer = Timer.new()
 	add_child(melee_return_animation_timer)
 	melee_return_animation_timer.add_to_group("timers")
-	melee_return_animation_timer.set_wait_time(return_step)
+	melee_return_animation_timer.set_wait_time(return_step_time)
 	melee_return_animation_timer.set_one_shot(false)
 	melee_return_animation_timer.connect("timeout", self, "return_step")
 
