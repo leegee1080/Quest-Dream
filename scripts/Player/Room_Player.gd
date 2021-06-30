@@ -18,7 +18,6 @@ var is_dead = false
 
 
 var type_class
-var health
 var attack_power
 
 var max_dodge_charges
@@ -41,7 +40,6 @@ func _ready():
 	current_battle_state = Battle_Enums.battle_states.setup
 	z_index = 12 #make sure the player sprite is on top
 	type_class = GlobalVars.player_node_ref.type_class
-	health = GlobalVars.player_node_ref.consumable_amt
 	attack_power = type_class.starting_attack_power
 	ani_dict = type_class.special_animations_dict
 	battle_dict = type_class.special_moves_dict
@@ -141,20 +139,22 @@ func setup_animations():
 	add_child(battle_dict.dodge)
 
 func heal_player(new_health):
-	health += new_health
-	print("Player now has "+ str(health) + " health left.")
+	GlobalVars.player_consumable_amount += new_health
+	print("Player now has "+ str(GlobalVars.player_consumable_amount) + " health left.")
 
 func take_hit(damage):
+	if is_dead:
+		return
 	get_tree().call_group("UI_Player_Info", "update_consumable")
 	ani_dict.injure.play_animation()
-	health -= damage
-	if health <= 0:
+	GlobalVars.player_consumable_amount -= damage
+	if GlobalVars.player_consumable_amount <= 0:
 		print("player dead")
 		current_battle_state = Battle_Enums.battle_states.dead
 		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
 		is_dead = true
-	print("Player health: "+ str(health))
+	print("Player health: "+ str(GlobalVars.player_consumable_amount))
 
 func attack():
 	if current_attack_charges > 0:

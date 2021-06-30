@@ -22,6 +22,7 @@ var battle_dict = {
 }
 var health = 1
 var speed
+var attack_power
 var is_dead = false
 var lane_index = 2 #this stores a number (0-4) that indicates the lane the player is in for battle
 
@@ -63,6 +64,8 @@ func setup_animations():
 	add_child(battle_dict.attack)
 	battle_dict.defend = type_class.special_moves_dict.defend.new()
 	add_child(battle_dict.defend)
+	battle_dict.turn = type_class.special_moves_dict.turn.new()
+	add_child(battle_dict.turn)
 
 func generate_enemy():
 	if type_enum == null:
@@ -70,7 +73,7 @@ func generate_enemy():
 	type_class = type_enum.new()
 	ani_sprite.set_frame(type_class.sprite_frame)
 	health = type_class.starting_health
-	
+	attack_power = type_class.damage
 	turn_timer = Timer.new()
 	turn_speed = type_class.speed
 	add_child(turn_timer)
@@ -82,7 +85,11 @@ func generate_enemy():
 func process_turn():
 	if is_dead == false:
 		print("enemy " + str(type_class.string_name) + " turn")
-#		battle_dict.turn.process_turn(GlobalVars.room_player_node_ref.players_team)
+		battle_dict.turn.process_turn()
+
+func attack():
+	print("enemy " + str(type_class.string_name) + " attack")
+	battle_dict.attack.attack(lane_index, attack_power)
 
 func take_hit(damage):
 	if is_dead:

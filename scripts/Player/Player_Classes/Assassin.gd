@@ -12,7 +12,7 @@ var special_animations_dict = {
 	"happy": null
 }
 var special_moves_dict = {
-	"attack": Tackle_Attack_1,
+	"attack": Player_Tackle_Attack,
 	"dodge" : Roll_Dodge_1
 }
 

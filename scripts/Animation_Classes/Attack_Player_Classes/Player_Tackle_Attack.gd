@@ -1,6 +1,6 @@
 extends Node
 
-class_name Tackle_Attack_1
+class_name Player_Tackle_Attack
 
 var animation_class = GlobalVars.ani_dict.melee_tackle
 
@@ -41,11 +41,13 @@ func _ready():
 
 func attack(lane, damage):
 	print("tackle attack")
-	animation_target = Vector2(get_parent().position.x - 80, get_parent().position.y)
+	animation_target = Vector2(get_parent().position.x + 80, get_parent().position.y)
 	damage_on_strike = damage
 	target_lane = lane
-	if GlobalVars.room_player_node_ref.lane_index == target_lane:
-		GlobalVars.room_player_node_ref.take_hit(damage_on_strike)
+	get_parent().current_attack_charges -= 1
+	for enemy in GlobalVars.battle_participants_node_array:
+		if enemy.lane_index == target_lane:
+			enemy.take_hit(damage_on_strike)
 	melee_attack_animation_timer.start()
 	pass
 
@@ -67,4 +69,5 @@ func return_step():
 
 func stop_animation():
 	ani_sprite.position = Vector2.ZERO
+	get_parent().current_battle_state = Battle_Enums.battle_states.ready
 	melee_return_animation_timer.stop()

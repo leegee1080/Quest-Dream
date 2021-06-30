@@ -82,6 +82,7 @@ func _ready():
 	#setup global refs
 	GlobalVars.main_node_ref = self
 	GlobalVars.player_node_ref = player
+	GlobalVars.player_consumable_amount = player.type_class.starting_consumable_amt
 	#create UI
 	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index)
 	
@@ -227,7 +228,8 @@ func start_round(): #just for the first time start, can add more here if needed
 	return
 
 func lose_round():
-	player.walk_toggle()
+	if current_game_state == game_state.run:
+		player.walk_toggle()
 	print("Round Lost")
 	current_game_state = game_state.lose
 	return

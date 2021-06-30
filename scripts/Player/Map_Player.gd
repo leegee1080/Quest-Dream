@@ -29,7 +29,6 @@ const walk_ani_pos_list = [
 
 var type_enum
 var type_class
-var consumable_amt = 0
 var is_dead = false
 
 var playarea
@@ -69,7 +68,6 @@ func _init(new_type):
 	add_child(ani_sprite)
 	type_class = Player_Enums.player_types_dict[type_enum].new()
 	ani_sprite.set_frame(type_class.sprite_frame)
-	consumable_amt += type_class.starting_consumable_amt
 
 func setup_animations():
 	for ani in type_class.special_animations_dict:
@@ -180,12 +178,14 @@ func turn_around():
 	return
 
 func take_hit(damage):
+	if is_dead:
+		return
 	get_tree().call_group("UI_Player_Info", "update_consumable")
 	ani_dict.injure.play_animation()
-	consumable_amt -= damage
-	if consumable_amt <= 0:
+	GlobalVars.player_consumable_amount -= damage
+	if GlobalVars.player_consumable_amount <= 0:
 		print("player dead")
 		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
 		is_dead = true
-	print("Player health: "+ str(consumable_amt))
+	print("Player health: "+ str(GlobalVars.player_consumable_amount))

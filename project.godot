@@ -209,6 +209,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Player/Player_Enums.gd"
 }, {
+"base": "Node",
+"class": "Player_Tackle_Attack",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Attack_Player_Classes/Player_Tackle_Attack.gd"
+}, {
 "base": "Node2D",
 "class": "Ranger",
 "language": "GDScript",
@@ -395,6 +400,7 @@ _global_script_class_icons={
 "Monkey": "",
 "Necromancer": "",
 "Player_Enums": "",
+"Player_Tackle_Attack": "",
 "Ranger": "",
 "Rat": "",
 "Robber": "",

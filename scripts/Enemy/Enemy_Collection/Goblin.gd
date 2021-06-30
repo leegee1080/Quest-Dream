@@ -19,5 +19,6 @@ var special_moves_dict = {
 }
 
 #battle vars
+var damage = 1
 var starting_health = 3
 var speed = 1
