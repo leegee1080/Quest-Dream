@@ -16,14 +16,17 @@ var ani_dict = {
 }
 #battle vars
 var battle_dict = {
-	"attack": Animation_Enums.attack_dict.Tackle,
-	"defend" : Animation_Enums.defend_dict.Weak,
-	"turn" : Animation_Enums.turn_dict.Simple_Attack
+	"attack": Animation_Enums.attack_dict.tackle,
+	"defend" : Animation_Enums.defend_dict.weak,
+	"turn" : Animation_Enums.turn_dict.simple_attack
 }
 var health = 1
 var speed
 var is_dead = false
 var lane_index = 2 #this stores a number (0-4) that indicates the lane the player is in for battle
+
+var turn_timer
+var turn_speed
 
 var current_target_list
 
@@ -36,6 +39,7 @@ func _ready():
 	generate_enemy()
 	string_name = type_class.string_name
 	setup_animations()
+	turn_timer.start()
 
 func _init(new_type):
 	if new_type == null:
@@ -66,11 +70,19 @@ func generate_enemy():
 	type_class = type_enum.new()
 	ani_sprite.set_frame(type_class.sprite_frame)
 	health = type_class.starting_health
+	
+	turn_timer = Timer.new()
+	turn_speed = type_class.speed
+	add_child(turn_timer)
+	turn_timer.add_to_group("timers")
+	turn_timer.set_wait_time(turn_speed)
+	turn_timer.set_one_shot(false)
+	turn_timer.connect("timeout", self, "process_turn")
 
 func process_turn():
 	if is_dead == false:
 		print("enemy " + str(type_class.string_name) + " turn")
-		battle_dict.turn.process_turn(GlobalVars.room_player_node_ref.players_team)
+#		battle_dict.turn.process_turn(GlobalVars.room_player_node_ref.players_team)
 
 func take_hit(damage):
 	if is_dead:
@@ -79,6 +91,7 @@ func take_hit(damage):
 	ani_dict.injure.play_animation()
 	battle_dict.defend.defend(damage)
 	if health <= 0:
+		turn_timer.stop()
 		is_dead = true
 		print(str(type_class.string_name) + " is dead")
 		kill_enemy()

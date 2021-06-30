@@ -13,11 +13,11 @@ var special_animations_dict = {
 	"happy": null
 }
 var special_moves_dict = {
-	"attack": Animation_Enums.attack_dict.Tackle,
-	"defend" : Animation_Enums.defend_dict.Weak,
-	"turn" : Animation_Enums.turn_dict.Simple_Attack
+	"attack": Animation_Enums.attack_dict.tackle,
+	"defend" : Animation_Enums.defend_dict.weak,
+	"turn" : Animation_Enums.turn_dict.simple_attack
 }
 
 #battle vars
 var starting_health = 3
-var speed = 0.5
+var speed = 1

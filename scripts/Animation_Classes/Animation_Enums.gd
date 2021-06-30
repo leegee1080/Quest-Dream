@@ -6,19 +6,20 @@ const ani_dict = {#dictionary of all the animation classes
 	"blink_sprite" : null,
 	"death_flip_red" : Death_Animation,
 	"teleport" : null,
-	"throw_projectile" : null,
 	"tackle_and_return" : null,
 	"dodge_roll" : null
 }
 
 const attack_dict = {
-	"Tackle": Tackle_Attack_1
+	"throw_projectile" : null,
+	"tackle": Tackle_Attack_1
 }
 
 const defend_dict = {
-	"Weak": Weak_Defend
+	"weak": Weak_Defend
 }
 
 const turn_dict = {
-	"Simple_Attack": Simple_Attack_Turn
+	"simple_attack": Simple_Attack_Turn,
+	"attack_then_move_random_direction": Attack_Then_Move_Random_Turn
 }
