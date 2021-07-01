@@ -4,8 +4,6 @@ class_name Stage
 
 var cheats_on = true
 
-var difficulty = 1
-var stage_level = 1
 var player = Map_Player.new(Player_Enums.player_types_enum.assassin)
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
@@ -208,12 +206,6 @@ func generate_enemies_dict():
 		else:
 			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
 		print(test_enemy.string_name)
-	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.forest])
-	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.mountain])
-	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.swamp])
-	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.grave])
-	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.castle])
-	print("stage enemies dict")
 
 func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	for test in array_to_check:
@@ -243,6 +235,7 @@ func win_round():
 		player.walk_toggle()
 	print("Round Win")
 	current_game_state = game_state.win
+	GlobalVars.current_stage += 1
 	return
 
 func _input(event):
@@ -276,7 +269,7 @@ func _input(event):
 func open_boss_room():
 	player.walk_toggle()
 	can_player_place_tiles = false
-	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, stage_level, room_screen_loc)
+	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, GlobalVars.current_stage, room_screen_loc)
 	room_screen.name = "boss battle"
 	add_child(room_screen)
 	current_game_state = game_state.boss
