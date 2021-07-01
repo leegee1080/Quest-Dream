@@ -98,6 +98,8 @@ func take_hit(damage):
 	ani_dict.injure.play_animation()
 	battle_dict.defend.defend(damage)
 	if health <= 0:
+		if !type_class.is_minion:
+			GlobalVars.main_node_ref.room_screen.complete_room()
 		turn_timer.stop()
 		is_dead = true
 		print(str(type_class.string_name) + " is dead")

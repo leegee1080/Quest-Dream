@@ -169,11 +169,8 @@ func ui_back(btn_node_ref):
 		return
 	if current_game_state == game_state.boss:
 		if room_screen.is_room_complete == true:
-			room_screen.leave_room()
 			btn_node_ref.queue_free()
-			current_game_state = game_state.run
-			player.walk_toggle()
-			can_player_place_tiles = true
+			win_round()
 		return
 
 func ui_pause():
@@ -210,6 +207,13 @@ func generate_enemies_dict():
 			GlobalVars.stage_enemies_dict[test_enemy.theme][1].append(Enemy_Enums.enemy_types_dict[test])
 		else:
 			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
+		print(test_enemy.string_name)
+	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.forest])
+	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.mountain])
+	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.swamp])
+	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.grave])
+	print(GlobalVars.stage_enemies_dict[Tile_Enums.tile_themes_enum.castle])
+	print("stage enemies dict")
 
 func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	for test in array_to_check:
@@ -235,7 +239,8 @@ func lose_round():
 	return
 
 func win_round():
-	player.walk_toggle()
+	if current_game_state == game_state.run:
+		player.walk_toggle()
 	print("Round Win")
 	current_game_state = game_state.win
 	return

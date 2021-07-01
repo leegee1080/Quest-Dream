@@ -100,7 +100,7 @@ func recharge_dodge():
 	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 
 func _input(event):
-	if current_battle_state != Battle_Enums.battle_states.ready:
+	if current_battle_state != Battle_Enums.battle_states.ready or is_dead:
 		return
 	if event is InputEventKey:
 		if event.pressed:

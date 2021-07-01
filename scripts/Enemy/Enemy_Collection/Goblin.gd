@@ -5,6 +5,7 @@ var sprite_frame = 1
 
 var theme = Tile_Enums.tile_themes_enum.castle
 var is_final_boss = false
+var is_minion = false
 
 var special_animations_dict = {
 	"walk": Animation_Enums.ani_dict.wiggle_in_place,
@@ -21,4 +22,4 @@ var special_moves_dict = {
 #battle vars
 var damage = 1
 var starting_health = 3
-var speed = 1
+var speed = 5

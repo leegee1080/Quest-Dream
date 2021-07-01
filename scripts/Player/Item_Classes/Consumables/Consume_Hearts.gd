@@ -18,7 +18,7 @@ func pick_up():
 	#play animation
 	print("consumable")
 	get_tree().call_group("UI_Player_Info", "update_consumable")
-	GlobalVars.player_node_ref.consumable_amt += 1
+	GlobalVars.player_consumable_amount += 1
 	finish_pickup_animation()
 
 func finish_pickup_animation():
