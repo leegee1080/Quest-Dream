@@ -1,9 +1,19 @@
 extends Node
-var money_gained_this_run = 0
 
-var current_stage = 1
+const stage_order = { #the stage number and corresponding theme 
+	1: Tile_Enums.tile_themes_enum.forest,
+	6: Tile_Enums.tile_themes_enum.mountain,
+	11: Tile_Enums.tile_themes_enum.swamp,
+	16: Tile_Enums.tile_themes_enum.grave,
+	21: Tile_Enums.tile_themes_enum.castle
+}
+
+var current_stage: int = 1
 var current_theme = Tile_Enums.tile_themes_enum.castle
 
+var money_gained_this_run = 0
+
+var player_type_class_storage
 var main_node_ref
 var player_node_ref
 var room_player_node_ref

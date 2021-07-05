@@ -3,7 +3,7 @@ class_name Avatar
 var string_name = "Avatar of Death"
 var sprite_frame = 0
 
-var theme = Tile_Enums.tile_themes_enum.castle
+var theme = Tile_Enums.tile_themes_enum.forest
 var is_final_boss = true
 var is_minion = false
 

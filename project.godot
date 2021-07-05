@@ -435,7 +435,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Quest Dream"
-run/main_scene="res://nodes/Main.tscn"
+run/main_scene="res://nodes/GameMaster.tscn"
 config/icon="res://icon.png"
 
 [autoload]

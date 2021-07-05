@@ -39,7 +39,7 @@ func _ready():
 	GlobalVars.room_player_node_ref = self
 	current_battle_state = Battle_Enums.battle_states.setup
 	z_index = 12 #make sure the player sprite is on top
-	type_class = GlobalVars.player_node_ref.type_class
+	type_class = GlobalVars.player_type_class_storage
 	attack_power = type_class.starting_attack_power
 	ani_dict = type_class.special_animations_dict
 	battle_dict = type_class.special_moves_dict

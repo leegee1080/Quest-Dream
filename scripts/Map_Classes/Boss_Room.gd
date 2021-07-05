@@ -29,6 +29,7 @@ func setup_battle():
 	if GlobalVars.current_stage % 5 == 0:
 		boss_stage_index = 1
 	var boss_index = int(rand_range(0, GlobalVars.stage_enemies_dict[GlobalVars.current_theme][boss_stage_index].size()))
+	print(boss_index)
 	boss = Enemy.new(GlobalVars.stage_enemies_dict[GlobalVars.current_theme][boss_stage_index][boss_index])
 	battle_player = Room_Player.new()
 	

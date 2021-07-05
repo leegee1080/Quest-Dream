@@ -2,9 +2,7 @@ extends Node2D
 
 class_name Stage
 
-var cheats_on = true
-
-var player = Map_Player.new(Player_Enums.player_types_enum.assassin)
+var player = Map_Player.new()
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var round_start_time = 5.0
@@ -43,7 +41,9 @@ var pause_menu_sprite = load("res://assets/visuals/menu_bg.png")
 var pause_menu
 const pause_menu_loc = Vector2(150,270)
 
+
 ##play area vars
+var ingame_tilegroup_Node = Node2D.new()
 var can_player_place_tiles
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 var clickable_coords_list = []
@@ -75,17 +75,24 @@ const queue_loc_dict = {
 	"4":Vector2(216,492)
 }
 
+func _init(theme):
+	chosen_level_theme = theme
+	pass
+
 func _ready():
 	current_game_state = game_state.setup
+	var bg_sprite = Sprite.new()
+	bg_sprite.centered = false
+	bg_sprite.texture = load("res://assets/visuals/bg.png")
+	add_child(bg_sprite)
+	add_child(ingame_tilegroup_Node)
+	
 	#setup global refs
 	GlobalVars.main_node_ref = self
 	GlobalVars.player_node_ref = player
-	GlobalVars.player_consumable_amount = player.type_class.starting_consumable_amt
+	GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
 	#create UI
 	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index)
-	
-	#setup dict for enemies
-	generate_enemies_dict()
 	
 	#setup the chances to pull a certain tile for the queue
 	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
@@ -122,7 +129,6 @@ func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_co
 	for btn in button_loc_dict:
 		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
 		temp_btn.local_name = btn
-#		temp_btn.name = btn
 		temp_btn.connect("ui_sig", self, "ui_func")
 		temp_button_list.append(temp_btn)
 		temp_btn.z_index = new_z_index
@@ -148,7 +154,7 @@ func ui_func(new_name, btn_node_ref): #checks which button is pressed
 		return
 
 func ui_quit():
-	get_tree().quit()
+	get_parent().exit_to_menu()
 	pass
 
 func ui_fastforward():
@@ -198,15 +204,6 @@ func ui_menu():
 	generate_ui(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index)
 	ui_pause()
 
-func generate_enemies_dict():
-	for test in Enemy_Enums.enemy_types_dict:
-		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
-		if test_enemy.is_final_boss:
-			GlobalVars.stage_enemies_dict[test_enemy.theme][1].append(Enemy_Enums.enemy_types_dict[test])
-		else:
-			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
-		print(test_enemy.string_name)
-
 func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	for test in array_to_check:
 		if test[0] == 0:
@@ -221,14 +218,15 @@ func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run
 	player.walk_toggle()
-	return
+	pass
 
 func lose_round():
 	if current_game_state == game_state.run:
 		player.walk_toggle()
 	print("Round Lost")
 	current_game_state = game_state.lose
-	return
+	get_parent().lose_stage()
+	pass
 
 func win_round():
 	if current_game_state == game_state.run:
@@ -236,15 +234,10 @@ func win_round():
 	print("Round Win")
 	current_game_state = game_state.win
 	GlobalVars.current_stage += 1
-	return
+	get_parent().win_stage()
+	pass
 
 func _input(event):
-	if event is InputEventKey:
-		if event.pressed:
-			if cheats_on: #this is a cheat for opening the boss room instantly
-				if event.scancode == KEY_SPACE and current_game_state != game_state.boss and current_game_state == game_state.run:
-					open_boss_room()
-					return
 	if event is InputEventMouseButton: #when the user clicks
 		if UiVars.clicked == true:
 			return
@@ -300,7 +293,7 @@ func slide_queue():
 		index += 1
 	var new_tile = generate_random_tile()
 	tile_queue.append(new_tile)
-	$InGameTileGroup.add_child(new_tile)
+	ingame_tilegroup_Node.add_child(new_tile)
 	new_tile.name = str(queue_length-1)
 	new_tile.position.x = queue_loc_dict.get(str(queue_length-1)).x
 	new_tile.position.y = queue_loc_dict.get(str(queue_length-1)).y
@@ -409,7 +402,7 @@ func place_starting_tiles():
 				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, -1)
 				tile.name = "Impass Tile " + str(num_impass_tiles)
 				tile_dict[picked_coord[2]] = tile
-				$InGameTileGroup.add_child(tile)
+				ingame_tilegroup_Node.add_child(tile)
 				tile.place_tile(picked_coord[3])
 				tile.lock_tile()
 				tile.is_impass_tile = true
@@ -419,7 +412,7 @@ func place_starting_tiles():
 	var queue = 0
 	while queue < queue_length:
 		tile = generate_random_tile()
-		$InGameTileGroup.add_child(tile)
+		ingame_tilegroup_Node.add_child(tile)
 		tile_queue.append(tile)
 		tile.name = str(queue)
 		tile.position.x = queue_loc_dict.get(str(queue)).x

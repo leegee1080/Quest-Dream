@@ -142,9 +142,9 @@ func place_center():
 	if center_object_enum == Tile_Enums.center_type_enum.none:
 		return
 	if center_object_enum == Tile_Enums.center_type_enum.consumable:
-		center_subtile = GlobalVars.player_node_ref.type_class.consumable_class.new()
+		center_subtile = GlobalVars.player_type_class_storage.consumable_class.new()
 	elif center_object_enum == Tile_Enums.center_type_enum.treasure:
-		center_subtile = GlobalVars.player_node_ref.type_class.money_class.new()
+		center_subtile = GlobalVars.player_type_class_storage.money_class.new()
 	add_child(center_subtile)
 
 func place_deco():

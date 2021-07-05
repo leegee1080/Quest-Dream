@@ -27,7 +27,7 @@ const walk_ani_pos_list = [
 	[Vector2(1,-2), -0.1]
 ]
 
-var type_enum
+#var type_enum
 var type_class
 var is_dead = false
 
@@ -35,7 +35,7 @@ var playarea
 var exit_tile_pos
 
 var can_walk = false
-var direction = Vector2(0,0)
+var direction: Vector2 = Vector2(0,0)
 ######################################################################suggestion!!!!!!!!!!!!!!!!!!!! make the movement speed tied to the combat speed
 var map_move_speed = .3
 const walk_interval = 16
@@ -58,15 +58,11 @@ func _ready():
 	walk_timer.stop()
 	setup_animations()
 
-func _init(new_type):
-	if new_type == null:
-		type_enum = Player_Enums.player_types_enum.soldier
-		return
-	type_enum = new_type
+func _init():
+	type_class = GlobalVars.player_type_class_storage
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
-	type_class = Player_Enums.player_types_dict[type_enum].new()
 	ani_sprite.set_frame(type_class.sprite_frame)
 
 func setup_animations():
@@ -78,8 +74,6 @@ func setup_animations():
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-		pass
-	pass
 
 func change_dir(new_dir):
 	if new_dir >= 0 and new_dir < walk_dir.size():
