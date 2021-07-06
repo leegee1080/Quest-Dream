@@ -28,18 +28,18 @@ const main_button_loc_dict = {
 const menu_button_z_index = 15
 const menu_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"back": [Vector2(40,300), 0, 1],
-	"quit": [Vector2(110,300), 6, 7],
-	"fastforward": [Vector2(180,300), 2, 3]
+	"back": [Vector2(49,301), 0, 1],
+	"quit": [Vector2(119,301), 6, 7],
+	"fastforward": [Vector2(189,301), 2, 3]
 }
 const room_button_z_index = 5
 const room_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"back": [Vector2(111,207), 0, 1]
 }
-var pause_menu_sprite = load("res://assets/visuals/menu_bg.png")
+var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
 var pause_menu
-const pause_menu_loc = Vector2(150,270)
+const pause_menu_loc = Vector2(152,273)
 
 
 ##play area vars
