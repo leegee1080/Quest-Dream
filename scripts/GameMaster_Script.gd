@@ -14,6 +14,15 @@ const tile_center_chance_array = []
 #ui vars
 var trans_timer = Timer.new()
 var trans_total_time = 0.5
+const mainmenu_button_z_index = 15
+const mainmenu_button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"new": [Vector2(49,301), 0, 1],
+	"load": [Vector2(119,301), 6, 7],
+	"option": [Vector2(189,301), 2, 3],
+	"credit": [Vector2(189,301), 2, 3],
+	"exit": [Vector2(189,301), 2, 3]
+}
 
 #overall gamestage
 var current_game_state
@@ -26,7 +35,8 @@ enum game_state{
 }
 
 func _ready():
-	current_game_state = game_state.setup
+	current_game_state = game_state.mainmenu
+#	UI_Vars.generate_button(mainmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", mainmenu_button_z_index, self)
 	add_child(trans_timer)
 	trans_timer = Timer.new()
 	add_child(trans_timer)
@@ -34,21 +44,26 @@ func _ready():
 	trans_timer.set_one_shot(true)
 	trans_timer.connect("timeout", self, "end_scene_trans")
 	
-	GlobalVars.player_type_class_storage = Player_Enums.player_types_dict[player_type_class].new()
-	add_child(GlobalVars.player_type_class_storage)
-	GlobalVars.player_type_class_storage.name = "Player_Data_Storage"
-	generate_enemies_dict()
-	create_stage(chosen_level_theme)
-	add_child(current_stage)
-	current_game_state = game_state.stage
+	current_game_state = game_state.setup
+	start_scene_trans()
 	pass
 
 func start_scene_trans():
-	current_stage.queue_free()
+	if current_stage != null:
+		current_stage.queue_free()
 	trans_timer.start()
 	pass
 
 func end_scene_trans():
+	if current_game_state == game_state.setup:
+		GlobalVars.player_type_class_storage = Player_Enums.player_types_dict[player_type_class].new()
+		add_child(GlobalVars.player_type_class_storage)
+		GlobalVars.player_type_class_storage.name = "Player_Data_Storage"
+		generate_enemies_dict()
+		create_stage(chosen_level_theme)
+		add_child(current_stage)
+		current_game_state = game_state.stage
+		return
 	if current_game_state == game_state.mainmenu:
 		get_tree().quit()
 		return
@@ -57,6 +72,7 @@ func end_scene_trans():
 		add_child(current_stage)
 		return
 	if current_game_state == game_state.lose:
+		current_game_state = game_state.mainmenu
 		get_tree().quit() #just for now until there is a main menu
 		return
 	pass

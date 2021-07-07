@@ -47,7 +47,6 @@ var center_interval_count = 2
 var current_tile
 var ani_sprite
 
-
 func _ready():
 	walk_timer = Timer.new()
 	add_child(walk_timer)

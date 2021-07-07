@@ -38,7 +38,7 @@ func _init(new_type, new_theme, level, new_room_screen_loc):
 	room_screen_loc = new_room_screen_loc
 
 func complete_room():
-	GlobalVars.main_node_ref.generate_ui(GlobalVars.main_node_ref.room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", GlobalVars.main_node_ref.room_button_z_index)
+	UI_Vars.generate_button(GlobalVars.main_node_ref.room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", GlobalVars.main_node_ref.room_button_z_index, GlobalVars.main_node_ref)
 	is_room_complete = true
 	print("room complete")
 

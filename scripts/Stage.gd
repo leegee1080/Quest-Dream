@@ -41,7 +41,6 @@ var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
 var pause_menu
 const pause_menu_loc = Vector2(152,273)
 
-
 ##play area vars
 var ingame_tilegroup_Node = Node2D.new()
 var can_player_place_tiles
@@ -92,7 +91,7 @@ func _ready():
 	GlobalVars.player_node_ref = player
 	GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
 	#create UI
-	generate_ui(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index)
+	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index, self)
 	
 	#setup the chances to pull a certain tile for the queue
 	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
@@ -124,17 +123,17 @@ func _ready():
 	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame, player.type_class.attack_sprite_frame, player.type_class.dodge_sprite_frame)
 	add_child(temp_ui_player_info)
 
-func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
-	var temp_button_list = []
-	for btn in button_loc_dict:
-		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
-		temp_btn.local_name = btn
-		temp_btn.connect("ui_sig", self, "ui_func")
-		temp_button_list.append(temp_btn)
-		temp_btn.z_index = new_z_index
-		add_child(temp_btn)
-	UiVars.buttons_dict[button_container_name] = temp_button_list
-	pass
+#func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
+#	var temp_button_list = []
+#	for btn in button_loc_dict:
+#		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
+#		temp_btn.local_name = btn
+#		temp_btn.connect("ui_sig", self, "ui_func")
+#		temp_button_list.append(temp_btn)
+#		temp_btn.z_index = new_z_index
+#		add_child(temp_btn)
+#	UiVars.buttons_dict[button_container_name] = temp_button_list
+#	pass
 
 func ui_func(new_name, btn_node_ref): #checks which button is pressed
 	if new_name == "back":
@@ -201,7 +200,7 @@ func ui_menu():
 	pause_menu.texture = pause_menu_sprite
 	pause_menu.z_index = 15
 	add_child(pause_menu)
-	generate_ui(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index)
+	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
 
 func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
