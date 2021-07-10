@@ -136,6 +136,8 @@ func _ready():
 #	pass
 
 func ui_func(new_name, btn_node_ref): #checks which button is pressed
+	if UiVars.is_trans:
+		return
 	if new_name == "back":
 		ui_back(btn_node_ref)
 		return

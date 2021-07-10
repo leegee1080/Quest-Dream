@@ -4,6 +4,7 @@ class_name UI_Vars
 
 var clicked
 var buttons_dict = {}
+var is_trans = false
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -24,4 +25,10 @@ static func generate_button(button_loc_dict, sprite_frames_file_loc, button_size
 		temp_btn.z_index = new_z_index
 		button_parent_node.add_child(temp_btn)
 	UiVars.buttons_dict[button_container_name] = temp_button_list
+	pass
+
+static func hide_buttons(button_container_name):
+	var list_to_check = UiVars.buttons_dict[button_container_name]
+	for button in list_to_check:
+		button.queue_free()
 	pass
