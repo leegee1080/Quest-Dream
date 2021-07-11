@@ -4,15 +4,19 @@ const ani_dict = {#dictionary of all the animation classes
 	"wiggle_in_place" : Walking_Animation,
 	"hit_color_change" : Hit_Color_Animation,
 	"blink_sprite" : null,
-	"death_flip_red" : Death_Animation,
+	"death_flip_red" : Death_Animation
+}
+
+const dodge_dict = {
 	"teleport" : null,
-	"tackle_and_return" : null,
-	"dodge_roll" : null
+	"dodge_roll" : Roll_Dodge_1
 }
 
 const attack_dict = {
 	"throw_projectile" : null,
-	"tackle": Tackle_Attack_1
+	"tackle": Tackle_Attack_1,
+	"tackle_and_return" : null,
+	"tackle_p": Player_Tackle_Attack
 }
 
 const defend_dict = {

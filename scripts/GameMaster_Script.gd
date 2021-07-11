@@ -74,6 +74,8 @@ func middle_scene_trans():
 		UiVars.hide_buttons("mainmenu_buttons")
 	if current_stage != null:
 		current_stage.queue_free()
+	if GlobalVars.current_stage_number in GlobalVars.stage_order:
+		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
 	pass
 
 func end_scene_trans():
@@ -154,8 +156,7 @@ func _input(event):
 					current_stage.win_round()
 					return
 				if event.scancode == KEY_N:
-					create_stage(chosen_level_theme)
-					add_child(current_stage)
+					win_stage()
 					return
 				if event.scancode == KEY_SPACE and current_stage.current_game_state != current_stage.game_state.boss and current_stage.current_game_state == current_stage.game_state.run:
 					current_stage.open_boss_room()
@@ -167,7 +168,7 @@ func create_stage(passed_theme):
 	GlobalVars.tile_center_chance_array = tile_center_chance_array
 	GlobalVars.current_theme = chosen_level_theme
 	current_stage = Stage.new(passed_theme)
-	current_stage.name = "Stage" + str(GlobalVars.current_stage)
+	current_stage.name = "Stage" + str(GlobalVars.current_stage_number)
 	pass
 
 func generate_enemies_dict():
@@ -194,6 +195,7 @@ func lose_stage():
 	pass
 
 func win_stage():
+	GlobalVars.current_stage_number += 1
 	next_game_state = game_state.win
 	print("play screen wipe")
 	print("You continue on!")

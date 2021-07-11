@@ -5,15 +5,15 @@ class_name Assassin
 var sprite_frame = 6
 const string_name = "Assassin"
 
-var special_animations_dict = {
-	"walk": Animation_Enums.ani_dict.wiggle_in_place,
-	"death": Animation_Enums.ani_dict.death_flip_red,
-	"injure": Animation_Enums.ani_dict.hit_color_change,
+const special_animations_dict = {
+	"walk": "wiggle_in_place",
+	"death": "death_flip_red",
+	"injure": "hit_color_change",
 	"happy": null
 }
-var special_moves_dict = {
-	"attack": Player_Tackle_Attack,
-	"dodge" : Roll_Dodge_1
+const special_moves_dict = {
+	"attack": "tackle_p",
+	"dodge" : "dodge_roll"
 }
 
 #battle vars

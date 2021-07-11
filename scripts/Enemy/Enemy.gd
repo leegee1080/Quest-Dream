@@ -52,19 +52,19 @@ func _init(new_type):
 		type_enum = new_type
 
 func setup_animations():
-	for ani in ani_dict:
+	for ani in type_class.special_animations_dict:
+		var temp_ani_class
 		if type_class.special_animations_dict[ani] == null:
 			continue
-		var temp_ani_class
-		temp_ani_class = type_class.special_animations_dict[ani].new(ani_sprite)
+		temp_ani_class = Animation_Enums.ani_dict[type_class.special_animations_dict[ani]].new(ani_sprite)
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-	battle_dict.attack = type_class.special_moves_dict.attack.new(ani_sprite)
+	battle_dict.attack = Animation_Enums.attack_dict[type_class.special_moves_dict["attack"]].new(ani_sprite)
+	battle_dict.defend = Animation_Enums.defend_dict[type_class.special_moves_dict["defend"]].new(ani_sprite)
+	battle_dict.turn = Animation_Enums.turn_dict[type_class.special_moves_dict["turn"]].new(ani_sprite)
 	add_child(battle_dict.attack)
-	battle_dict.defend = type_class.special_moves_dict.defend.new()
 	add_child(battle_dict.defend)
-	battle_dict.turn = type_class.special_moves_dict.turn.new()
 	add_child(battle_dict.turn)
 
 func generate_enemy():

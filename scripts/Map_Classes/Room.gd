@@ -16,7 +16,6 @@ var type_enum
 var theme_enum
 var room_theme_frame #stores the frame number of the room theme
 var room_screen_loc #the location the room will appear on the player's screen
-var room_level
 var is_room_complete = false
 var ani_sprite
 var room_class
@@ -30,10 +29,9 @@ func _ready():
 	room_class =  Boss_Room.new()
 	add_child(room_class)
 
-func _init(new_type, new_theme, level, new_room_screen_loc):
+func _init(new_type, new_theme, new_room_screen_loc):
 	theme_enum = new_theme
 	type_enum = new_type
-	room_level = level
 	room_theme_frame = room_theme_dict.get(new_theme)
 	room_screen_loc = new_room_screen_loc
 

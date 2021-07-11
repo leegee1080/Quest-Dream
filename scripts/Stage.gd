@@ -92,7 +92,6 @@ func _ready():
 	GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
 	#create UI
 	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index, self)
-	
 	#setup the chances to pull a certain tile for the queue
 	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
 	generate_tile_chance_arrays(Tile_Enums.tile_center_chances, GlobalVars.tile_center_chance_array)
@@ -117,23 +116,10 @@ func _ready():
 	player.exit_tile_pos = end_tile.position
 	player.name = "Player"
 	player.position = start_tile.position
-	
 	#generate the heads-up for collectables
 	var temp_player_consumable = player.type_class.consumable_class.new()
 	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame, player.type_class.attack_sprite_frame, player.type_class.dodge_sprite_frame)
 	add_child(temp_ui_player_info)
-
-#func generate_ui(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index):
-#	var temp_button_list = []
-#	for btn in button_loc_dict:
-#		var temp_btn = Btn.new(button_loc_dict[btn][0], sprite_frames_file_loc, button_loc_dict[btn][1], button_loc_dict[btn][2], button_size)
-#		temp_btn.local_name = btn
-#		temp_btn.connect("ui_sig", self, "ui_func")
-#		temp_button_list.append(temp_btn)
-#		temp_btn.z_index = new_z_index
-#		add_child(temp_btn)
-#	UiVars.buttons_dict[button_container_name] = temp_button_list
-#	pass
 
 func ui_func(new_name, btn_node_ref): #checks which button is pressed
 	if UiVars.is_trans:
@@ -234,7 +220,6 @@ func win_round():
 		player.walk_toggle()
 	print("Round Win")
 	current_game_state = game_state.win
-	GlobalVars.current_stage += 1
 	get_parent().win_stage()
 	pass
 
@@ -263,7 +248,7 @@ func _input(event):
 func open_boss_room():
 	player.walk_toggle()
 	can_player_place_tiles = false
-	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, GlobalVars.current_stage, room_screen_loc)
+	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, room_screen_loc)
 	room_screen.name = "boss battle"
 	add_child(room_screen)
 	current_game_state = game_state.boss

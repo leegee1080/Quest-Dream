@@ -48,6 +48,7 @@ var current_tile
 var ani_sprite
 
 func _ready():
+	type_class = GlobalVars.player_type_class_storage
 	walk_timer = Timer.new()
 	add_child(walk_timer)
 	walk_timer.add_to_group("timers")
@@ -58,18 +59,17 @@ func _ready():
 	setup_animations()
 
 func _init():
-	type_class = GlobalVars.player_type_class_storage
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
 	add_child(ani_sprite)
-	ani_sprite.set_frame(type_class.sprite_frame)
+	ani_sprite.set_frame(GlobalVars.player_type_class_storage.sprite_frame)
 
 func setup_animations():
-	for ani in type_class.special_animations_dict:
-		if type_class.special_animations_dict[ani] == null:
-			continue
+	for ani in GlobalVars.player_type_class_storage.special_animations_dict:
 		var temp_ani_class
-		temp_ani_class = type_class.special_animations_dict[ani].new(ani_sprite)
+		if GlobalVars.player_type_class_storage.special_animations_dict[ani] == null:
+			continue
+		temp_ani_class = Animation_Enums.ani_dict[GlobalVars.player_type_class_storage.special_animations_dict[ani]].new(ani_sprite)
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class

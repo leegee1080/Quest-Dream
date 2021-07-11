@@ -8,7 +8,7 @@ const stage_order = { #the stage number and corresponding theme
 	21: Tile_Enums.tile_themes_enum.castle
 }
 
-var current_stage: int = 1
+var current_stage_number: int = 1
 var current_theme = Tile_Enums.tile_themes_enum.castle
 
 var money_gained_this_run = 0

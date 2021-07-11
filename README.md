@@ -19,8 +19,8 @@
       - [x] enemy makes a choice and then will attack, dodge, or other
 - [ ] Macro Game
    - [x] At the end of each level is a boss room
-   - [ ] 4 mini boss rooms and a main boss at the end of a set
-   - [ ] 5 levels in a set for each theme, forest -> mountains -> swamp -> grave -> castle
+   - [x] 4 mini boss rooms and a main boss at the end of a set
+   - [x] 5 levels in a set for each theme, forest -> mountains -> swamp -> grave -> castle
    - [ ] after castle is the final level with a super boss(demi-god?) at the end
 
 ### art todo:

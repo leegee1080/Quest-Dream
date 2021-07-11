@@ -41,8 +41,6 @@ func _ready():
 	z_index = 12 #make sure the player sprite is on top
 	type_class = GlobalVars.player_type_class_storage
 	attack_power = type_class.starting_attack_power
-	ani_dict = type_class.special_animations_dict
-	battle_dict = type_class.special_moves_dict
 	max_dodge_charges = type_class.starting_dodge_charges
 	max_attack_charges = type_class.starting_attack_charges
 	ani_sprite = AnimatedSprite.new()
@@ -107,36 +105,34 @@ func _input(event):
 			if event.scancode == KEY_A:
 				current_battle_state = Battle_Enums.battle_states.attack
 				attack()
-				#tell player to attack
 				get_tree().call_group("UI_Player_Info", "update_battle_charges")
 				return
 			if event.scancode == KEY_UP:
 				current_battle_state = Battle_Enums.battle_states.dodge
 				dodge("up")
-				#tell player to dodge up
 				get_tree().call_group("UI_Player_Info", "update_battle_charges")
 				return
 			if event.scancode == KEY_DOWN:
 				current_battle_state = Battle_Enums.battle_states.dodge
 				dodge("down")
-				#tell player to dodge down
 				get_tree().call_group("UI_Player_Info", "update_battle_charges")
 				return
 			
 
 func setup_animations():
-	for ani in ani_dict:
-		if type_class.special_animations_dict[ani] == null:
-			continue
+	for ani in GlobalVars.player_type_class_storage.special_animations_dict:
 		var temp_ani_class
-		temp_ani_class = type_class.special_animations_dict[ani].new(ani_sprite)
+		if GlobalVars.player_type_class_storage.special_animations_dict[ani] == null:
+			continue
+		temp_ani_class = Animation_Enums.ani_dict[GlobalVars.player_type_class_storage.special_animations_dict[ani]].new(ani_sprite)
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-	battle_dict.attack = type_class.special_moves_dict.attack.new(ani_dict)
+	battle_dict.attack = Animation_Enums.attack_dict[GlobalVars.player_type_class_storage.special_moves_dict["attack"]].new(ani_sprite)
+	battle_dict.dodge = Animation_Enums.dodge_dict[GlobalVars.player_type_class_storage.special_moves_dict["dodge"]].new(ani_sprite)
 	add_child(battle_dict.attack)
-	battle_dict.dodge = type_class.special_moves_dict.dodge.new(ani_dict)
 	add_child(battle_dict.dodge)
+
 
 func heal_player(new_health):
 	GlobalVars.player_consumable_amount += new_health
