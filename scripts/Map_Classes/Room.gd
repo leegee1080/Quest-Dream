@@ -25,7 +25,6 @@ func _ready():
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/room_bg_frames.tres"))
 	ani_sprite.set_frame(room_theme_frame)
 	position = room_screen_loc
-	print("battle")
 	room_class =  Boss_Room.new()
 	add_child(room_class)
 
@@ -38,7 +37,6 @@ func _init(new_type, new_theme, new_room_screen_loc):
 func complete_room():
 	UI_Vars.generate_button(GlobalVars.main_node_ref.room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", GlobalVars.main_node_ref.room_button_z_index, GlobalVars.main_node_ref)
 	is_room_complete = true
-	print("room complete")
 
 func leave_room():
 	if is_room_complete == true:
@@ -46,6 +44,5 @@ func leave_room():
 		queue_free()
 
 func boss_battle_room():
-	print("battle")
 	room_class =  Boss_Room.new()
 	add_child(room_class)

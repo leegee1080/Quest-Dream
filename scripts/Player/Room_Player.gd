@@ -53,7 +53,6 @@ func _ready():
 	ready_up_player()
 
 func ready_up_player():
-	print("player ready")
 	current_battle_state = Battle_Enums.battle_states.ready
 	players_team = [self]
 

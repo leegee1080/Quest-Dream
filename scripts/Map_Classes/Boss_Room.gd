@@ -26,7 +26,6 @@ func setup_battle():
 	if GlobalVars.current_stage_number % 5 == 0:
 		boss_stage_index = 1
 	var boss_index = int(rand_range(0, GlobalVars.stage_enemies_dict[GlobalVars.current_theme][boss_stage_index].size()))
-	print(boss_index)
 	boss = Enemy.new(GlobalVars.stage_enemies_dict[GlobalVars.current_theme][boss_stage_index][boss_index])
 	battle_player = Room_Player.new()
 	
@@ -36,8 +35,6 @@ func setup_battle():
 	
 	GlobalVars.main_node_ref.add_child(battle_player)
 	battle_player.position = GlobalVars.main_node_ref.player_room_screen_loc
-	print("boss room setup complete")
-	print(GlobalVars.battle_participants_node_array)
 
 func complete_battle():
 	get_parent().complete_room()
