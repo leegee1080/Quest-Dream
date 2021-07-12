@@ -97,26 +97,32 @@ func recharge_dodge():
 	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 
 func _input(event):
-	if current_battle_state != Battle_Enums.battle_states.ready or is_dead:
-		return
 	if event is InputEventKey:
 		if event.pressed:
 			if event.scancode == KEY_A:
-				current_battle_state = Battle_Enums.battle_states.attack
-				attack()
-				get_tree().call_group("UI_Player_Info", "update_battle_charges")
+				player_command("attack")
 				return
 			if event.scancode == KEY_UP:
-				current_battle_state = Battle_Enums.battle_states.dodge
-				dodge("up")
-				get_tree().call_group("UI_Player_Info", "update_battle_charges")
+				player_command("dodge_up")
 				return
 			if event.scancode == KEY_DOWN:
-				current_battle_state = Battle_Enums.battle_states.dodge
-				dodge("down")
-				get_tree().call_group("UI_Player_Info", "update_battle_charges")
+				player_command("dodge_down")
 				return
 			
+
+func player_command(command):
+	if current_battle_state != Battle_Enums.battle_states.ready or is_dead:
+		return
+	if command == "attack":
+		attack()
+		return
+	if command == "dodge_up":
+		dodge("up")
+		return
+	if command == "dodge_down":
+		dodge("down")
+		return
+	pass
 
 func setup_animations():
 	for ani in GlobalVars.player_type_class_storage.special_animations_dict:
@@ -152,14 +158,18 @@ func take_hit(damage):
 	print("Player health: "+ str(GlobalVars.player_consumable_amount))
 
 func attack():
+	current_battle_state = Battle_Enums.battle_states.attack
 	if current_attack_charges > 0:
 		attack_charge_timer.start()
 		battle_dict.attack.attack(lane_index, attack_power)
 	else:
 		current_battle_state = Battle_Enums.battle_states.ready
+	get_tree().call_group("UI_Player_Info", "update_battle_charges")
 
 func dodge(direction):
+	current_battle_state = Battle_Enums.battle_states.dodge
 	if current_dodge_charges > 0:
 		battle_dict.dodge.dodge(direction)
 	else:
 		current_battle_state = Battle_Enums.battle_states.ready
+	get_tree().call_group("UI_Player_Info", "update_battle_charges")

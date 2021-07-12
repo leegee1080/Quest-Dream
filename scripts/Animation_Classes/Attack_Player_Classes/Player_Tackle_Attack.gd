@@ -2,8 +2,6 @@ extends Node
 
 class_name Player_Tackle_Attack
 
-var animation_class = GlobalVars.ani_dict.melee_tackle
-
 var sprite_frame = 2
 var melee_attack_animation_timer
 var melee_return_animation_timer
@@ -23,6 +21,8 @@ func _init(new_ani_sprite):
 	pass
 
 func _ready():
+	add_to_group("AnimationClasses")
+	
 	ani_sprite = get_parent().ani_sprite
 
 	melee_attack_animation_timer = Timer.new()
@@ -62,7 +62,7 @@ func attack_step():
 
 func return_step():
 	var yeet = (ani_sprite.position - Vector2.ZERO)* (-speed)
-	ani_sprite.position += yeet.normalized() * 2
+	ani_sprite.position += yeet.normalized() * 6
 	if ani_sprite.position.distance_to(Vector2.ZERO) < 1:
 		stop_animation()
 	pass
@@ -70,4 +70,8 @@ func return_step():
 func stop_animation():
 	ani_sprite.position = Vector2.ZERO
 	get_parent().current_battle_state = Battle_Enums.battle_states.ready
+	melee_return_animation_timer.stop()
+
+func terminate_animation():
+	melee_attack_animation_timer.stop()
 	melee_return_animation_timer.stop()

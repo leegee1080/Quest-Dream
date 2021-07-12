@@ -40,6 +40,14 @@ const room_button_loc_dict = {
 var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
 var pause_menu
 const pause_menu_loc = Vector2(152,273)
+#battle ui vars
+const battle_button_z_index = 15
+const battle_button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"up": [Vector2(20,201), 16, 17],
+	"down": [Vector2(20,291), 18, 19],
+	"attack": [Vector2(191,201), 20, 21]
+}
 
 ##play area vars
 var ingame_tilegroup_Node = Node2D.new()
@@ -139,6 +147,16 @@ func ui_func(new_name, btn_node_ref): #checks which button is pressed
 	if new_name == "fastforward":
 		ui_fastforward()
 		return
+	if current_game_state == game_state.boss:
+		if new_name == "up":
+			ui_touch_dodge_up()
+			return
+		if new_name == "down":
+			ui_touch_dodge_down()
+			return
+		if new_name == "attack":
+			ui_touch_attack()
+			return
 
 func ui_quit():
 	get_parent().exit_to_menu()
@@ -190,6 +208,18 @@ func ui_menu():
 	add_child(pause_menu)
 	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
+
+func ui_touch_dodge_up():
+	GlobalVars.room_player_node_ref.player_command("dodge_up")
+	pass
+
+func ui_touch_dodge_down():
+	GlobalVars.room_player_node_ref.player_command("dodge_down")
+	pass
+
+func ui_touch_attack():
+	GlobalVars.room_player_node_ref.player_command("attack")
+	pass
 
 func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	for test in array_to_check:
@@ -250,6 +280,7 @@ func open_boss_room():
 	can_player_place_tiles = false
 	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, room_screen_loc)
 	room_screen.name = "boss battle"
+	UI_Vars.generate_button(battle_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "battle", battle_button_z_index, self)
 	add_child(room_screen)
 	current_game_state = game_state.boss
 #play animation for opening room.

@@ -37,6 +37,8 @@ func _init(new_type, new_theme, new_room_screen_loc):
 func complete_room():
 	UI_Vars.generate_button(GlobalVars.main_node_ref.room_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "room_back_btn", GlobalVars.main_node_ref.room_button_z_index, GlobalVars.main_node_ref)
 	is_room_complete = true
+	UI_Vars.hide_buttons("battle")
+	get_tree().call_group("AnimationClasses", "terminate_animation")
 
 func leave_room():
 	if is_room_complete == true:

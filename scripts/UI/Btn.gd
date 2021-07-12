@@ -8,6 +8,7 @@ signal ui_sig(name)
 #var clicked = false
 var clickable = true
 var clickable_area_max
+var was_clicked = false
 
 var sprite_frames
 var neutral_frame
@@ -34,12 +35,14 @@ func _ready():
 func _input(event):
 	if clickable:
 		if event is InputEventMouseButton:
-			if UiVars.clicked == true and event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:
+			if UiVars.clicked == true and was_clicked:
 				ani_sprite.set_frame(neutral_frame)
 				click_btn()
 				return
+			was_clicked = false
 			if event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:
 				ani_sprite.set_frame(down_frame)
+				was_clicked = true
 				return
 
 func click_btn():

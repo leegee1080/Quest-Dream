@@ -2,8 +2,6 @@ extends Node
 
 class_name Tackle_Attack_1
 
-var animation_class = GlobalVars.ani_dict.melee_tackle
-
 var sprite_frame = 2
 var melee_attack_animation_timer
 var melee_return_animation_timer
@@ -23,6 +21,8 @@ func _init(new_ani_sprite):
 	pass
 
 func _ready():
+	add_to_group("AnimationClasses")
+	
 	ani_sprite = get_parent().ani_sprite
 
 	melee_attack_animation_timer = Timer.new()
@@ -67,4 +67,8 @@ func return_step():
 
 func stop_animation():
 	ani_sprite.position = Vector2.ZERO
+	melee_return_animation_timer.stop()
+
+func terminate_animation():
+	melee_attack_animation_timer.stop()
 	melee_return_animation_timer.stop()

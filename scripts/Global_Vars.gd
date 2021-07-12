@@ -31,11 +31,3 @@ var battle_participants_node_array = []
 
 var tile_path_type_chance_array = []
 var tile_center_chance_array = []
-const ani_dict = {#dictionary of all the animation classes
-	"wiggle_in_place" : Walking_Animation,
-	"melee_tackle" : Tackle_Attack_1,
-	"range" : null,
-	"magic" : null,
-	"hit_color_change" : Hit_Color_Animation,
-	"death_flip_red" : Death_Animation
-}
