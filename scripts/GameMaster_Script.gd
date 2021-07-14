@@ -84,7 +84,7 @@ func end_scene_trans():
 		GlobalVars.player_type_class_storage = Player_Enums.player_types_dict[player_type_class].new()
 		add_child(GlobalVars.player_type_class_storage)
 		GlobalVars.player_type_class_storage.name = "Player_Data_Storage"
-		generate_enemies_dict()
+#		generate_enemies_dict()
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
 		current_game_state = game_state.stage
@@ -158,12 +158,12 @@ func _input(event):
 				if event.scancode == KEY_N:
 					win_stage()
 					return
-				if event.scancode == KEY_SPACE and current_stage.current_game_state != current_stage.game_state.boss and current_stage.current_game_state == current_stage.game_state.run:
-					current_stage.open_boss_room()
-					return
+#				if event.scancode == KEY_SPACE and current_stage.current_game_state != current_stage.game_state.boss and current_stage.current_game_state == current_stage.game_state.run:
+#					current_stage.open_boss_room()
+#					return
 
 func create_stage(passed_theme):
-	GlobalVars.battle_participants_node_array = battle_participants_node_array
+#	GlobalVars.battle_participants_node_array = battle_participants_node_array
 	GlobalVars.tile_path_type_chance_array = tile_path_type_chance_array
 	GlobalVars.tile_center_chance_array = tile_center_chance_array
 	GlobalVars.current_theme = chosen_level_theme
@@ -171,13 +171,13 @@ func create_stage(passed_theme):
 	current_stage.name = "Stage" + str(GlobalVars.current_stage_number)
 	pass
 
-func generate_enemies_dict():
-	for test in Enemy_Enums.enemy_types_dict:
-		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
-		if test_enemy.is_final_boss:
-			GlobalVars.stage_enemies_dict[test_enemy.theme][1].append(Enemy_Enums.enemy_types_dict[test])
-		else:
-			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
+#func generate_enemies_dict():
+#	for test in Enemy_Enums.enemy_types_dict:
+#		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
+#		if test_enemy.is_final_boss:
+#			GlobalVars.stage_enemies_dict[test_enemy.theme][1].append(Enemy_Enums.enemy_types_dict[test])
+#		else:
+#			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
 
 func exit_to_menu():
 	next_game_state = game_state.mainmenu

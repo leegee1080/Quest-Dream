@@ -36,7 +36,7 @@ var exit_tile_pos
 
 var can_walk = false
 var direction: Vector2 = Vector2(0,0)
-######################################################################suggestion!!!!!!!!!!!!!!!!!!!! make the movement speed tied to the combat speed
+
 var map_move_speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
@@ -119,7 +119,8 @@ func check_map_edge():
 #	print(y_test)
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
 		if check_dist_exit():
-			get_parent().open_boss_room()
+#			get_parent().open_boss_room()
+			get_parent().win_round()
 			return
 		turn_around()
 	return
