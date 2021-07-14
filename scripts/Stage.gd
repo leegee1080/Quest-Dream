@@ -44,9 +44,13 @@ const pause_menu_loc = Vector2(152,273)
 const battle_button_z_index = 15
 const battle_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"up": [Vector2(20,201), 16, 17],
-	"down": [Vector2(20,291), 18, 19],
-	"attack": [Vector2(191,201), 20, 21]
+	"up": [Vector2(20,251), 16, 17],
+	"down": [Vector2(20,341), 18, 19],
+	"attack": [Vector2(191,251), 20, 21]
+}
+const menu_battle_button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"menu": [Vector2(191,347), 4, 5]
 }
 
 ##play area vars
@@ -279,7 +283,17 @@ func open_boss_room():
 	player.walk_toggle()
 	can_player_place_tiles = false
 	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, room_screen_loc)
+	
+	var room_bg = AnimatedSprite.new()
+	room_bg.centered = false
+	room_bg.set_sprite_frames(load("res://assets/visuals/scene_trans_frames.tres"))
+	add_child(room_bg)
+	room_bg.set_frame(6)
+	
 	room_screen.name = "boss battle"
+	
+	UI_Vars.hide_buttons("main")
+	UI_Vars.generate_button(menu_battle_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index, self)
 	UI_Vars.generate_button(battle_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "battle", battle_button_z_index, self)
 	add_child(room_screen)
 	current_game_state = game_state.boss
