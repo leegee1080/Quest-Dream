@@ -89,18 +89,18 @@ export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_t
 #pull info about the centertile here
 var center_subtile
 var current_tileset: Dictionary
-var saved_center_room = null
-var saved_loot_pool = null
+#var saved_center_room = null
+#var saved_loot_pool = null
 
 var is_locked = false
 
 var deco_number
 var deco_list = []
 
-var player_level
-var difficulty
-var center_level
-var is_boss_tile = false
+#var player_level
+#var difficulty
+#var center_level
+#var is_boss_tile = false
 var is_impass_tile = false
 
 var rotate_var = 0
@@ -136,7 +136,7 @@ func generate_tile():
 	ani_sprite.set_frame(tile_theme_dict.get(theme_enum).get(direction_enum)[init_chosen_sprite])
 	add_child(ani_sprite)
 	place_center()
-	return
+	pass
 
 func place_center():
 	if center_object_enum == Tile_Enums.center_type_enum.none:
@@ -161,7 +161,7 @@ func place_deco():
 		var rngy = rand_range(14.0, 18.0)* multi[0]
 		add_child(deco)
 		deco.translate(Vector2(rngx,rngy))
-	return
+	pass
 
 func lock_tile():
 	if is_locked == true:
@@ -176,7 +176,7 @@ func lock_tile():
 	lock_timer.start()
 	lock_sprite.set_frame(starting_lock_frame)
 	add_child(lock_sprite)
-	return
+	pass
 
 func change_lock_animation():
 	if current_lock_frame < (total_lock_frames):
@@ -184,7 +184,7 @@ func change_lock_animation():
 		current_lock_frame +=1
 		return
 	lock_timer.stop()
-	return
+	pass
 
 func rot_value_changer(current_player_dir: Vector2):
 	var new_rot = current_player_dir
@@ -205,4 +205,4 @@ func place_tile(new_loc: Vector2):
 	self.position.x = new_loc.x
 	self.position.y = new_loc.y
 	place_deco()
-	return
+	pass
