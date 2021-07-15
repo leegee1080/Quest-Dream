@@ -69,41 +69,41 @@ func _ready():
 #	rtl_node_money.margin_left = 0
 #	rtl_node_money.margin_top = 0
 	
-	attack_sprite_node = AnimatedSprite.new()
-	attack_sprite_node.set_sprite_frames(load(item_spritesheet))
-	add_child(attack_sprite_node)
-	attack_sprite_node.set_frame(attack_sprite_frame)
-	attack_sprite_node.position = attack_sprite_pos
-	rtl_node_attack = Label.new()
-	add_child(rtl_node_attack)
-	rtl_node_attack.rect_position = Vector2(attack_sprite_pos.x, attack_sprite_pos.y + 5)
-	rtl_node_attack.rect_scale = Vector2(text_scale,text_scale)
-	rtl_node_attack.rect_size = rect_size
-	rtl_node_attack.text = str(GlobalVars.player_node_ref.type_class.starting_attack_charges)
-	rtl_node_attack.add_font_override("font", load(font))
-#	rtl_node_attack.margin_left = 0
-#	rtl_node_attack.margin_top = 0
-	
-	dodge_sprite_node = AnimatedSprite.new()
-	dodge_sprite_node.set_sprite_frames(load(item_spritesheet))
-	add_child(dodge_sprite_node)
-	dodge_sprite_node.set_frame(dodge_sprite_frame)
-	dodge_sprite_node.position = dodge_sprite_pos
-	rtl_node_dodge = Label.new()
-	add_child(rtl_node_dodge)
-	rtl_node_dodge.rect_position = Vector2(dodge_sprite_pos.x, dodge_sprite_pos.y + 5)
-	rtl_node_dodge.rect_scale = Vector2(text_scale,text_scale)
-	rtl_node_dodge.rect_size = rect_size
-	rtl_node_dodge.text = str(GlobalVars.player_node_ref.type_class.starting_dodge_charges)
-	rtl_node_dodge.add_font_override("font", load(font))
-#	rtl_node_dodge.margin_left = 0
-#	rtl_node_dodge.margin_top = 0
+#	attack_sprite_node = AnimatedSprite.new()
+#	attack_sprite_node.set_sprite_frames(load(item_spritesheet))
+#	add_child(attack_sprite_node)
+#	attack_sprite_node.set_frame(attack_sprite_frame)
+#	attack_sprite_node.position = attack_sprite_pos
+#	rtl_node_attack = Label.new()
+#	add_child(rtl_node_attack)
+#	rtl_node_attack.rect_position = Vector2(attack_sprite_pos.x, attack_sprite_pos.y + 5)
+#	rtl_node_attack.rect_scale = Vector2(text_scale,text_scale)
+#	rtl_node_attack.rect_size = rect_size
+#	rtl_node_attack.text = str(GlobalVars.player_node_ref.type_class.starting_attack_charges)
+#	rtl_node_attack.add_font_override("font", load(font))
+##	rtl_node_attack.margin_left = 0
+##	rtl_node_attack.margin_top = 0
+#
+#	dodge_sprite_node = AnimatedSprite.new()
+#	dodge_sprite_node.set_sprite_frames(load(item_spritesheet))
+#	add_child(dodge_sprite_node)
+#	dodge_sprite_node.set_frame(dodge_sprite_frame)
+#	dodge_sprite_node.position = dodge_sprite_pos
+#	rtl_node_dodge = Label.new()
+#	add_child(rtl_node_dodge)
+#	rtl_node_dodge.rect_position = Vector2(dodge_sprite_pos.x, dodge_sprite_pos.y + 5)
+#	rtl_node_dodge.rect_scale = Vector2(text_scale,text_scale)
+#	rtl_node_dodge.rect_size = rect_size
+#	rtl_node_dodge.text = str(GlobalVars.player_node_ref.type_class.starting_dodge_charges)
+#	rtl_node_dodge.add_font_override("font", load(font))
+##	rtl_node_dodge.margin_left = 0
+##	rtl_node_dodge.margin_top = 0
 	pass
 
-func _init(player_consumable_frame, player_attack_sprite_frame, player_dodge_sprite_frame):
+func _init(player_consumable_frame):
 	consumable_sprite_frame = player_consumable_frame
-	attack_sprite_frame = player_attack_sprite_frame
-	dodge_sprite_frame = player_dodge_sprite_frame
+#	attack_sprite_frame = player_attack_sprite_frame
+#	dodge_sprite_frame = player_dodge_sprite_frame
 
 func update_consumable():
 	rtl_node_consumable.text = str(GlobalVars.player_consumable_amount)

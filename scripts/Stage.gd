@@ -130,7 +130,7 @@ func _ready():
 	player.position = start_tile.position
 	#generate the heads-up for collectables
 	var temp_player_consumable = player.type_class.consumable_class.new()
-	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame, player.type_class.attack_sprite_frame, player.type_class.dodge_sprite_frame)
+	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame)
 	add_child(temp_ui_player_info)
 
 func ui_func(new_name, btn_node_ref): #checks which button is pressed

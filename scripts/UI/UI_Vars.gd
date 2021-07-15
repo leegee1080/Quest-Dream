@@ -28,7 +28,10 @@ static func generate_button(button_loc_dict, sprite_frames_file_loc, button_size
 	pass
 
 static func hide_buttons(button_container_name):
-	var list_to_check = UiVars.buttons_dict[button_container_name]
-	for button in list_to_check:
-		button.queue_free()
+	if button_container_name in UiVars.buttons_dict:
+		var list_to_check = UiVars.buttons_dict[button_container_name]
+		for button in list_to_check:
+			if button == null:
+				continue
+			button.queue_free()
 	pass

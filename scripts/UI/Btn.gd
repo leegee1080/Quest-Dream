@@ -30,6 +30,7 @@ func _ready():
 	ani_sprite.set_frame(neutral_frame)
 	ani_sprite.set_centered(false)
 	add_child(ani_sprite)
+	name = local_name + "_btn"
 	return
 
 func _input(event):

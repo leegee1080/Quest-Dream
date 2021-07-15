@@ -13,18 +13,23 @@ const tile_center_chance_array = []
 
 #ui vars
 var trans_timer = Timer.new()
-var trans_total_time = 0.5
+var trans_total_time = 1.0
 var trans_middle_timer = Timer.new()
 const mainmenu_button_z_index = 15
 const mainmenu_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"newgame": [Vector2(79,291), 8, 9],
-	"continuegame": [Vector2(159,291), 10, 11],
 	"options": [Vector2(79,371), 12, 13],
 	"credits": [Vector2(159,371), 14, 15]
 }
+const mainmenu_contgame_button_loc_dict = {
+	"continuegame": [Vector2(159,291), 10, 11]
+}
+const creditsmenu_button_loc_dict = {
+	"back": [Vector2(121,371), 0, 1]
+}
 const optionsmenu_button_loc_dict = {
-	"back": [Vector2(189,301), 0, 1]
+	"back": [Vector2(121,371), 0, 1]
 }
 
 #overall gamestage
@@ -61,6 +66,9 @@ func _ready():
 func setup_mainmenu():
 	current_game_state = game_state.mainmenu
 	UiVars.generate_button(mainmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_buttons", mainmenu_button_z_index, self)
+	if GlobalVars.player_type_class_storage != null:
+		UiVars.generate_button(mainmenu_contgame_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_continue_button", mainmenu_button_z_index, self)
+	next_game_state = null
 	pass
 
 func start_scene_trans():
@@ -70,41 +78,48 @@ func start_scene_trans():
 	pass
 
 func middle_scene_trans():
-	if current_game_state == game_state.mainmenu:
-		UiVars.hide_buttons("mainmenu_buttons")
+	UiVars.hide_buttons("mainmenu_buttons")
+	UiVars.hide_buttons("mainmenu_continue_button")
 	if current_stage != null:
 		current_stage.queue_free()
 	if GlobalVars.current_stage_number in GlobalVars.stage_order:
 		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
-	pass
-
-func end_scene_trans():
-	UiVars.is_trans = false
 	if next_game_state == game_state.newgame:
-		GlobalVars.player_type_class_storage = Player_Enums.player_types_dict[player_type_class].new()
-		add_child(GlobalVars.player_type_class_storage)
-		GlobalVars.player_type_class_storage.name = "Player_Data_Storage"
-#		generate_enemies_dict()
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
 		current_game_state = game_state.stage
 		return
 	if next_game_state == game_state.continuegame:
-		print("cont")
+		create_stage(chosen_level_theme)
+		add_child(current_stage)
 		current_game_state = game_state.stage
 		return
 	if next_game_state == game_state.mainmenu:
-		current_game_state = game_state.mainmenu
 		setup_mainmenu()
 		return
 	if next_game_state == game_state.win:
-		current_game_state = game_state.stage
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
+		current_game_state = game_state.stage
 		return
 	if next_game_state == game_state.lose:
-		current_game_state = game_state.mainmenu
 		setup_mainmenu()
+		return
+	pass
+
+func end_scene_trans():
+	UiVars.is_trans = false
+	if next_game_state == game_state.newgame:
+		print("new game")
+		current_game_state = game_state.stage
+		return
+	if next_game_state == game_state.continuegame:
+		print("cont game")
+		current_game_state = game_state.stage
+		return
+	if next_game_state == game_state.win:
+		print("cont game")
+		current_game_state = game_state.stage
 		return
 	pass
 
@@ -127,25 +142,45 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 		ui_new()
 		return
 
-func ui_back(button_node_ref):
+func ui_back(_button_node_ref):
+	UiVars.hide_buttons("creditmenu_buttons")
+	UiVars.hide_buttons("optionsmenu_buttons")
+	UiVars.hide_buttons("mainmenu_continue_button")
+	setup_mainmenu()
 	pass
 
 func ui_new():
 	next_game_state = game_state.newgame
+	GlobalVars.current_stage_number = 1
+	if GlobalVars.player_type_class_storage != null:
+		GlobalVars.player_type_class_storage.queue_free()
+		GlobalVars.player_type_class_storage = null
+	GlobalVars.player_type_class_storage = Player_Enums.player_types_dict[player_type_class].new()
+	add_child(GlobalVars.player_type_class_storage)
+	GlobalVars.player_type_class_storage.name = "Player_Data_Storage"
 	start_scene_trans()
 	pass
 
 func ui_cont():
 	next_game_state = game_state.continuegame
+	#load stage numb and player type class stor from global vars
 	start_scene_trans()
 	pass
 
 func ui_options():
-	next_game_state = game_state.options
+	print("options menu open")
+	current_game_state = game_state.options
+	UiVars.hide_buttons("mainmenu_buttons")
+	UiVars.hide_buttons("mainmenu_continue_button")
+	UiVars.generate_button(optionsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "optionsmenu_buttons", mainmenu_button_z_index, self)
 	pass
 
 func ui_credits():
-	next_game_state = game_state.credits
+	print("credits menu open")
+	current_game_state = game_state.credits
+	UiVars.hide_buttons("mainmenu_buttons")
+	UiVars.hide_buttons("mainmenu_continue_button")
+	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_buttons", mainmenu_button_z_index, self)
 	pass
 
 func _input(event):
@@ -158,9 +193,11 @@ func _input(event):
 				if event.scancode == KEY_N:
 					win_stage()
 					return
-#				if event.scancode == KEY_SPACE and current_stage.current_game_state != current_stage.game_state.boss and current_stage.current_game_state == current_stage.game_state.run:
-#					current_stage.open_boss_room()
-#					return
+				if event.scancode == KEY_SPACE:
+					print(current_game_state)
+					print(next_game_state)
+					print(UiVars.buttons_dict)
+					return
 
 func create_stage(passed_theme):
 #	GlobalVars.battle_participants_node_array = battle_participants_node_array
@@ -187,10 +224,11 @@ func exit_to_menu():
 	pass
 
 func lose_stage():
+	GlobalVars.player_type_class_storage.queue_free()
+	GlobalVars.player_type_class_storage = null
 	next_game_state = game_state.lose
 	print("play screen wipe")
-	print("You died!")
-	print("go back to main menu")
+	print("You died! Go back to main menu")
 	start_scene_trans()
 	pass
 
@@ -199,6 +237,5 @@ func win_stage():
 	next_game_state = game_state.win
 	print("play screen wipe")
 	print("You continue on!")
-	print("show skill picker on next stage")
 	start_scene_trans()
 	pass
