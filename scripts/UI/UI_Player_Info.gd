@@ -2,7 +2,7 @@ extends Node2D
 
 class_name UI_Player_Info
 
-const ui_pos = Vector2(115,320)
+const ui_pos = Vector2(128,323)
 const item_spritesheet = "res://assets/visuals/item_frames.tres"
 
 #vars for the consumable UI element

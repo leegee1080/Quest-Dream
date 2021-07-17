@@ -23,7 +23,7 @@ enum game_state{
 const main_button_z_index = 1
 const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"menu": [Vector2(191,307), 4, 5]
+	"menu": [Vector2(201,307), 4, 5]
 }
 const menu_button_z_index = 15
 const menu_button_loc_dict = {
