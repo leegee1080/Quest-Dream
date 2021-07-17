@@ -31,6 +31,8 @@ const creditsmenu_button_loc_dict = {
 const optionsmenu_button_loc_dict = {
 	"back": [Vector2(121,371), 0, 1]
 }
+var credits_screen = preload("res://nodes/Credits_Screen.tscn")
+var credits_screen_instance
 
 #overall gamestage
 var current_game_state
@@ -146,6 +148,8 @@ func ui_back(_button_node_ref):
 	UiVars.hide_buttons("creditmenu_buttons")
 	UiVars.hide_buttons("optionsmenu_buttons")
 	UiVars.hide_buttons("mainmenu_continue_button")
+	if credits_screen_instance != null:
+		credits_screen_instance.queue_free()
 	setup_mainmenu()
 	pass
 
@@ -180,6 +184,8 @@ func ui_credits():
 	current_game_state = game_state.credits
 	UiVars.hide_buttons("mainmenu_buttons")
 	UiVars.hide_buttons("mainmenu_continue_button")
+	credits_screen_instance = credits_screen.instance()
+	add_child(credits_screen_instance)
 	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_buttons", mainmenu_button_z_index, self)
 	pass
 
