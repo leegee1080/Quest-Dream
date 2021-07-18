@@ -107,6 +107,7 @@ func _ready():
 	#setup the chances to pull a certain tile for the queue
 	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
 	generate_tile_chance_arrays(Tile_Enums.tile_center_chances, GlobalVars.tile_center_chance_array)
+	generate_tile_chance_arrays(Tile_Enums.premade_tile_center_chances, GlobalVars.premade_center_chance_array)
 	
 	#setup start timer and player character
 	can_player_place_tiles = true

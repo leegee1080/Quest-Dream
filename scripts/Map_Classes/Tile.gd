@@ -139,13 +139,15 @@ func generate_tile():
 	pass
 
 func place_center():
-	if center_object_enum == Tile_Enums.center_type_enum.none:
+	if center_object_enum == Tile_Enums.center_type_enum.none or center_object_enum == null:
 		return
 	if center_object_enum == Tile_Enums.center_type_enum.consumable:
 		center_subtile = GlobalVars.player_type_class_storage.consumable_class.new()
-	elif center_object_enum == Tile_Enums.center_type_enum.treasure:
-		center_subtile = GlobalVars.player_type_class_storage.money_class.new()
+		add_child(center_subtile)
+		return
+	center_subtile = Tile_Enums.center_classes[center_object_enum].new()
 	add_child(center_subtile)
+	pass
 
 func place_deco():
 	var multi = [1,1,1,-1,-1,-1]

@@ -9,6 +9,7 @@ const stage_order = { #the stage number and corresponding theme
 }
 
 var current_stage_number: int = 1
+const difficulty_increment = 0.5
 var current_theme = Tile_Enums.tile_themes_enum.castle
 
 var money_gained_this_run = 0
@@ -16,7 +17,6 @@ var money_gained_this_run = 0
 var player_type_class_storage
 var main_node_ref
 var player_node_ref
-#var room_player_node_ref
 var player_consumable_amount = 0
 
 var stage_enemies_dict = { #this dict is filled at start of the main class, there is an array for each them of sub_boss[0] and bosses[1]
@@ -31,3 +31,4 @@ var stage_enemies_dict = { #this dict is filled at start of the main class, ther
 
 var tile_path_type_chance_array = []
 var tile_center_chance_array = []
+var premade_center_chance_array = []

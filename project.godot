@@ -192,7 +192,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Money_Coins",
 "language": "GDScript",
-"path": "res://scripts/Player/Item_Classes/Money/Money_Coins.gd"
+"path": "res://scripts/Player/Item_Classes/Money_Coins.gd"
+}, {
+"base": "Node2D",
+"class": "Money_Pile",
+"language": "GDScript",
+"path": "res://scripts/Player/Item_Classes/Money_Pile.gd"
 }, {
 "base": "Reference",
 "class": "Monkey",
@@ -402,6 +407,7 @@ _global_script_class_icons={
 "Lich": "",
 "Map_Player": "",
 "Money_Coins": "",
+"Money_Pile": "",
 "Monkey": "",
 "Necromancer": "",
 "Player_Enums": "",

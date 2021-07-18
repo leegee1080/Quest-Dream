@@ -22,7 +22,29 @@ enum center_type_enum{
 	none,
 	consumable,
 	treasure,
-	boss
+	timedspike,
+	moneypile,
+	reverse,
+	kill,
+	fight,
+	switch,
+	patrol,
+	impass,
+	keygate
+}
+const center_classes = {
+	center_type_enum.none: null,
+	center_type_enum.consumable: null,
+	center_type_enum.treasure: Money_Coins,
+	center_type_enum.timedspike: null,
+	center_type_enum.moneypile: Money_Pile,
+	center_type_enum.reverse: null,
+	center_type_enum.kill: null,
+	center_type_enum.fight: null,
+	center_type_enum.switch: null,
+	center_type_enum.patrol: null,
+	center_type_enum.impass: null,
+	center_type_enum.keygate: null
 }
 
 #Chances To Spawn
@@ -36,4 +58,16 @@ const tile_center_chances = [
 	[10, center_type_enum.none],
 	[2, center_type_enum.consumable],
 	[1, center_type_enum.treasure]
+]
+const premade_tile_center_chances = [
+	[4, center_type_enum.treasure],
+	[3, center_type_enum.timedspike],
+	[4, center_type_enum.moneypile],
+	[4, center_type_enum.reverse],
+	[1, center_type_enum.kill],
+	[2, center_type_enum.fight],
+	[2, center_type_enum.switch],
+	[1, center_type_enum.patrol],
+	[4, center_type_enum.impass],
+	[1, center_type_enum.keygate]
 ]
