@@ -6,10 +6,9 @@ var chosen_level_theme = Tile_Enums.tile_themes_enum.forest
 
 var current_stage: Node2D
 
-#const vars for the stage reset:
-const battle_participants_node_array = []
-const tile_path_type_chance_array = []
-const tile_center_chance_array = []
+##const vars for the stage reset:
+#const tile_path_type_chance_array = []
+#const tile_center_chance_array = []
 
 #ui vars
 var trans_timer = Timer.new()
@@ -61,6 +60,11 @@ func _ready():
 	trans_middle_timer.set_wait_time(trans_total_time/2)
 	trans_middle_timer.set_one_shot(true)
 	trans_middle_timer.connect("timeout", self, "middle_scene_trans")
+	
+	#setup the chances to pull a certain tile for the queue
+	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
+	generate_tile_chance_arrays(Tile_Enums.tile_center_chances, GlobalVars.tile_center_chance_array)
+	generate_tile_chance_arrays(Tile_Enums.premade_tile_center_chances, GlobalVars.premade_center_chance_array)
 	
 	setup_mainmenu()
 	pass
@@ -206,21 +210,22 @@ func _input(event):
 					return
 
 func create_stage(passed_theme):
-#	GlobalVars.battle_participants_node_array = battle_participants_node_array
-	GlobalVars.tile_path_type_chance_array = tile_path_type_chance_array
-	GlobalVars.tile_center_chance_array = tile_center_chance_array
 	GlobalVars.current_theme = chosen_level_theme
 	current_stage = Stage.new(passed_theme)
 	current_stage.name = "Stage" + str(GlobalVars.current_stage_number)
 	pass
 
-#func generate_enemies_dict():
-#	for test in Enemy_Enums.enemy_types_dict:
-#		var test_enemy = Enemy_Enums.enemy_types_dict[test].new()
-#		if test_enemy.is_final_boss:
-#			GlobalVars.stage_enemies_dict[test_enemy.theme][1].append(Enemy_Enums.enemy_types_dict[test])
-#		else:
-#			GlobalVars.stage_enemies_dict[test_enemy.theme][0].append(Enemy_Enums.enemy_types_dict[test])
+func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
+	for test in array_to_check:
+		if test[0] == 0:
+			continue
+		if test[0] == 1:
+			chance_array_to_build.append(test[1])
+			continue
+		for _num in range(0, test[0]):
+			chance_array_to_build.append(test[1])
+			continue
+	pass
 
 func exit_to_menu():
 	next_game_state = game_state.mainmenu

@@ -104,10 +104,6 @@ func _ready():
 	GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
 	#create UI
 	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index, self)
-	#setup the chances to pull a certain tile for the queue
-	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
-	generate_tile_chance_arrays(Tile_Enums.tile_center_chances, GlobalVars.tile_center_chance_array)
-	generate_tile_chance_arrays(Tile_Enums.premade_tile_center_chances, GlobalVars.premade_center_chance_array)
 	
 	#setup start timer and player character
 	can_player_place_tiles = true
@@ -226,16 +222,8 @@ func ui_touch_attack():
 	GlobalVars.room_player_node_ref.player_command("attack")
 	pass
 
-func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
-	for test in array_to_check:
-		if test[0] == 0:
-			continue
-		if test[0] == 1:
-			chance_array_to_build.append(test[1])
-			continue
-		for _num in range(0, test[0]):
-			chance_array_to_build.append(test[1])
-			continue
+func generate_premade_center_tile_pool():
+	pass
 
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run

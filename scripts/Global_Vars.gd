@@ -26,8 +26,6 @@ var stage_enemies_dict = { #this dict is filled at start of the main class, ther
 	Tile_Enums.tile_themes_enum.grave : [[],[]],
 	Tile_Enums.tile_themes_enum.castle : [[],[]]
 }
-#
-#var battle_participants_node_array = []
 
 var tile_path_type_chance_array = []
 var tile_center_chance_array = []
