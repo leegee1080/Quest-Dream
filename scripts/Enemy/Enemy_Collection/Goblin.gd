@@ -8,15 +8,10 @@ var is_final_boss = false
 var is_minion = false
 
 const special_animations_dict = {
-	"walk": "wiggle_in_place",
+	"idle": "wiggle_in_place",
 	"death": "death_flip_red",
 	"injure": "hit_color_change",
 	"happy": null
-}
-var special_moves_dict = {
-	"attack": "tackle",
-	"defend" : "weak",
-	"turn" : "attack_then_move_random_direction"
 }
 
 #battle vars

@@ -6,7 +6,7 @@ var player = Map_Player.new()
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
 
 var round_start_time = 5.0
-var num_impass_tiles = 2
+var num_difficult_tiles: int = 2
 
 var current_game_state
 var previous_game_state
@@ -116,6 +116,7 @@ func _ready():
 	start_timer.connect("timeout", self, "start_round")
 	start_timer.start()
 	#setup the clickable play area and starting tiles
+	num_difficult_tiles = int(0.5 * GlobalVars.current_stage_number)
 	setup_coord_array()
 	setup_tile_dict()
 	place_starting_tiles()
@@ -148,16 +149,16 @@ func ui_func(new_name, btn_node_ref): #checks which button is pressed
 	if new_name == "fastforward":
 		ui_fastforward()
 		return
-	if current_game_state == game_state.boss:
-		if new_name == "up":
-			ui_touch_dodge_up()
-			return
-		if new_name == "down":
-			ui_touch_dodge_down()
-			return
-		if new_name == "attack":
-			ui_touch_attack()
-			return
+#	if current_game_state == game_state.boss:
+#		if new_name == "up":
+#			ui_touch_dodge_up()
+#			return
+#		if new_name == "down":
+#			ui_touch_dodge_down()
+#			return
+#		if new_name == "attack":
+#			ui_touch_attack()
+#			return
 
 func ui_quit():
 	get_parent().exit_to_menu()
@@ -210,17 +211,17 @@ func ui_menu():
 	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
 
-func ui_touch_dodge_up():
-	GlobalVars.room_player_node_ref.player_command("dodge_up")
-	pass
-
-func ui_touch_dodge_down():
-	GlobalVars.room_player_node_ref.player_command("dodge_down")
-	pass
-
-func ui_touch_attack():
-	GlobalVars.room_player_node_ref.player_command("attack")
-	pass
+#func ui_touch_dodge_up():
+#	GlobalVars.room_player_node_ref.player_command("dodge_up")
+#	pass
+#
+#func ui_touch_dodge_down():
+#	GlobalVars.room_player_node_ref.player_command("dodge_down")
+#	pass
+#
+#func ui_touch_attack():
+#	GlobalVars.room_player_node_ref.player_command("attack")
+#	pass
 
 func generate_premade_center_tile_pool():
 	pass
@@ -415,18 +416,18 @@ func place_starting_tiles():
 	add_child(end_tile)
 	end_tile.place_tile(picked_coord[0])
 	#place preplaced tiles
-	if num_impass_tiles > 0:
-		while num_impass_tiles > 0:
+	if num_difficult_tiles > 0:
+		while num_difficult_tiles > 0:
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
 				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, -1)
-				tile.name = "Impass Tile " + str(num_impass_tiles)
+				tile.name = "Impass Tile " + str(num_difficult_tiles)
 				tile_dict[picked_coord[2]] = tile
 				ingame_tilegroup_Node.add_child(tile)
 				tile.place_tile(picked_coord[3])
 				tile.lock_tile()
 				tile.is_impass_tile = true
-			num_impass_tiles -= 1
+			num_difficult_tiles -= 1
 
 	#create the starting queue
 	var queue = 0

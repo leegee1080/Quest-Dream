@@ -35,7 +35,7 @@ enum enemy_types_enum{
 	dragon_god
 }
 const enemy_types_dict = {
-	enemy_types_enum.avatar: Avatar,
+#	enemy_types_enum.avatar: Avatar,
 	enemy_types_enum.goblin: Goblin
 #	enemy_types_enum.goblin_wizard: Goblin_Wizard,
 #	enemy_types_enum.monkey: Monkey,

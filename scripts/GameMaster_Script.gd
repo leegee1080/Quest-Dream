@@ -6,10 +6,6 @@ var chosen_level_theme = Tile_Enums.tile_themes_enum.forest
 
 var current_stage: Node2D
 
-##const vars for the stage reset:
-#const tile_path_type_chance_array = []
-#const tile_center_chance_array = []
-
 #ui vars
 var trans_timer = Timer.new()
 var trans_total_time = 1.0
