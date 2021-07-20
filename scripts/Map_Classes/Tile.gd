@@ -124,6 +124,10 @@ func _init(new_type, new_theme, new_center, new_deco_number: int, chosen_sprite:
 	center_object_enum = new_center
 	deco_number = new_deco_number
 	init_chosen_sprite = chosen_sprite
+	if new_center == Tile_Enums.center_type_enum.impass:
+		direction_enum = Tile_Enums.tile_directions_enum.impass
+	if new_type == Tile_Enums.tile_directions_enum.impass:
+		is_impass_tile = true
 
 func generate_tile():
 	if init_chosen_sprite == -1:
@@ -139,14 +143,21 @@ func generate_tile():
 	pass
 
 func place_center():
-	if center_object_enum == Tile_Enums.center_type_enum.none or center_object_enum == null:
+	if center_object_enum == null:
+		return
+	if center_object_enum == Tile_Enums.center_type_enum.none:
 		return
 	if center_object_enum == Tile_Enums.center_type_enum.consumable:
 		center_subtile = GlobalVars.player_type_class_storage.consumable_class.new()
 		add_child(center_subtile)
 		return
+	if Tile_Enums.center_classes[center_object_enum] == null:
+		print("No center object class exists for " + str(center_object_enum))
+		name = str(Tile_Enums.center_classes.keys()[center_object_enum]) + " " + name
+		return
 	center_subtile = Tile_Enums.center_classes[center_object_enum].new()
 	add_child(center_subtile)
+	name = str(Tile_Enums.center_classes.keys()[center_object_enum]) + " " + name
 	pass
 
 func place_deco():

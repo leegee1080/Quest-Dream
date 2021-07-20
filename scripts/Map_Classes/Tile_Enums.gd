@@ -60,14 +60,14 @@ const tile_center_chances = [
 	[1, center_type_enum.treasure]
 ]
 const premade_tile_center_chances = [
-	[4, center_type_enum.treasure],
-	[3, center_type_enum.timedspike],
-	[4, center_type_enum.moneypile],
-	[4, center_type_enum.reverse],
-	[1, center_type_enum.kill],
-	[2, center_type_enum.fight],
-	[2, center_type_enum.switch],
+	[10, center_type_enum.treasure],
+	[7, center_type_enum.timedspike],
+	[10, center_type_enum.moneypile],
+	[10, center_type_enum.reverse],
+	[2, center_type_enum.kill],
+	[7, center_type_enum.fight],
+	[5, center_type_enum.switch],
 	[1, center_type_enum.patrol],
-	[4, center_type_enum.impass],
+	[20, center_type_enum.impass],
 	[1, center_type_enum.keygate]
 ]

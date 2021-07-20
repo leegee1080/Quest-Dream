@@ -362,7 +362,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Weak_Defend",
 "language": "GDScript",
-"path": "res://scripts/Animation_Classes/Defend_Classes/Weak_Defend.gd"
+"path": "res://scripts/Animation_Classes/Defend_CLasses/Weak_Defend.gd"
 }, {
 "base": "Node2D",
 "class": "Wizard",

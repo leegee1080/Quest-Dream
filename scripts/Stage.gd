@@ -4,6 +4,7 @@ class_name Stage
 
 var player = Map_Player.new()
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
+var premade_tile_pool
 
 var round_start_time = 5.0
 var num_difficult_tiles: int = 2
@@ -40,14 +41,14 @@ const room_button_loc_dict = {
 var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
 var pause_menu
 const pause_menu_loc = Vector2(152,273)
-#battle ui vars
-const battle_button_z_index = 15
-const battle_button_loc_dict = {
-	#fill with the locations to instance the button objects
-	"up": [Vector2(20,251), 16, 17],
-	"down": [Vector2(20,341), 18, 19],
-	"attack": [Vector2(191,251), 20, 21]
-}
+##battle ui vars
+#const battle_button_z_index = 15
+#const battle_button_loc_dict = {
+#	#fill with the locations to instance the button objects
+#	"up": [Vector2(20,251), 16, 17],
+#	"down": [Vector2(20,341), 18, 19],
+#	"attack": [Vector2(191,251), 20, 21]
+#}
 const menu_battle_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"menu": [Vector2(191,347), 4, 5]
@@ -97,6 +98,7 @@ func _ready():
 	bg_sprite.texture = load("res://assets/visuals/bg.png")
 	add_child(bg_sprite)
 	add_child(ingame_tilegroup_Node)
+	ingame_tilegroup_Node.name = "Ingame Tilegroup"
 	
 	#setup global refs
 	GlobalVars.main_node_ref = self
@@ -119,7 +121,9 @@ func _ready():
 	num_difficult_tiles = int(0.5 * GlobalVars.current_stage_number)
 	setup_coord_array()
 	setup_tile_dict()
+	generate_premade_center_tile_pool()
 	place_starting_tiles()
+	print(premade_tile_pool)
 	#setup the player's character
 	add_child(player)
 	player.playarea = max_starting_playarea
@@ -224,6 +228,12 @@ func ui_menu():
 #	pass
 
 func generate_premade_center_tile_pool():
+	var pool_array = []
+	randomize()
+	GlobalVars.premade_center_chance_array.shuffle()
+	for i in range(0, GlobalVars.current_stage_number, 1):
+		pool_array.append(GlobalVars.premade_center_chance_array[i])
+	premade_tile_pool = pool_array
 	pass
 
 func start_round(): #just for the first time start, can add more here if needed
@@ -308,7 +318,7 @@ func slide_queue():
 	tile_queue = temp_array
 	index = 0
 	for tile in tile_queue:
-		tile.name = str(index)
+		tile.name = "Queued Tile: " + str(index)
 		tile.position.x = queue_loc_dict.get(str(index)).x
 		tile.position.y = queue_loc_dict.get(str(index)).y
 		index += 1
@@ -370,10 +380,14 @@ func setup_coord_array():
 			row -= 1
 		current_x += 48
 		col -= 1
-#	print(clickable_coords_list)
-#	print(potential_terminal_locations)
-#	print(player_tile_dict)
 	return
+
+func pick_premade_tile():
+	var tile
+	randomize()
+	premade_tile_pool.shuffle()
+	tile = premade_tile_pool[0]
+	return tile
 
 func place_starting_tiles():
 	var tile
@@ -416,17 +430,19 @@ func place_starting_tiles():
 	add_child(end_tile)
 	end_tile.place_tile(picked_coord[0])
 	#place preplaced tiles
-	if num_difficult_tiles > 0:
+	if num_difficult_tiles > 1:
 		while num_difficult_tiles > 0:
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
 			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
-				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, -1)
-				tile.name = "Impass Tile " + str(num_difficult_tiles)
+				randomize()
+				GlobalVars.tile_path_type_chance_array.shuffle()
+				tile = Tile.new(GlobalVars.tile_path_type_chance_array[0], chosen_level_theme, pick_premade_tile(), 0, -1)
+#				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, -1)
+				tile.name = "Premade Tile: " + str(num_difficult_tiles)
 				tile_dict[picked_coord[2]] = tile
 				ingame_tilegroup_Node.add_child(tile)
 				tile.place_tile(picked_coord[3])
 				tile.lock_tile()
-				tile.is_impass_tile = true
 			num_difficult_tiles -= 1
 
 	#create the starting queue
@@ -435,7 +451,7 @@ func place_starting_tiles():
 		tile = generate_random_tile()
 		ingame_tilegroup_Node.add_child(tile)
 		tile_queue.append(tile)
-		tile.name = str(queue)
+		tile.name = "Queued Tile: " + str(queue)
 		tile.position.x = queue_loc_dict.get(str(queue)).x
 		tile.position.y = queue_loc_dict.get(str(queue)).y
 		queue += 1
