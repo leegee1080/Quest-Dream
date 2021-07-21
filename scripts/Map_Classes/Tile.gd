@@ -151,6 +151,8 @@ func place_center():
 		center_subtile = GlobalVars.player_type_class_storage.consumable_class.new()
 		add_child(center_subtile)
 		return
+	if center_object_enum == Tile_Enums.center_type_enum.impass:
+		return
 	if Tile_Enums.center_classes[center_object_enum] == null:
 		print("No center object class exists for " + str(center_object_enum))
 		name = str(Tile_Enums.center_classes.keys()[center_object_enum]) + " " + name

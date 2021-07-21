@@ -6,6 +6,7 @@ var sound
 
 var ani_sprite
 var item_frame = 77
+const pick_up = true
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()

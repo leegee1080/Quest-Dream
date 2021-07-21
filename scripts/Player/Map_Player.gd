@@ -160,7 +160,7 @@ func check_center_tile():
 	direction = current_tile.rot_value_changer(direction)
 	if current_tile.center_subtile == null:
 		return
-	if current_tile.center_object_enum == Tile_Enums.center_type_enum.treasure or current_tile.center_object_enum == Tile_Enums.center_type_enum.consumable:
+	if current_tile.center_subtile.pick_up == true:
 		current_tile.center_subtile.pick_up()
 		return
 	return
