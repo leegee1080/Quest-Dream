@@ -15,21 +15,27 @@ const money_sprite_frame = 60
 const money_sprite_pos = Vector2(0,30)
 var money_sprite_node
 
-#vars for attack UI element
-var attack_sprite_frame
-const attack_sprite_pos = Vector2(0,60)
-var attack_sprite_node
+#vars for the keys UI element
+const keys_sprite_frame = 82
+const keys_sprite_pos = Vector2(0,60)
+var keys_sprite_node
 
-#vars for dodge UI element
-var dodge_sprite_frame
-const dodge_sprite_pos = Vector2(0,90)
-var dodge_sprite_node
+##vars for attack UI element
+#var attack_sprite_frame
+#const attack_sprite_pos = Vector2(0,60)
+#var attack_sprite_node
+#
+##vars for dodge UI element
+#var dodge_sprite_frame
+#const dodge_sprite_pos = Vector2(0,90)
+#var dodge_sprite_node
 
 #vars for text elements
 var rtl_node_consumable
 var rtl_node_money
-var rtl_node_attack
-var rtl_node_dodge
+var rtl_node_keys
+#var rtl_node_attack
+#var rtl_node_dodge
 const rect_size = Vector2(50,50)
 const font = "res://assets/fonts/pixel_dyna_font.tres"
 const text_scale = 0.1
@@ -68,6 +74,21 @@ func _ready():
 	rtl_node_money.add_font_override("font", load(font))
 #	rtl_node_money.margin_left = 0
 #	rtl_node_money.margin_top = 0
+	
+	keys_sprite_node = AnimatedSprite.new()
+	keys_sprite_node.set_sprite_frames(load(item_spritesheet))
+	add_child(keys_sprite_node)
+	keys_sprite_node.set_frame(keys_sprite_frame)
+	keys_sprite_node.position = keys_sprite_pos
+	rtl_node_keys = Label.new()
+	add_child(rtl_node_keys)
+	rtl_node_keys.rect_position = Vector2(keys_sprite_pos.x, keys_sprite_pos.y + 5)
+	rtl_node_keys.rect_scale = Vector2(text_scale,text_scale)
+	rtl_node_keys.rect_size = rect_size
+	rtl_node_keys.text = str(GlobalVars.keys_gained_this_run)
+	rtl_node_keys.add_font_override("font", load(font))
+#	rtl_node_keys.margin_left = 0
+#	rtl_node_keys.margin_top = 0
 	
 #	attack_sprite_node = AnimatedSprite.new()
 #	attack_sprite_node.set_sprite_frames(load(item_spritesheet))
@@ -111,6 +132,9 @@ func update_consumable():
 func update_money():
 	rtl_node_money.text = str(GlobalVars.money_gained_this_run)
 
-func update_battle_charges():
-	rtl_node_attack.text = str(GlobalVars.room_player_node_ref.current_attack_charges)
-	rtl_node_dodge.text = str(GlobalVars.room_player_node_ref.current_dodge_charges)
+func update_keys():
+	rtl_node_keys.text = str(GlobalVars.keys_gained_this_run)
+
+#func update_battle_charges():
+#	rtl_node_attack.text = str(GlobalVars.room_player_node_ref.current_attack_charges)
+#	rtl_node_dodge.text = str(GlobalVars.room_player_node_ref.current_dodge_charges)

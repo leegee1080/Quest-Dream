@@ -1,11 +1,11 @@
 extends Node2D
 
-class_name Money_Pile
+class_name Consume_Hearts
 
 var sound
 
 var ani_sprite
-var item_frame = 61
+var item_frame = 77
 const pick_up = true
 
 func _ready():
@@ -17,9 +17,9 @@ func _ready():
 func pick_up():
 	#play sound
 	#play animation
-	print("money")
-	get_tree().call_group("UI_Player_Info", "update_money")
-	GlobalVars.money_gained_this_run += 5
+	print("consumable")
+	GlobalVars.player_consumable_amount += 1
+	get_tree().call_group("UI_Player_Info", "update_consumable")
 	finish_pickup_animation()
 
 func finish_pickup_animation():

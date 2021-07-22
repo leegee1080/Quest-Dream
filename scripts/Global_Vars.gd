@@ -13,6 +13,7 @@ const difficulty_increment = 0.5
 var current_theme = Tile_Enums.tile_themes_enum.castle
 
 var money_gained_this_run = 0
+var keys_gained_this_run = 0
 
 var player_type_class_storage
 var main_node_ref

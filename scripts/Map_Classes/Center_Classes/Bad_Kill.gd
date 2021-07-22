@@ -1,11 +1,11 @@
 extends Node2D
 
-class_name Money_Coins
+class_name Bad_Kill
 
 var sound
 
 var ani_sprite
-var item_frame = 60
+var item_frame = 81
 const pick_up = true
 
 func _ready():
@@ -15,12 +15,8 @@ func _ready():
 	add_child(ani_sprite)
 
 func pick_up():
+	GlobalVars.player_node_ref.take_hit(100)
 	#play sound
-	#play animation
-	print("money")
-	get_tree().call_group("UI_Player_Info", "update_money")
-	GlobalVars.money_gained_this_run += 1
-	finish_pickup_animation()
 
 func finish_pickup_animation():
-	queue_free()
+	pass
