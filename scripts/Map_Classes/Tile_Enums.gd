@@ -21,7 +21,6 @@ enum tile_directions_enum{
 enum center_type_enum{
 	none,
 	consumable,
-	bomb,
 	treasure,
 	timedspike,
 	moneypile,
@@ -38,7 +37,6 @@ enum center_type_enum{
 const center_classes = {
 	center_type_enum.none: null, #there is never going to be a class here
 	center_type_enum.consumable: null, #this is overwritten by the chosen player class
-	center_type_enum.bomb: null,
 	center_type_enum.treasure: Money_Coins,
 	center_type_enum.timedspike: null,
 	center_type_enum.moneypile: Money_Pile,
@@ -66,7 +64,6 @@ const tile_center_chances = [
 	[1, center_type_enum.treasure]
 ]
 const premade_tile_center_chances = [
-	[5, center_type_enum.bomb],
 	[10, center_type_enum.treasure],
 	[7, center_type_enum.timedspike],
 	[10, center_type_enum.moneypile],

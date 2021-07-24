@@ -7,7 +7,7 @@ var sound
 var ani_sprite
 var item_frame = 83
 var open_chest = 84
-var pick_up = true
+var can_pick_up = true
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
@@ -27,4 +27,4 @@ func pick_up():
 
 func finish_pickup_animation():
 	ani_sprite.set_frame(open_chest)
-	pick_up = false
+	can_pick_up = false

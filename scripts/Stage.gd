@@ -24,7 +24,8 @@ enum game_state{
 const main_button_z_index = 1
 const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"menu": [Vector2(201,307), 4, 5]
+	"menu": [Vector2(201,377), 4, 5],
+	"bomb": [Vector2(201,307), 20, 21]
 }
 const menu_button_z_index = 15
 const menu_button_loc_dict = {
@@ -105,7 +106,7 @@ func _ready():
 	GlobalVars.player_node_ref = player
 	GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
 	#create UI
-	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index, self)
+	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "main", main_button_z_index, self)
 	
 	#setup start timer and player character
 	can_player_place_tiles = true
@@ -215,6 +216,8 @@ func ui_menu():
 	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
 
+func ui_bomb():
+	pass
 #func ui_touch_dodge_up():
 #	GlobalVars.room_player_node_ref.player_command("dodge_up")
 #	pass
