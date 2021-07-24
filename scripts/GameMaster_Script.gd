@@ -1,6 +1,6 @@
 extends Node2D
 
-var cheats = true
+const cheats = true
 var player_type_class = Player_Enums.player_types_enum.assassin
 var chosen_level_theme = Tile_Enums.tile_themes_enum.forest
 
