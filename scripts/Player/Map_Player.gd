@@ -45,7 +45,12 @@ var walk_timer
 const center_interval = 3
 var center_interval_count = 2
 var current_tile
+
+var can_check_next_tile = true
+
 var ani_sprite
+
+var map_action_queued = false
 
 func _ready():
 	type_class = GlobalVars.player_type_class_storage
@@ -74,6 +79,26 @@ func setup_animations():
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
 
+func map_action():
+	GlobalVars.player_consumable_amount -= GlobalVars.player_type_class_storage.action_cost
+	get_tree().call_group("UI_Player_Info", "update_consumable")
+	check_for_death()
+	map_action_queued = false
+	for loc in GlobalVars.main_node_ref.clickable_coords_list:
+			var x_test = loc[0]
+			var y_test = loc[1]
+			if position[0] >= x_test[0] and position[0] < x_test[1] and position[1] >= y_test[0] and position[1] < y_test[1]:
+				if GlobalVars.main_node_ref.tile_dict.get(loc[2]) != null:
+					GlobalVars.main_node_ref.tile_dict.get(loc[2]).is_locked = false
+					GlobalVars.main_node_ref.tile_dict.get(loc[2]).delete_tile()
+					GlobalVars.main_node_ref.tile_dict[loc[2]] = null
+				#assign the new tile node to the correct dictionary entry
+				var new_tile = Tile.new(GlobalVars.player_type_class_storage.tile_direction, GlobalVars.current_theme, GlobalVars.player_type_class_storage.tile_center, 0, -1)
+				GlobalVars.main_node_ref.tile_dict[loc[2]] = new_tile
+				GlobalVars.main_node_ref.ingame_tilegroup_Node.add_child(new_tile)
+				GlobalVars.main_node_ref.tile_dict[loc[2]].place_tile(loc[3])
+				GlobalVars.main_node_ref.tile_dict[loc[2]].name = "built_tile " + str(loc[2])
+
 func change_dir(new_dir):
 	if new_dir >= 0 and new_dir < walk_dir.size():
 		direction = walk_dir_dict.get(new_dir)
@@ -101,7 +126,8 @@ func walk():
 	translate(direction*map_move_speed)
 	walk_interval_count -= map_move_speed
 	if center_interval_count == 1:
-		check_map_edge()
+		if check_map_edge() == true:
+			return
 		check_tile()
 	if center_interval_count <= 0:
 		center_interval_count = center_interval
@@ -109,21 +135,19 @@ func walk():
 	if walk_interval_count <= 0:
 		walk_interval_count = walk_interval
 		center_interval_count -= 1
+		can_check_next_tile = true
 	return
 
 func check_map_edge():
 	var x_test = [playarea[0][0],playarea[1][0]]
 	var y_test = [playarea[0][1],playarea[1][1]]
-#	print(position)
-#	print(x_test)
-#	print(y_test)
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
 		if check_dist_exit():
-#			get_parent().open_boss_room()
 			get_parent().win_round()
-			return
+			return true
 		turn_around()
-	return
+		return true
+	return false
 
 func check_dist_exit():
 	if position.distance_to(exit_tile_pos) <= 16:
@@ -138,17 +162,29 @@ func check_tile():
 				var y_test = loc[1]
 				if position.x >= x_test[0] and position.x < x_test[1] and position.y >= y_test[0] and position.y < y_test[1]:
 					if current_tile_dict.get(loc[2]) != null:
-						if current_tile_dict.get(loc[2]).is_impass_tile == true:
+						if current_tile_dict.get(loc[2]).is_impass_tile == true and can_check_next_tile:
+							can_check_next_tile = false
+							if map_action_queued:
+								map_action()
+								return
 							turn_around()
 							return
-						if current_tile_dict.get(loc[2]).rot_value_changer(direction) == null:
+						if current_tile_dict.get(loc[2]).rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right) == null and can_check_next_tile:
+							can_check_next_tile = false
+							if map_action_queued:
+								map_action()
+								return
 							turn_around()
 							return
 						if current_tile_dict.get(loc[2]).is_locked != true:
 							current_tile_dict.get(loc[2]).lock_tile()
 						current_tile = current_tile_dict.get(loc[2])
 						return
-					elif current_tile_dict.get(loc[2]) == null:
+					elif current_tile_dict.get(loc[2]) == null and can_check_next_tile:
+						can_check_next_tile = false
+						if map_action_queued:
+							map_action()
+							return
 						turn_around()
 						return
 	return
@@ -157,7 +193,7 @@ func check_center_tile():
 	if current_tile == null:
 		return
 	position = current_tile.position #to make sure the grid stays aligned
-	direction = current_tile.rot_value_changer(direction)
+	direction = current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right)
 	if current_tile.center_subtile == null:
 		return
 	if current_tile.center_subtile.can_pick_up == true:
@@ -177,9 +213,13 @@ func take_hit(damage):
 	get_tree().call_group("UI_Player_Info", "update_consumable")
 	ani_dict.injure.play_animation()
 	GlobalVars.player_consumable_amount -= damage
+	check_for_death()
+	print("Player health: "+ str(GlobalVars.player_consumable_amount))
+
+func check_for_death():
 	if GlobalVars.player_consumable_amount <= 0:
 		print("player dead")
 		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
 		is_dead = true
-	print("Player health: "+ str(GlobalVars.player_consumable_amount))
+	pass

@@ -19,11 +19,14 @@ func pick_up():
 	#play sound
 	#play animation
 	print("chest")
-	GlobalVars.keys_gained_this_run -= 1
-	GlobalVars.money_gained_this_run += 10
-	get_tree().call_group("UI_Player_Info", "update_keys")
-	get_tree().call_group("UI_Player_Info", "update_money")
-	finish_pickup_animation()
+	if GlobalVars.keys_gained_this_run >= 1:
+		#play opening sound
+		#play opening animation
+		GlobalVars.keys_gained_this_run -= 1
+		GlobalVars.money_gained_this_run += 10
+		get_tree().call_group("UI_Player_Info", "update_keys")
+		get_tree().call_group("UI_Player_Info", "update_money")
+		finish_pickup_animation()
 
 func finish_pickup_animation():
 	ani_sprite.set_frame(open_chest)

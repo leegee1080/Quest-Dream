@@ -12,8 +12,13 @@ const special_animations_dict = {
 	"happy": null
 }
 
-#battle vars
+#ingame vars
+var t_turn_right = false
 var starting_attack_power = 1
-
-var starting_consumable_amt = 3
+var starting_consumable_amt = 10
 var consumable_class = Consume_Hearts
+
+#action vars
+var action_cost = 1
+var tile_direction = Tile_Enums.tile_directions_enum.cross
+var tile_center = Tile_Enums.center_type_enum.none

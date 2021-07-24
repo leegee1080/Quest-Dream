@@ -25,7 +25,7 @@ const main_button_z_index = 1
 const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"menu": [Vector2(201,377), 4, 5],
-	"bomb": [Vector2(201,307), 20, 21]
+	"action": [Vector2(201,307), 20, 21]
 }
 const menu_button_z_index = 15
 const menu_button_loc_dict = {
@@ -104,7 +104,9 @@ func _ready():
 	#setup global refs
 	GlobalVars.main_node_ref = self
 	GlobalVars.player_node_ref = player
-	GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
+	if GlobalVars.player_consumable_amount == 0:
+		GlobalVars.player_consumable_amount = GlobalVars.player_type_class_storage.starting_consumable_amt
+		pass
 	#create UI
 	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "main", main_button_z_index, self)
 	
@@ -153,6 +155,9 @@ func ui_func(new_name, btn_node_ref): #checks which button is pressed
 		return
 	if new_name == "fastforward":
 		ui_fastforward()
+		return
+	if new_name == "action":
+		ui_action()
 		return
 #	if current_game_state == game_state.boss:
 #		if new_name == "up":
@@ -216,8 +221,10 @@ func ui_menu():
 	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
 
-func ui_bomb():
-	pass
+func ui_action():
+	if GlobalVars.player_consumable_amount >= (GlobalVars.player_type_class_storage.action_cost + 1):
+		GlobalVars.player_node_ref.map_action_queued = true
+
 #func ui_touch_dodge_up():
 #	GlobalVars.room_player_node_ref.player_command("dodge_up")
 #	pass
@@ -440,7 +447,6 @@ func place_starting_tiles():
 				randomize()
 				GlobalVars.tile_path_type_chance_array.shuffle()
 				tile = Tile.new(GlobalVars.tile_path_type_chance_array[0], chosen_level_theme, pick_premade_tile(), 0, -1)
-#				tile = Tile.new(Tile_Enums.tile_directions_enum.impass, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, -1)
 				tile.name = "Premade Tile: " + str(num_difficult_tiles)
 				tile_dict[picked_coord[2]] = tile
 				ingame_tilegroup_Node.add_child(tile)

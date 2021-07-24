@@ -59,50 +59,49 @@ const player_turn_dict = {
 	Vector2(0,-1): #up
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(1,0), 1:Vector2(-1,0), 2:null, 3:null}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:null, 2:Vector2(0,-1), 3:Vector2(0,-1)},
+		"tee_right": {0:Vector2(1,0), 1:null, 2:Vector2(0,-1), 3:Vector2(0,-1)},
+		"tee_left": {0:Vector2(-1,0), 1:null, 2:Vector2(0,-1), 3:Vector2(0,-1)},
 		Tile_Enums.tile_directions_enum.straight: {0:null, 1:Vector2(0,-1), 2:null, 3:Vector2(0,-1)}
 		},
 	Vector2(0,1): #down
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:null, 1:null, 2:Vector2(1,0), 3:Vector2(-1,0)}, 
-		Tile_Enums.tile_directions_enum.tee: {0:null, 1:Vector2(-1,0), 2:Vector2(0,1), 3:Vector2(0,1)},
+		"tee_right": {0:null, 1:Vector2(-1,0), 2:Vector2(0,1), 3:Vector2(0,1)},
+		"tee_left": {0:null, 1:Vector2(1,0), 2:Vector2(0,1), 3:Vector2(0,1)},
 		Tile_Enums.tile_directions_enum.straight: {0:null, 1:Vector2(0,1), 2:null, 3:Vector2(0,1)}
 		},
 	Vector2(-1,0): #left
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:Vector2(0,1), 1:null, 2:Vector2(0,-1), 3:null}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,-1)},
+		"tee_right": {0:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,-1)},
+		"tee_left": {00:Vector2(-1,0), 1:Vector2(-1,0), 2:null, 3:Vector2(0,1)},
 		Tile_Enums.tile_directions_enum.straight: {0:Vector2(-1,0), 1:null, 2:Vector2(-1,0), 3:null}
 		},
 	Vector2(1,0): #right
 		{
 		Tile_Enums.tile_directions_enum.elbow: {0:null, 1:Vector2(0,1), 2:null, 3:Vector2(0,-1)}, 
-		Tile_Enums.tile_directions_enum.tee: {0:Vector2(1,0), 1:Vector2(1,0), 2:Vector2(0,1), 3:null},
+		"tee_right": {0:Vector2(1,0), 1:Vector2(1,0), 2:Vector2(0,1), 3:null},
+		"tee_left": {0:Vector2(1,0), 1:Vector2(1,0), 2:Vector2(0,-1), 3:null},
 		Tile_Enums.tile_directions_enum.straight: {0:Vector2(1,0), 1:null, 2:Vector2(1,0), 3:null}
 		},
 }
 
-export(Tile_Enums.tile_themes_enum) var theme_enum = Tile_Enums.tile_themes_enum.forest
-export(Tile_Enums.tile_directions_enum) var direction_enum = Tile_Enums.tile_directions_enum.cross
-export(Tile_Enums.center_type_enum) var center_object_enum = Tile_Enums.center_type_enum.none
+var theme_enum = Tile_Enums.tile_themes_enum.forest
+var direction_enum = Tile_Enums.tile_directions_enum.cross
+var center_object_enum = Tile_Enums.center_type_enum.none
 
 #pull info about the centertile here
 var center_subtile
 var current_tileset: Dictionary
-#var saved_center_room = null
-#var saved_loot_pool = null
 
 var is_locked = false
 
 var deco_number
 var deco_list = []
 
-#var player_level
-#var difficulty
-#var center_level
-#var is_boss_tile = false
 var is_impass_tile = false
 
+#check sprite sheet for directions
 var rotate_var = 0
 
 var init_chosen_sprite
@@ -124,9 +123,8 @@ func _init(new_type, new_theme, new_center, new_deco_number: int, chosen_sprite:
 	center_object_enum = new_center
 	deco_number = new_deco_number
 	init_chosen_sprite = chosen_sprite
-	if new_center == Tile_Enums.center_type_enum.impass:
+	if new_center == Tile_Enums.center_type_enum.impass or new_type == Tile_Enums.tile_directions_enum.impass:
 		direction_enum = Tile_Enums.tile_directions_enum.impass
-	if new_type == Tile_Enums.tile_directions_enum.impass:
 		is_impass_tile = true
 
 func generate_tile():
@@ -152,6 +150,7 @@ func place_center():
 		add_child(center_subtile)
 		return
 	if center_object_enum == Tile_Enums.center_type_enum.impass:
+		name = "impass " + name
 		return
 	if Tile_Enums.center_classes[center_object_enum] == null:
 		print("No center object class exists for " + str(center_object_enum))
@@ -201,11 +200,19 @@ func change_lock_animation():
 	lock_timer.stop()
 	pass
 
-func rot_value_changer(current_player_dir: Vector2):
+func rot_value_changer(current_player_dir: Vector2, tee_option):
 	var new_rot = current_player_dir
-	if direction_enum == Tile_Enums.tile_directions_enum.elbow or direction_enum == Tile_Enums.tile_directions_enum.tee or direction_enum == Tile_Enums.tile_directions_enum.straight:
+	if direction_enum == Tile_Enums.tile_directions_enum.cross:
+		return new_rot
+	if direction_enum == Tile_Enums.tile_directions_enum.elbow or direction_enum == Tile_Enums.tile_directions_enum.straight:
 		new_rot = player_turn_dict.get(current_player_dir).get(direction_enum).get(rotate_var)
-	return new_rot
+		return new_rot
+	if direction_enum == Tile_Enums.tile_directions_enum.tee:
+		if tee_option == true:
+			new_rot = player_turn_dict.get(current_player_dir).get("tee_right").get(rotate_var)
+		if tee_option == false:
+			new_rot = player_turn_dict.get(current_player_dir).get("tee_left").get(rotate_var)
+		return new_rot
 
 func delete_tile():
 	if is_locked == false:

@@ -5,7 +5,7 @@ class_name Bad_Kill
 var sound
 
 var ani_sprite
-var item_frame = 81
+var item_frame = 55
 const can_pick_up = true
 
 func _ready():
