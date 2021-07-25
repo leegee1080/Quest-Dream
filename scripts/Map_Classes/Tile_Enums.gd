@@ -75,5 +75,5 @@ const premade_tile_center_chances = [
 	[1, center_type_enum.patrol],
 	[20, center_type_enum.impass],
 	[5, center_type_enum.key],
-	[1, center_type_enum.keygate]
+	[10, center_type_enum.keygate]
 ]

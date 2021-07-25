@@ -8,6 +8,7 @@ var ani_sprite
 var item_frame = 83
 var open_chest = 84
 var can_pick_up = true
+var changes_direction = false
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
@@ -27,6 +28,7 @@ func pick_up():
 		get_tree().call_group("UI_Player_Info", "update_keys")
 		get_tree().call_group("UI_Player_Info", "update_money")
 		finish_pickup_animation()
+		return changes_direction
 
 func finish_pickup_animation():
 	ani_sprite.set_frame(open_chest)

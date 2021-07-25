@@ -7,6 +7,7 @@ var sound
 var ani_sprite
 var item_frame = 82
 const can_pick_up = true
+var changes_direction = false
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
@@ -21,6 +22,7 @@ func pick_up():
 	get_tree().call_group("UI_Player_Info", "update_keys")
 	GlobalVars.keys_gained_this_run += 1
 	finish_pickup_animation()
+	return changes_direction
 
 func finish_pickup_animation():
 	queue_free()

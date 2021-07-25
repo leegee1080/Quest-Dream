@@ -193,11 +193,13 @@ func check_center_tile():
 	if current_tile == null:
 		return
 	position = current_tile.position #to make sure the grid stays aligned
-	direction = current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right)
 	if current_tile.center_subtile == null:
+		direction = current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right)
 		return
 	if current_tile.center_subtile.can_pick_up == true:
-		current_tile.center_subtile.pick_up()
+		if current_tile.center_subtile.pick_up() == true:
+			return
+		direction = current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right)
 		return
 	return
 

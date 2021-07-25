@@ -24,7 +24,7 @@ enum game_state{
 const main_button_z_index = 1
 const main_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"menu": [Vector2(201,377), 4, 5],
+	"pause": [Vector2(201,377), 4, 5],
 	"action": [Vector2(201,307), 20, 21]
 }
 const menu_button_z_index = 15
@@ -34,11 +34,11 @@ const menu_button_loc_dict = {
 	"quit": [Vector2(119,301), 6, 7],
 	"fastforward": [Vector2(189,301), 2, 3]
 }
-const room_button_z_index = 5
-const room_button_loc_dict = {
-	#fill with the locations to instance the button objects
-	"back": [Vector2(111,207), 0, 1]
-}
+#const room_button_z_index = 5
+#const room_button_loc_dict = {
+#	#fill with the locations to instance the button objects
+#	"back": [Vector2(111,207), 0, 1]
+#}
 var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
 var pause_menu
 const pause_menu_loc = Vector2(152,273)
@@ -50,10 +50,10 @@ const pause_menu_loc = Vector2(152,273)
 #	"down": [Vector2(20,341), 18, 19],
 #	"attack": [Vector2(191,251), 20, 21]
 #}
-const menu_battle_button_loc_dict = {
-	#fill with the locations to instance the button objects
-	"menu": [Vector2(191,347), 4, 5]
-}
+#const menu_battle_button_loc_dict = {
+#	#fill with the locations to instance the button objects
+#	"menu": [Vector2(191,347), 4, 5]
+#}
 
 ##play area vars
 var ingame_tilegroup_Node = Node2D.new()
@@ -138,16 +138,16 @@ func _ready():
 	var temp_ui_player_info = UI_Player_Info.new(temp_player_consumable.item_frame)
 	add_child(temp_ui_player_info)
 
-func ui_func(new_name, btn_node_ref): #checks which button is pressed
+func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 	if UiVars.is_trans:
 		return
 	if new_name == "back":
-		ui_back(btn_node_ref)
+		ui_back()
 		return
+#	if new_name == "pause":
+#		ui_pause()
+#		return
 	if new_name == "pause":
-		ui_pause()
-		return
-	if new_name == "menu":
 		ui_menu()
 		return
 	if new_name == "quit":
@@ -159,16 +159,6 @@ func ui_func(new_name, btn_node_ref): #checks which button is pressed
 	if new_name == "action":
 		ui_action()
 		return
-#	if current_game_state == game_state.boss:
-#		if new_name == "up":
-#			ui_touch_dodge_up()
-#			return
-#		if new_name == "down":
-#			ui_touch_dodge_down()
-#			return
-#		if new_name == "attack":
-#			ui_touch_attack()
-#			return
 
 func ui_quit():
 	get_parent().exit_to_menu()
@@ -180,29 +170,23 @@ func ui_fastforward():
 	print("fast forwarded")
 	pass
 
-func ui_back(btn_node_ref):
-	if current_game_state == game_state.pause:
-		pause_menu.queue_free()
-		for btn_list in UiVars.buttons_dict["pause_menu"]:
-			if btn_list != null:
-				btn_list.queue_free()
-		ui_pause()
-		return
-	if current_game_state == game_state.boss:
-		if room_screen.is_room_complete == true:
-			btn_node_ref.queue_free()
-			win_round()
-		return
+func ui_back():
+	pause_menu.queue_free()
+	UI_Vars.hide_buttons("pause_menu")
+	ui_pause()
+	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "main", main_button_z_index, self)
+
+func ui_unpause():
+	var timers = get_tree().get_nodes_in_group("timers")
+	current_game_state = previous_game_state
+	for timer in timers:
+		timer.paused = false
+	current_game_state = game_state.run
+	can_player_place_tiles = true
+	print("unpause game")
 
 func ui_pause():
 	var timers = get_tree().get_nodes_in_group("timers")
-	if current_game_state == game_state.pause:
-		current_game_state = previous_game_state
-		for timer in timers:
-			timer.paused = false
-		can_player_place_tiles = true
-		print("unpause game")
-		return
 	previous_game_state = current_game_state
 	for timer in timers:
 		timer.paused = true
@@ -211,8 +195,6 @@ func ui_pause():
 	print("pause game")
 
 func ui_menu():
-	if current_game_state == game_state.pause:
-		return
 	pause_menu = Sprite.new()
 	pause_menu.position = pause_menu_loc
 	pause_menu.texture = pause_menu_sprite
@@ -220,6 +202,7 @@ func ui_menu():
 	add_child(pause_menu)
 	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
+	UI_Vars.hide_buttons("main")
 
 func ui_action():
 	if GlobalVars.player_consumable_amount >= (GlobalVars.player_type_class_storage.action_cost + 1):

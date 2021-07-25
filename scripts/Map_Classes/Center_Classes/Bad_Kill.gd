@@ -7,6 +7,7 @@ var sound
 var ani_sprite
 var item_frame = 55
 const can_pick_up = true
+var changes_direction = false
 
 func _ready():
 	ani_sprite = AnimatedSprite.new()
@@ -17,6 +18,7 @@ func _ready():
 func pick_up():
 	GlobalVars.player_node_ref.take_hit(100)
 	#play sound
+	return changes_direction
 
 func finish_pickup_animation():
 	pass
