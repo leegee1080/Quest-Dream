@@ -98,6 +98,7 @@ func map_action():
 				GlobalVars.main_node_ref.ingame_tilegroup_Node.add_child(new_tile)
 				GlobalVars.main_node_ref.tile_dict[loc[2]].place_tile(loc[3])
 				GlobalVars.main_node_ref.tile_dict[loc[2]].name = "built_tile " + str(loc[2])
+	print("action")
 
 func change_dir(new_dir):
 	if new_dir >= 0 and new_dir < walk_dir.size():
@@ -157,6 +158,10 @@ func check_dist_exit():
 func check_tile():
 	var tile_coords_list = get_parent().clickable_coords_list
 	var current_tile_dict = get_parent().tile_dict
+	if map_action_queued and can_check_next_tile:
+		map_action()
+		can_check_next_tile = false
+		return
 	for loc in tile_coords_list:
 				var x_test = loc[0]
 				var y_test = loc[1]
@@ -164,16 +169,16 @@ func check_tile():
 					if current_tile_dict.get(loc[2]) != null:
 						if current_tile_dict.get(loc[2]).is_impass_tile == true and can_check_next_tile:
 							can_check_next_tile = false
-							if map_action_queued:
-								map_action()
-								return
+#							if map_action_queued:
+#								map_action()
+#								return
 							turn_around()
 							return
 						if current_tile_dict.get(loc[2]).rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right) == null and can_check_next_tile:
 							can_check_next_tile = false
-							if map_action_queued:
-								map_action()
-								return
+#							if map_action_queued:
+#								map_action()
+#								return
 							turn_around()
 							return
 						if current_tile_dict.get(loc[2]).is_locked != true:
@@ -182,9 +187,9 @@ func check_tile():
 						return
 					elif current_tile_dict.get(loc[2]) == null and can_check_next_tile:
 						can_check_next_tile = false
-						if map_action_queued:
-							map_action()
-							return
+#						if map_action_queued:
+#							map_action()
+#							return
 						turn_around()
 						return
 	return
