@@ -38,7 +38,7 @@ const center_classes = {
 	center_type_enum.none: null, #there is never going to be a class here
 	center_type_enum.consumable: null, #this is overwritten by the chosen player class
 	center_type_enum.treasure: Money_Coins,
-	center_type_enum.timedspike: null,
+	center_type_enum.timedspike: Bad_TimedSpike,
 	center_type_enum.moneypile: Money_Pile,
 	center_type_enum.moneychest: Money_Chest,
 	center_type_enum.reverse: Safe_Reverse,

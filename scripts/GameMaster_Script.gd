@@ -87,6 +87,7 @@ func middle_scene_trans():
 	if GlobalVars.current_stage_number in GlobalVars.stage_order:
 		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
 	if next_game_state == game_state.newgame:
+		GlobalVars.player_consumable_amount = 0
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
 		current_game_state = game_state.stage
