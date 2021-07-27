@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Enemy/Enemy_Collection/Avatar.gd"
 }, {
 "base": "Node2D",
+"class": "Bad_EnemySpawn",
+"language": "GDScript",
+"path": "res://scripts/Map_Classes/Center_Classes/Bad_EnemySpawn.gd"
+}, {
+"base": "Node2D",
 "class": "Bad_Kill",
 "language": "GDScript",
 "path": "res://scripts/Map_Classes/Center_Classes/Bad_Kill.gd"
@@ -193,6 +198,11 @@ _global_script_classes=[ {
 "class": "Lich",
 "language": "GDScript",
 "path": "res://scripts/Enemy/Enemy_Collection/Lich.gd"
+}, {
+"base": "Node2D",
+"class": "Map_Enemy",
+"language": "GDScript",
+"path": "res://scripts/Enemy/Map_Enemy.gd"
 }, {
 "base": "Node2D",
 "class": "Map_Player",
@@ -410,6 +420,7 @@ _global_script_class_icons={
 "Assassin": "",
 "Attack_Then_Move_Random_Turn": "",
 "Avatar": "",
+"Bad_EnemySpawn": "",
 "Bad_Kill": "",
 "Bad_TimedSpike": "",
 "Bat": "",
@@ -442,6 +453,7 @@ _global_script_class_icons={
 "Level_Up_Increase_Stat": "",
 "Level_Up_Swap_Ability": "",
 "Lich": "",
+"Map_Enemy": "",
 "Map_Player": "",
 "Money_Chest": "",
 "Money_Coins": "",
