@@ -100,6 +100,7 @@ var deco_number
 var deco_list = []
 
 var is_impass_tile = false
+var is_in_play = false
 
 #check sprite sheet for directions
 var rotate_var = 0
@@ -227,4 +228,5 @@ func place_tile(new_loc: Vector2):
 	self.position.x = new_loc.x
 	self.position.y = new_loc.y
 	place_deco()
+	is_in_play = true
 	pass

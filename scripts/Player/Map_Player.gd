@@ -42,6 +42,7 @@ const walk_interval = 16
 var walk_interval_count = walk_interval
 const walk_timer_wait_time = 0.04
 var walk_timer
+var injure_timer
 const center_interval = 3
 var center_interval_count = 2
 var current_tile
@@ -61,6 +62,14 @@ func _ready():
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
+	
+	injure_timer = Timer.new()
+	add_child(injure_timer)
+	injure_timer.add_to_group("timers")
+	injure_timer.set_wait_time(0.5)
+	injure_timer.set_one_shot(true)
+	injure_timer.connect("timeout", self, "walk_toggle")
+	injure_timer.stop()
 	setup_animations()
 
 func _init():
@@ -201,8 +210,15 @@ func check_center_tile():
 	if current_tile.center_subtile == null:
 		direction = current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right)
 		return
+	if can_walk:
+		walk_toggle()
+		injure_timer.start()
+		pass
 	if current_tile.center_subtile.can_pick_up == true:
 		if current_tile.center_subtile.pick_up() == true:
+			return
+		if current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right) == null:
+			print("null rot value on tile: " + current_tile.name)
 			return
 		direction = current_tile.rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right)
 		return
@@ -217,6 +233,10 @@ func turn_around():
 func take_hit(damage):
 	if is_dead:
 		return
+	if can_walk:
+		walk_toggle()
+		injure_timer.start()
+		pass
 	get_tree().call_group("UI_Player_Info", "update_consumable")
 	ani_dict.injure.play_animation()
 	GlobalVars.player_consumable_amount -= damage

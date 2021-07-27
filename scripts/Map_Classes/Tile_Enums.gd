@@ -44,7 +44,7 @@ const center_classes = {
 	center_type_enum.reverse: Safe_Reverse,
 	center_type_enum.kill: Bad_Kill,
 	center_type_enum.fight: null,
-	center_type_enum.switch: null,
+	center_type_enum.switch: Safe_Switch,
 	center_type_enum.patrol: null,
 	center_type_enum.impass: null, #there is never going to be a class here
 	center_type_enum.key: Money_Key,
@@ -71,7 +71,7 @@ const premade_tile_center_chances = [
 	[10, center_type_enum.reverse],
 	[2, center_type_enum.kill],
 	[7, center_type_enum.fight],
-	[5, center_type_enum.switch],
+	[500, center_type_enum.switch],
 	[1, center_type_enum.patrol],
 	[20, center_type_enum.impass],
 	[5, center_type_enum.key],

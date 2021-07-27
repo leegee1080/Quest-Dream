@@ -284,6 +284,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Map_Classes/Center_Classes/Safe_Reverse.gd"
 }, {
+"base": "Node2D",
+"class": "Safe_Switch",
+"language": "GDScript",
+"path": "res://scripts/Map_Classes/Center_Classes/Safe_Switch.gd"
+}, {
 "base": "Node",
 "class": "Simple_Attack_Turn",
 "language": "GDScript",
@@ -455,6 +460,7 @@ _global_script_class_icons={
 "Room_Player": "",
 "Safe_Keygate": "",
 "Safe_Reverse": "",
+"Safe_Switch": "",
 "Simple_Attack_Turn": "",
 "Slime_Big": "",
 "Slime_Boss": "",
