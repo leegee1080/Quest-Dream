@@ -12,7 +12,6 @@ var spawn_timer
 
 func _ready():
 	var parent_tile = get_parent()
-	var old_tile_rot_var = parent_tile.rotate_var
 	parent_tile.rotate_var = 0
 	parent_tile.direction_enum = 0
 	parent_tile.ani_sprite.set_frame(parent_tile.tile_theme_dict.get(parent_tile.theme_enum).get(0)[parent_tile.rotate_var])
@@ -39,10 +38,3 @@ func spawn():
 	temp_enemy.walk_toggle()
 	queue_free()
 	pass
-
-#func pick_up():
-#	#play sound
-#	return changes_direction
-#
-#func finish_pickup_animation():
-#	pass

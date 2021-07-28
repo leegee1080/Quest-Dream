@@ -65,13 +65,12 @@ func _ready():
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
 	setup_animations()
-
 func _init(chosen_enemy_enum, spawn_pos):
 	starting_pos = spawn_pos
 	type_class = Enemy_Enums.enemy_types_dict.get(chosen_enemy_enum).new()
 #	add_child(type_class)
 	ani_sprite = AnimatedSprite.new()
-	ani_sprite.set_sprite_frames(load("res://assets/visuals/player_frames.tres"))
+	ani_sprite.set_sprite_frames(load("res://assets/visuals/enemy_frames.tres"))
 	add_child(ani_sprite)
 	ani_sprite.set_frame(type_class.sprite_frame)
 	playarea = GlobalVars.main_node_ref.max_starting_playarea
@@ -110,6 +109,7 @@ func walk_toggle():
 		return
 
 func walk():
+	check_player_current_tile()
 	translate(direction*map_move_speed)
 	walk_interval_count -= map_move_speed
 	if center_interval_count == 1:
@@ -133,10 +133,19 @@ func check_map_edge():
 		return true
 	return false
 
-func check_dist_exit():
-	if position.distance_to(exit_tile_pos) <= 16:
-		return true
-	return false
+func check_player_current_tile():
+	if current_tile == null:
+		return
+	if current_tile == GlobalVars.player_node_ref.current_tile:
+		print("enemy fight")
+#		walk_toggle()
+#		GlobalVars.player_node_ref.walk_toggle()
+#		GlobalVars.player_node_ref.take_hit(type_class.damage)
+#		queue_free()
+		var fight_class = Fight.new(self, current_tile.position)
+		GlobalVars.main_node_ref.add_child(fight_class)
+		return
+	pass
 
 func check_tile():
 	var tile_coords_list = get_parent().clickable_coords_list

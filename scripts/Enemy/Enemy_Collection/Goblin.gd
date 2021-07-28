@@ -1,7 +1,7 @@
 class_name Goblin
 
 var string_name = "Goblin"
-var sprite_frame = 1
+var sprite_frame = 21
 
 #var theme = Tile_Enums.tile_themes_enum.forest
 #var is_final_boss = false
