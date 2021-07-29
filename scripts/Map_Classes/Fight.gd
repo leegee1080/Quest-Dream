@@ -16,12 +16,20 @@ const total_turn_frames = 4
 var current_turn_frame = total_turn_frames
 
 func _ready():
+	add_to_group("fast_forward_grp")
+	if GlobalVars.main_node_ref.is_fast_forwarded:
+		fight_overall_time = fight_overall_time/10
+	
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/room_bg_frames.tres"))
 	ani_sprite.set_frame(total_turn_frames)
 	position = room_screen_loc
 	add_child(ani_sprite)
 	start_fight()
+
+func fast_forward():
+	fight_overall_timer.set_wait_time(fight_overall_time/10)
+	pass
 
 func _init(passed_enemy_node, new_room_screen_loc):
 	enemy_node = passed_enemy_node
@@ -53,10 +61,14 @@ func start_fight():
 func pass_fight_turn():
 	current_turn_frame -= 1
 	ani_sprite.set_frame(current_turn_frame)
-	if GlobalVars.player_node_ref.is_dead:
+	enemy_node.take_hit(GlobalVars.player_node_ref.type_class.starting_attack_power)
+	if enemy_node.is_dead:
 		finish_fight()
 		return
 	GlobalVars.player_node_ref.take_hit(enemy_node.type_class.damage)
+	if GlobalVars.player_node_ref.is_dead:
+		finish_fight()
+		return
 	if current_turn_frame <= 0:
 		current_turn_frame = total_turn_frames
 	pass

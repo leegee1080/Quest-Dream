@@ -4,6 +4,7 @@ class_name Stage
 
 var player = Map_Player.new()
 var chosen_level_theme = Tile_Enums.tile_themes_enum.castle
+var is_fast_forwarded = false
 var premade_tile_pool
 
 var round_start_time = 5.0
@@ -126,7 +127,7 @@ func _ready():
 	setup_tile_dict()
 	generate_premade_center_tile_pool()
 	place_starting_tiles()
-	print(premade_tile_pool)
+#	print(premade_tile_pool)
 	#setup the player's character
 	add_child(player)
 	player.playarea = max_starting_playarea
@@ -165,15 +166,20 @@ func ui_quit():
 	pass
 
 func ui_fastforward():
-	var new_speed = 0.0001
-	player.walk_timer.set_wait_time(new_speed)
+	is_fast_forwarded = false
+#	var new_speed = 0.0001
+	for node in get_tree().get_nodes_in_group("fast_forward_grp"):
+		if node == null:
+			continue
+		node.fast_forward()
+#	player.walk_timer.set_wait_time(new_speed)
 	print("fast forwarded")
 	pass
 
 func ui_back():
 	pause_menu.queue_free()
 	UI_Vars.hide_buttons("pause_menu")
-	ui_pause()
+	ui_unpause()
 	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "main", main_button_z_index, self)
 
 func ui_unpause():
@@ -404,6 +410,7 @@ func place_starting_tiles():
 		player.direction = Vector2(1,0)
 	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, start_tile_sprite_index)
 	start_tile.name = "Start Tile"
+	start_tile.is_terminal_tile = true
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0])
 	potential_terminal_locations.remove(start_tile_index)
@@ -420,6 +427,7 @@ func place_starting_tiles():
 		end_tile_sprite_index = 0
 	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, end_tile_sprite_index)
 	end_tile.name = "End Tile"
+	end_tile.is_terminal_tile = true
 	add_child(end_tile)
 	end_tile.place_tile(picked_coord[0])
 	#place preplaced tiles

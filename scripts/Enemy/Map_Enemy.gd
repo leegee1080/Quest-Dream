@@ -43,7 +43,7 @@ var direction: Vector2 = Vector2(1,0)
 var map_move_speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
-const walk_timer_wait_time = 0.04
+var walk_timer_wait_time = 0.04
 var walk_timer
 const center_interval = 3
 var center_interval_count = 0
@@ -54,6 +54,10 @@ var can_check_next_tile = true
 var ani_sprite
 
 func _ready():
+	add_to_group("fast_forward_grp")
+	if GlobalVars.main_node_ref.is_fast_forwarded:
+		walk_timer_wait_time = 0.01
+	
 	direction = walk_dir_dict.get(int(rand_range(0, walk_dir_dict.size())))
 	health = type_class.starting_health
 	position = starting_pos
@@ -92,6 +96,10 @@ func change_dir(new_dir):
 	direction = Vector2(0,0)
 	return
 
+func fast_forward():
+	walk_timer.set_wait_time(0.004)
+	pass
+
 func walk_toggle():
 	if is_dead:
 		return
@@ -109,6 +117,8 @@ func walk_toggle():
 		return
 
 func walk():
+	if is_dead:
+		return
 	check_player_current_tile()
 	translate(direction*map_move_speed)
 	walk_interval_count -= map_move_speed
@@ -134,20 +144,26 @@ func check_map_edge():
 	return false
 
 func check_player_current_tile():
-	if current_tile == null:
-		return
-	if current_tile == GlobalVars.player_node_ref.current_tile:
-		print("enemy fight")
-#		walk_toggle()
-#		GlobalVars.player_node_ref.walk_toggle()
-#		GlobalVars.player_node_ref.take_hit(type_class.damage)
-#		queue_free()
+	if position.distance_to(GlobalVars.player_node_ref.position) <= 5:
 		var fight_class = Fight.new(self, current_tile.position)
 		GlobalVars.main_node_ref.add_child(fight_class)
 		return
-	pass
+#	if current_tile == null:
+#		return
+#	if current_tile == GlobalVars.player_node_ref.current_tile:
+#		print("enemy fight")
+##		walk_toggle()
+##		GlobalVars.player_node_ref.walk_toggle()
+##		GlobalVars.player_node_ref.take_hit(type_class.damage)
+##		queue_free()
+#		var fight_class = Fight.new(self, current_tile.position)
+#		GlobalVars.main_node_ref.add_child(fight_class)
+#		return
+#	pass
 
 func check_tile():
+	if is_dead:
+		return
 	var tile_coords_list = get_parent().clickable_coords_list
 	var current_tile_dict = get_parent().tile_dict
 	for loc in tile_coords_list:
@@ -159,7 +175,7 @@ func check_tile():
 							can_check_next_tile = false
 							turn_around()
 							return
-						if current_tile_dict.get(loc[2]).rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right) == null and can_check_next_tile:
+						if current_tile_dict.get(loc[2]).rot_value_changer(direction, type_class.t_turn_right) == null and can_check_next_tile:
 							can_check_next_tile = false
 							turn_around()
 							return

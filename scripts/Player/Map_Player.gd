@@ -40,7 +40,7 @@ var direction: Vector2 = Vector2(0,0)
 var map_move_speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
-const walk_timer_wait_time = 0.04
+var walk_timer_wait_time = 0.04
 var walk_timer
 var injure_timer
 const center_interval = 3
@@ -54,6 +54,10 @@ var ani_sprite
 var map_action_queued = false
 
 func _ready():
+	add_to_group("fast_forward_grp")
+	if GlobalVars.main_node_ref.is_fast_forwarded:
+		walk_timer_wait_time = 0.04
+	
 	type_class = GlobalVars.player_type_class_storage
 	walk_timer = Timer.new()
 	add_child(walk_timer)
@@ -89,24 +93,28 @@ func setup_animations():
 		ani_dict[ani] = temp_ani_class
 
 func map_action():
-	GlobalVars.player_consumable_amount -= GlobalVars.player_type_class_storage.action_cost
-	get_tree().call_group("UI_Player_Info", "update_consumable")
-	check_for_death()
-	map_action_queued = false
 	for loc in GlobalVars.main_node_ref.clickable_coords_list:
 			var x_test = loc[0]
 			var y_test = loc[1]
 			if position[0] >= x_test[0] and position[0] < x_test[1] and position[1] >= y_test[0] and position[1] < y_test[1]:
+				if GlobalVars.main_node_ref.tile_dict.get(loc[2]) != null and (GlobalVars.main_node_ref.tile_dict.get(loc[2]).is_player_built or GlobalVars.main_node_ref.tile_dict.get(loc[2]).is_terminal_tile):
+					return
 				if GlobalVars.main_node_ref.tile_dict.get(loc[2]) != null:
 					GlobalVars.main_node_ref.tile_dict.get(loc[2]).is_locked = false
 					GlobalVars.main_node_ref.tile_dict.get(loc[2]).delete_tile()
 					GlobalVars.main_node_ref.tile_dict[loc[2]] = null
 				#assign the new tile node to the correct dictionary entry
 				var new_tile = Tile.new(GlobalVars.player_type_class_storage.tile_direction, GlobalVars.current_theme, GlobalVars.player_type_class_storage.tile_center, 0, -1)
+				new_tile.is_player_built = true
 				GlobalVars.main_node_ref.tile_dict[loc[2]] = new_tile
 				GlobalVars.main_node_ref.ingame_tilegroup_Node.add_child(new_tile)
 				GlobalVars.main_node_ref.tile_dict[loc[2]].place_tile(loc[3])
 				GlobalVars.main_node_ref.tile_dict[loc[2]].name = "built_tile " + str(loc[2])
+				
+				GlobalVars.player_consumable_amount -= GlobalVars.player_type_class_storage.action_cost
+				get_tree().call_group("UI_Player_Info", "update_consumable")
+				check_for_death()
+				map_action_queued = false
 	print("action")
 
 func change_dir(new_dir):
@@ -115,6 +123,10 @@ func change_dir(new_dir):
 		return
 	direction = Vector2(0,0)
 	return
+
+func fast_forward():
+	walk_timer.set_wait_time(0.004)
+	pass
 
 func walk_toggle():
 	if is_dead:
@@ -133,6 +145,8 @@ func walk_toggle():
 		return
 
 func walk():
+	if is_dead:
+		return
 	translate(direction*map_move_speed)
 	walk_interval_count -= map_move_speed
 	if center_interval_count == 1:
@@ -165,6 +179,8 @@ func check_dist_exit():
 	return false
 
 func check_tile():
+	if is_dead:
+		return
 	var tile_coords_list = get_parent().clickable_coords_list
 	var current_tile_dict = get_parent().tile_dict
 	if map_action_queued and can_check_next_tile:

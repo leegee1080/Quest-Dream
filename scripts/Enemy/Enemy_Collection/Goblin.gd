@@ -14,7 +14,10 @@ const special_animations_dict = {
 	"happy": null
 }
 
+#map vars
+var t_turn_right = false
+
 #battle vars
 var damage = 1
-var starting_health = 3
+var starting_health = 1
 var speed = 5

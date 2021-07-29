@@ -10,10 +10,14 @@ var spike_out_frame = 86
 const can_pick_up = true
 var changes_direction = false
 var my_spike_timer
-const spike_toggle_speed = 5.0
+var spike_toggle_speed = 5.0
 var is_spike_out = true
 
 func _ready():
+	add_to_group("fast_forward_grp")
+	if GlobalVars.main_node_ref.is_fast_forwarded:
+		spike_toggle_speed = spike_toggle_speed/10
+	
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/item_frames.tres"))
 	ani_sprite.set_frame(spike_out_frame)
@@ -27,6 +31,11 @@ func _ready():
 	my_spike_timer.set_one_shot(false)
 	my_spike_timer.connect("timeout", self, "spike_toggle")
 	my_spike_timer.start()
+	add_to_group("fast_forward_grp")
+
+func fast_forward():
+	my_spike_timer.set_wait_time(spike_toggle_speed/10)
+	pass
 
 func spike_toggle():
 	if is_spike_out:
