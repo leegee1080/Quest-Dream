@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/pixel_dyna_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/visuals/main_menu_bg.png" type="Texture" id=2]
+
+[node name="Credits_Screen" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Label" type="Label" parent="."]
+margin_left = 65.0
+margin_top = 90.0
+margin_right = 1224.0
+margin_bottom = 1896.0
+rect_scale = Vector2( 0.15, 0.15 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tutorial:
+
+Click on
+middle of
+screen to 
+place tiles,
+press action
+button to 
+build a tile."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

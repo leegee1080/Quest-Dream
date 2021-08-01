@@ -15,7 +15,8 @@ const mainmenu_button_loc_dict = {
 	#fill with the locations to instance the button objects
 	"newgame": [Vector2(79,291), 8, 9],
 	"options": [Vector2(79,371), 12, 13],
-	"credits": [Vector2(159,371), 14, 15]
+	"credits": [Vector2(159,371), 14, 15],
+	"tutorial": [Vector2(159,291), 22, 23]
 }
 const mainmenu_contgame_button_loc_dict = {
 	"continuegame": [Vector2(159,291), 10, 11]
@@ -29,6 +30,9 @@ const optionsmenu_button_loc_dict = {
 var credits_screen = preload("res://nodes/Credits_Screen.tscn")
 var credits_screen_instance
 
+var tutorial_screen = preload("res://nodes/Tutorial_Screen.tscn")
+var tutorial_screen_instance
+
 #overall gamestage
 var current_game_state
 var next_game_state
@@ -38,6 +42,7 @@ enum game_state{
 	newgame,
 	options,
 	credits,
+	tutorial,
 	stage,
 	lose,
 	win,
@@ -68,9 +73,9 @@ func _ready():
 func setup_mainmenu():
 	current_game_state = game_state.mainmenu
 	UiVars.generate_button(mainmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_buttons", mainmenu_button_z_index, self)
-	if GlobalVars.player_type_class_storage != null:
-		UiVars.generate_button(mainmenu_contgame_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_continue_button", mainmenu_button_z_index, self)
-	next_game_state = null
+#	if GlobalVars.player_type_class_storage != null:
+#		UiVars.generate_button(mainmenu_contgame_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_continue_button", mainmenu_button_z_index, self)
+#	next_game_state = null
 	pass
 
 func start_scene_trans():
@@ -81,7 +86,7 @@ func start_scene_trans():
 
 func middle_scene_trans():
 	UiVars.hide_buttons("mainmenu_buttons")
-	UiVars.hide_buttons("mainmenu_continue_button")
+#	UiVars.hide_buttons("mainmenu_continue_button")
 	if current_stage != null:
 		current_stage.queue_free()
 	if GlobalVars.current_stage_number in GlobalVars.stage_order:
@@ -144,13 +149,19 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 	if new_name == "newgame":
 		ui_new()
 		return
+	if new_name == "tutorial":
+		ui_tutorial()
+		return
 
 func ui_back(_button_node_ref):
-	UiVars.hide_buttons("creditmenu_buttons")
+	UiVars.hide_buttons("creditmenu_button")
 	UiVars.hide_buttons("optionsmenu_buttons")
 	UiVars.hide_buttons("mainmenu_continue_button")
+	UI_Vars.hide_buttons("tutorial_button")
 	if credits_screen_instance != null:
 		credits_screen_instance.queue_free()
+	if tutorial_screen_instance != null:
+		tutorial_screen_instance.queue_free()
 	setup_mainmenu()
 	pass
 
@@ -172,6 +183,16 @@ func ui_cont():
 	start_scene_trans()
 	pass
 
+func ui_tutorial():
+	print("tutoral menu open")
+	current_game_state = game_state.credits
+	UiVars.hide_buttons("mainmenu_buttons")
+	UiVars.hide_buttons("mainmenu_continue_button")
+	tutorial_screen_instance = tutorial_screen.instance()
+	add_child(tutorial_screen_instance)
+	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
+	pass
+
 func ui_options():
 	print("options menu open")
 	current_game_state = game_state.options
@@ -187,18 +208,16 @@ func ui_credits():
 	UiVars.hide_buttons("mainmenu_continue_button")
 	credits_screen_instance = credits_screen.instance()
 	add_child(credits_screen_instance)
-	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_buttons", mainmenu_button_z_index, self)
+	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
 	pass
 
 func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			if cheats:
-				if event.scancode == KEY_W:
-					current_stage.win_round()
-					return
 				if event.scancode == KEY_N:
-					win_stage()
+					if current_game_state == game_state.stage:
+						win_stage()
 					return
 				if event.scancode == KEY_SPACE:
 					print(current_game_state)

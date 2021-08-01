@@ -29,7 +29,7 @@ enum center_type_enum{
 	kill,
 	fight,
 	switch,
-	patrol,
+#	patrol,
 	impass,
 	key,
 	keygate
@@ -40,12 +40,12 @@ const center_classes = {
 	center_type_enum.treasure: Money_Coins,
 	center_type_enum.timedspike: Bad_TimedSpike,
 	center_type_enum.moneypile: Money_Pile,
-	center_type_enum.moneychest: Money_Chest,
+	center_type_enum.moneychest: Money_Chest, 
 	center_type_enum.reverse: Safe_Reverse,
 	center_type_enum.kill: Bad_Kill,
 	center_type_enum.fight: Bad_EnemySpawn,
 	center_type_enum.switch: Safe_Switch,
-	center_type_enum.patrol: null,
+#	center_type_enum.patrol: null,
 	center_type_enum.impass: null, #there is never going to be a class here
 	center_type_enum.key: Money_Key,
 	center_type_enum.keygate: Safe_Keygate
@@ -72,7 +72,6 @@ const premade_tile_center_chances = [
 	[2, center_type_enum.kill],
 	[500, center_type_enum.fight],
 	[7, center_type_enum.switch],
-	[1, center_type_enum.patrol],
 	[20, center_type_enum.impass],
 	[5, center_type_enum.key],
 	[10, center_type_enum.keygate]
