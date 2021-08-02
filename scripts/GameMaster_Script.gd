@@ -10,6 +10,7 @@ var current_stage: Node2D
 var trans_timer = Timer.new()
 var trans_total_time = 1.0
 var trans_middle_timer = Timer.new()
+var trans_screen = Trans.new()
 const mainmenu_button_z_index = 15
 const mainmenu_button_loc_dict = {
 	#fill with the locations to instance the button objects
@@ -62,6 +63,8 @@ func _ready():
 	trans_middle_timer.set_one_shot(true)
 	trans_middle_timer.connect("timeout", self, "middle_scene_trans")
 	
+	add_child(trans_screen)
+	
 	#setup the chances to pull a certain tile for the queue
 	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
 	generate_tile_chance_arrays(Tile_Enums.tile_center_chances, GlobalVars.tile_center_chance_array)
@@ -79,6 +82,7 @@ func setup_mainmenu():
 	pass
 
 func start_scene_trans():
+	trans_screen.run_trans()
 	trans_timer.start()
 	trans_middle_timer.start()
 	UiVars.is_trans = true
@@ -245,7 +249,6 @@ func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 
 func exit_to_menu():
 	next_game_state = game_state.mainmenu
-	print("play screen wipe")
 	print("go back to main menu")
 	start_scene_trans()
 	pass
@@ -254,7 +257,6 @@ func lose_stage():
 	GlobalVars.player_type_class_storage.queue_free()
 	GlobalVars.player_type_class_storage = null
 	next_game_state = game_state.lose
-	print("play screen wipe")
 	print("You died! Go back to main menu")
 	start_scene_trans()
 	pass
@@ -262,7 +264,6 @@ func lose_stage():
 func win_stage():
 	GlobalVars.current_stage_number += 1
 	next_game_state = game_state.win
-	print("play screen wipe")
 	print("You continue on!")
 	start_scene_trans()
 	pass
