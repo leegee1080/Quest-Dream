@@ -7,9 +7,11 @@
 ### prog todo:
 - [ ] Main menu
    - [x] credits menu
-   - [ ] options menu sound, music
    - [ ] character select on new game
    - [x] how to play button
+- [ ] Sound system
+   - [ ] as a class child of game controller
+   - [ ] functions to play sounds based on string in func called
 - [x] consumable and money counter in the middle of the map screen
 - [x] collectables around the map randomly generates on tiles
    - [x] the collectable is different per player class, they will increase the players (consumable) stat (health for the warrior, skulls for the nec)
@@ -22,3 +24,10 @@
 - [x] change outer walls to spikes
 - [x] consumable, keys, and money counter in the middle of the map screen
 - [ ] remake art in vector style
+- [ ] add scene trans
+- [ ] add sounds
+   - [ ] menu sounds (click, swoosh, bloops)
+   - [ ] music (game (per theme), menu)
+   - [ ] in game sounds (fight sounds, walk sounds, pickup sounds)
+- [ ] fight animation
+- [ ] player animations (happy, pickup)
