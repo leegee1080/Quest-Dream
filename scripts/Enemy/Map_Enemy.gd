@@ -69,6 +69,7 @@ func _ready():
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
 	setup_animations()
+
 func _init(chosen_enemy_enum, spawn_pos):
 	starting_pos = spawn_pos
 	type_class = Enemy_Enums.enemy_types_dict.get(chosen_enemy_enum).new()
@@ -78,6 +79,7 @@ func _init(chosen_enemy_enum, spawn_pos):
 	add_child(ani_sprite)
 	ani_sprite.set_frame(type_class.sprite_frame)
 	playarea = GlobalVars.main_node_ref.max_starting_playarea
+	map_move_speed = type_class.speed
 
 func setup_animations():
 	for ani in type_class.special_animations_dict:
@@ -145,7 +147,7 @@ func check_map_edge():
 
 func check_player_current_tile():
 	if position.distance_to(GlobalVars.player_node_ref.position) <= 5:
-		var fight_class = Fight.new(self, current_tile.position)
+		var fight_class = Fight.new(self, position)
 		GlobalVars.main_node_ref.add_child(fight_class)
 		return
 #	if current_tile == null:
@@ -206,6 +208,7 @@ func take_hit(damage):
 		return
 	ani_dict.injure.play_animation()
 	health -= damage
+	print("enemy health: " + str(health))
 	check_for_death()
 
 func check_for_death():

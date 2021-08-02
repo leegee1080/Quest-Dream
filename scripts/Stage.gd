@@ -166,7 +166,7 @@ func ui_quit():
 	pass
 
 func ui_fastforward():
-	is_fast_forwarded = false
+	is_fast_forwarded = true
 #	var new_speed = 0.0001
 	for node in get_tree().get_nodes_in_group("fast_forward_grp"):
 		if node == null:

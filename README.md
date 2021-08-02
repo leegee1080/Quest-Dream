@@ -24,10 +24,10 @@
 - [x] change outer walls to spikes
 - [x] consumable, keys, and money counter in the middle of the map screen
 - [ ] remake art in vector style
-- [ ] add scene trans
+- [x] add scene trans
 - [ ] add sounds
    - [ ] menu sounds (click, swoosh, bloops)
    - [ ] music (game (per theme), menu)
    - [ ] in game sounds (fight sounds, walk sounds, pickup sounds)
-- [ ] fight animation
+- [x] fight animation
 - [ ] player animations (happy, pickup)

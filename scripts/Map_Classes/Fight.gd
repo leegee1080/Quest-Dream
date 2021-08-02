@@ -8,27 +8,38 @@ var enemy_node
 var ani_sprite
 var room_class
 
-var fight_overall_timer
-var fight_overall_time = 0.5
+const starting_fight_turn_time = 0.5
+const starting_ani_step_time = 0.2
+
 var fight_turn_timer
-var fight_turn_time = 0.1
-const total_turn_frames = 4
-var current_turn_frame = total_turn_frames
+var fight_turn_time = starting_fight_turn_time
+var fight_fade_stage = false
+
+var ani_step_timer
+var current_ani_step
+
+var ani_step_time = starting_ani_step_time
+const top_fight_frames = 3
+const bottom_fight_frames = 0
+const top_fade_frames = 7
+const bottom_fade_frames = 4
 
 func _ready():
 	add_to_group("fast_forward_grp")
 	if GlobalVars.main_node_ref.is_fast_forwarded:
-		fight_overall_time = fight_overall_time/10
+		fight_turn_time = starting_fight_turn_time/10
+		ani_step_time = starting_ani_step_time/10
 	
 	ani_sprite = AnimatedSprite.new()
-	ani_sprite.set_sprite_frames(load("res://assets/visuals/room_bg_frames.tres"))
-	ani_sprite.set_frame(total_turn_frames)
+	ani_sprite.set_sprite_frames(load("res://assets/visuals/fight_cloud_frames.tres"))
+	ani_sprite.set_frame(top_fight_frames)
 	position = room_screen_loc
 	add_child(ani_sprite)
 	start_fight()
 
 func fast_forward():
-	fight_overall_timer.set_wait_time(fight_overall_time/10)
+	fight_turn_time.set_wait_time(starting_fight_turn_time/10)
+	ani_step_timer.set_wait_time(starting_ani_step_time/10)
 	pass
 
 func _init(passed_enemy_node, new_room_screen_loc):
@@ -38,15 +49,7 @@ func _init(passed_enemy_node, new_room_screen_loc):
 func start_fight():
 	GlobalVars.player_node_ref.walk_toggle()
 	enemy_node.walk_toggle()
-	
-	fight_overall_timer = Timer.new()
-	fight_overall_timer.name = "Fight Timer"
-	add_child(fight_overall_timer)
-	fight_overall_timer.add_to_group("timers")
-	fight_overall_timer.set_wait_time(fight_overall_time)
-	fight_overall_timer.set_one_shot(true)
-	fight_overall_timer.connect("timeout", self, "finish_fight")
-	fight_overall_timer.start()
+	current_ani_step = top_fight_frames
 	
 	fight_turn_timer = Timer.new()
 	fight_turn_timer.name = "Turn Timer"
@@ -56,29 +59,64 @@ func start_fight():
 	fight_turn_timer.set_one_shot(false)
 	fight_turn_timer.connect("timeout", self, "pass_fight_turn")
 	fight_turn_timer.start()
+	
+	ani_step_timer = Timer.new()
+	ani_step_timer.name = "Fight Ani Timer"
+	add_child(ani_step_timer)
+	ani_step_timer.add_to_group("timers")
+	ani_step_timer.set_wait_time(ani_step_time)
+	ani_step_timer.set_one_shot(false)
+	ani_step_timer.connect("timeout", self, "ani_timer_step")
+	ani_step_timer.start()
 	pass
 
 func pass_fight_turn():
-	current_turn_frame -= 1
-	ani_sprite.set_frame(current_turn_frame)
 	enemy_node.take_hit(GlobalVars.player_node_ref.type_class.starting_attack_power)
-	if enemy_node.is_dead:
+	if enemy_node.is_dead == true:
 		finish_fight()
 		return
 	GlobalVars.player_node_ref.take_hit(enemy_node.type_class.damage)
-	if GlobalVars.player_node_ref.is_dead:
+	if GlobalVars.player_node_ref.is_dead == true:
 		finish_fight()
 		return
-	if current_turn_frame <= 0:
-		current_turn_frame = total_turn_frames
+	pass
+
+func ani_timer_step():
+	if fight_fade_stage:
+		fade_ani_step()
+	else:
+		fight_ani_step()
+	pass
+
+func fight_ani_step():
+	current_ani_step -= 1
+	ani_sprite.set_frame(current_ani_step)
+	if current_ani_step <= 0:
+		current_ani_step = top_fight_frames
+	pass
+
+func fade_ani_step():
+	current_ani_step -= 1
+	ani_sprite.set_frame(current_ani_step)
+	if current_ani_step <= bottom_fade_frames:
+		clean_up_fight()
+	pass
+
+func clean_up_fight():
+	ani_step_timer.stop()
+	queue_free()
 	pass
 
 func finish_fight():
 	fight_turn_timer.stop()
+	fight_fade_stage = true
+	current_ani_step = top_fade_frames
+	ani_sprite.set_frame(current_ani_step)
 	if GlobalVars.player_node_ref.is_dead:
-		fight_overall_timer.stop()
+		pass
 	else:
+		GlobalVars.money_gained_this_run += enemy_node.type_class.reward
+		get_tree().call_group("UI_Player_Info", "update_money")
 		enemy_node.queue_free()
 		GlobalVars.player_node_ref.walk_toggle()
-	queue_free()
 	pass

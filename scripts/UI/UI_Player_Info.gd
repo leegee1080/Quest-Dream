@@ -127,12 +127,15 @@ func _init(player_consumable_frame):
 #	dodge_sprite_frame = player_dodge_sprite_frame
 
 func update_consumable():
+	#play pickup sound
 	rtl_node_consumable.text = str(GlobalVars.player_consumable_amount)
 
 func update_money():
+	#play money sound
 	rtl_node_money.text = str(GlobalVars.money_gained_this_run)
 
 func update_keys():
+	#play key sound
 	rtl_node_keys.text = str(GlobalVars.keys_gained_this_run)
 
 #func update_battle_charges():

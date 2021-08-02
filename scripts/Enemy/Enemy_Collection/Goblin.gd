@@ -19,5 +19,6 @@ var t_turn_right = false
 
 #battle vars
 var damage = 1
-var starting_health = 1
-var speed = 5
+var starting_health = 5
+var speed = .5
+var reward = 10
