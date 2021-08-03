@@ -3,10 +3,6 @@ class_name Goblin
 var string_name = "Goblin"
 var sprite_frame = 21
 
-#var theme = Tile_Enums.tile_themes_enum.forest
-#var is_final_boss = false
-#var is_minion = false
-
 const special_animations_dict = {
 	"walk": "wiggle_in_place",
 	"death": "death_flip_red",

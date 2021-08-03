@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Class_Select_Screen.gd" type="Script" id=1]
+[ext_resource path="res://assets/visuals/main_menu_bg.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/pixel_dyna_font.tres" type="DynamicFont" id=3]
+
+[node name="ClassSelectScreen" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Label" type="Label" parent="."]
+margin_left = 78.076
+margin_top = 89.4827
+margin_right = 678.076
+margin_bottom = 572.483
+rect_scale = Vector2( 0.25, 0.25 )
+custom_fonts/font = ExtResource( 3 )
+text = "Choose
+your
+Hero"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

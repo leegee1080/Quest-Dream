@@ -2,7 +2,7 @@ extends Node
 
 class_name UI_Vars
 
-var clicked
+var clicked = false
 var buttons_dict = {}
 var is_trans = false
 

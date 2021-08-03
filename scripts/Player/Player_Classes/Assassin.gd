@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Assassin
 
-var sprite_frame = 6
+const sprite_frame = 6
 const string_name = "Assassin"
 
 const special_animations_dict = {

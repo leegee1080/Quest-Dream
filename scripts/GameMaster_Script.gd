@@ -1,7 +1,7 @@
 extends Node2D
 
 const cheats = true
-var player_type_class = Player_Enums.player_types_enum.assassin
+var player_type_class = Assassin
 var chosen_level_theme = Tile_Enums.tile_themes_enum.forest
 
 var current_stage: Node2D
@@ -14,7 +14,7 @@ var trans_screen = Trans.new()
 const mainmenu_button_z_index = 15
 const mainmenu_button_loc_dict = {
 	#fill with the locations to instance the button objects
-	"newgame": [Vector2(79,291), 8, 9],
+	"heroselect": [Vector2(79,291), 8, 9],
 	"options": [Vector2(79,371), 12, 13],
 	"credits": [Vector2(159,371), 14, 15],
 	"tutorial": [Vector2(159,291), 22, 23]
@@ -39,7 +39,6 @@ var current_game_state
 var next_game_state
 enum game_state{
 	setup,
-	continuegame,
 	newgame,
 	options,
 	credits,
@@ -47,8 +46,14 @@ enum game_state{
 	stage,
 	lose,
 	win,
-	mainmenu
+	mainmenu,
+	heroselect
 }
+
+#player progression data
+const class_select_screen = preload("res://nodes/ClassSelectScreen.tscn")
+var current_class_select_screen
+var unlocked_classes = [6] #this is an array of each enum of each playable class that is unlocked, if every enum is there every class is unlocked
 
 func _ready():
 	trans_timer = Timer.new()
@@ -76,9 +81,6 @@ func _ready():
 func setup_mainmenu():
 	current_game_state = game_state.mainmenu
 	UiVars.generate_button(mainmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_buttons", mainmenu_button_z_index, self)
-#	if GlobalVars.player_type_class_storage != null:
-#		UiVars.generate_button(mainmenu_contgame_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "mainmenu_continue_button", mainmenu_button_z_index, self)
-#	next_game_state = null
 	pass
 
 func start_scene_trans():
@@ -90,23 +92,30 @@ func start_scene_trans():
 
 func middle_scene_trans():
 	UiVars.hide_buttons("mainmenu_buttons")
-#	UiVars.hide_buttons("mainmenu_continue_button")
 	if current_stage != null:
 		current_stage.queue_free()
+		current_stage = null
 	if GlobalVars.current_stage_number in GlobalVars.stage_order:
 		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
 	if next_game_state == game_state.newgame:
+		current_class_select_screen.queue_free()
 		GlobalVars.player_consumable_amount = 0
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
 		current_game_state = game_state.stage
 		return
-	if next_game_state == game_state.continuegame:
-		create_stage(chosen_level_theme)
-		add_child(current_stage)
-		current_game_state = game_state.stage
-		return
 	if next_game_state == game_state.mainmenu:
+		UiVars.hide_buttons("creditmenu_button")
+		UiVars.hide_buttons("optionsmenu_buttons")
+		UiVars.hide_buttons("mainmenu_continue_button")
+		UI_Vars.hide_buttons("tutorial_button")
+		UI_Vars.hide_buttons("class_select_back_button")
+		if credits_screen_instance != null:
+			credits_screen_instance.queue_free()
+		if tutorial_screen_instance != null:
+			tutorial_screen_instance.queue_free()
+		if current_class_select_screen != null:
+			current_class_select_screen.queue_free()
 		setup_mainmenu()
 		return
 	if next_game_state == game_state.win:
@@ -117,6 +126,35 @@ func middle_scene_trans():
 	if next_game_state == game_state.lose:
 		setup_mainmenu()
 		return
+	if next_game_state == game_state.heroselect:
+		current_class_select_screen = class_select_screen.instance()
+		add_child(current_class_select_screen)
+		return
+	if next_game_state == game_state.credits:
+		print("credits menu open")
+		current_game_state = game_state.credits
+		UiVars.hide_buttons("mainmenu_buttons")
+		UiVars.hide_buttons("mainmenu_continue_button")
+		credits_screen_instance = credits_screen.instance()
+		add_child(credits_screen_instance)
+		UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
+		return
+	if next_game_state == game_state.tutorial:
+		print("tutoral menu open")
+		current_game_state = game_state.credits
+		UiVars.hide_buttons("mainmenu_buttons")
+		UiVars.hide_buttons("mainmenu_continue_button")
+		tutorial_screen_instance = tutorial_screen.instance()
+		add_child(tutorial_screen_instance)
+		UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
+		return
+	if next_game_state == game_state.options:
+		print("options menu open")
+		current_game_state = game_state.options
+		UiVars.hide_buttons("mainmenu_buttons")
+		UiVars.hide_buttons("mainmenu_continue_button")
+		UiVars.generate_button(optionsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "optionsmenu_buttons", mainmenu_button_z_index, self)
+		return
 	pass
 
 func end_scene_trans():
@@ -125,10 +163,10 @@ func end_scene_trans():
 		print("new game")
 		current_game_state = game_state.stage
 		return
-	if next_game_state == game_state.continuegame:
-		print("cont game")
-		current_game_state = game_state.stage
-		return
+#	if next_game_state == game_state.continuegame:
+#		print("cont game")
+#		current_game_state = game_state.stage
+#		return
 	if next_game_state == game_state.win:
 		print("cont game")
 		current_game_state = game_state.stage
@@ -136,38 +174,31 @@ func end_scene_trans():
 	pass
 
 func ui_func(new_name, _btn_node_ref): #checks which button is pressed
-	if UiVars.is_trans:
+#	if UiVars.is_trans:
+#		return
+	if new_name == "heroselect":
+		next_game_state = game_state.heroselect
+		start_scene_trans()
 		return
 	if new_name == "back":
-		ui_back(_btn_node_ref)
-		return
-	if new_name == "continuegame":
-		ui_cont()
+		next_game_state = game_state.mainmenu
+		start_scene_trans()
 		return
 	if new_name == "options":
-		ui_options()
+		next_game_state = game_state.options
+		start_scene_trans()
 		return
 	if new_name == "credits":
-		ui_credits()
+		next_game_state = game_state.credits
+		start_scene_trans()
 		return
 	if new_name == "newgame":
 		ui_new()
 		return
 	if new_name == "tutorial":
-		ui_tutorial()
+		next_game_state = game_state.tutorial
+		start_scene_trans()
 		return
-
-func ui_back(_button_node_ref):
-	UiVars.hide_buttons("creditmenu_button")
-	UiVars.hide_buttons("optionsmenu_buttons")
-	UiVars.hide_buttons("mainmenu_continue_button")
-	UI_Vars.hide_buttons("tutorial_button")
-	if credits_screen_instance != null:
-		credits_screen_instance.queue_free()
-	if tutorial_screen_instance != null:
-		tutorial_screen_instance.queue_free()
-	setup_mainmenu()
-	pass
 
 func ui_new():
 	next_game_state = game_state.newgame
@@ -175,44 +206,10 @@ func ui_new():
 	if GlobalVars.player_type_class_storage != null:
 		GlobalVars.player_type_class_storage.queue_free()
 		GlobalVars.player_type_class_storage = null
-	GlobalVars.player_type_class_storage = Player_Enums.player_types_dict[player_type_class].new()
+	GlobalVars.player_type_class_storage = player_type_class.new()
 	add_child(GlobalVars.player_type_class_storage)
 	GlobalVars.player_type_class_storage.name = "Player_Data_Storage"
 	start_scene_trans()
-	pass
-
-func ui_cont():
-	next_game_state = game_state.continuegame
-	#load stage numb and player type class stor from global vars
-	start_scene_trans()
-	pass
-
-func ui_tutorial():
-	print("tutoral menu open")
-	current_game_state = game_state.credits
-	UiVars.hide_buttons("mainmenu_buttons")
-	UiVars.hide_buttons("mainmenu_continue_button")
-	tutorial_screen_instance = tutorial_screen.instance()
-	add_child(tutorial_screen_instance)
-	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
-	pass
-
-func ui_options():
-	print("options menu open")
-	current_game_state = game_state.options
-	UiVars.hide_buttons("mainmenu_buttons")
-	UiVars.hide_buttons("mainmenu_continue_button")
-	UiVars.generate_button(optionsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "optionsmenu_buttons", mainmenu_button_z_index, self)
-	pass
-
-func ui_credits():
-	print("credits menu open")
-	current_game_state = game_state.credits
-	UiVars.hide_buttons("mainmenu_buttons")
-	UiVars.hide_buttons("mainmenu_continue_button")
-	credits_screen_instance = credits_screen.instance()
-	add_child(credits_screen_instance)
-	UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
 	pass
 
 func _input(event):
