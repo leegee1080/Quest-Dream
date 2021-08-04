@@ -4,6 +4,7 @@ class_name Necromancer
 
 const sprite_frame = 9
 const string_name = "Necromancer"
+const unlock_cost = 200
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

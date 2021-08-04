@@ -4,6 +4,7 @@ class_name Executioner
 
 const sprite_frame = 4
 const string_name = "Executioner"
+const unlock_cost = 120
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

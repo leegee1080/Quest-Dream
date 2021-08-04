@@ -4,6 +4,7 @@ class_name Valkyrie
 
 const sprite_frame = 1
 const string_name = "Valkyrie"
+const unlock_cost = 120
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

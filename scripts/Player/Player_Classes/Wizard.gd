@@ -4,6 +4,7 @@ class_name Wizard
 
 const sprite_frame = 7
 const string_name = "Wizard"
+const unlock_cost = 80
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

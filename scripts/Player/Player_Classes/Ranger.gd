@@ -2,8 +2,9 @@ extends Node2D
 
 class_name Ranger
 
-const sprite_frame = 9
+const sprite_frame = 2
 const string_name = "Ranger"
+const unlock_cost = 30
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

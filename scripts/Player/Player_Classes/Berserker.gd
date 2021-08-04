@@ -4,6 +4,7 @@ class_name Berserker
 
 const sprite_frame = 3
 const string_name = "Berserker"
+const unlock_cost = 120
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

@@ -4,6 +4,7 @@ class_name Traveler
 
 const sprite_frame = 8
 const string_name = "Traveler"
+const unlock_cost = 70
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",

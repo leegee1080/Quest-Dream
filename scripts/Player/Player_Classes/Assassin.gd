@@ -4,6 +4,7 @@ class_name Assassin
 
 const sprite_frame = 6
 const string_name = "Assassin"
+const unlock_cost = 100
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",
