@@ -23,6 +23,7 @@
    - [x] 5 levels in a set for each theme, forest -> mountains -> swamp -> grave -> castle
    - [x] each level has changing tiles (keys and doors, spikes that come up and go away)
    - [ ] play a happy animation for enemies and player at triggered points
+   - [ ] boss battle on each 5th stage. (i.e. boss flies around and blows stuff up/ replaces tiles, lands then the player can run to him for a hit)
 
 ### art todo:
 - [x] change outer walls to spikes
