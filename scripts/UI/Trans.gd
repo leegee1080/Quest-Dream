@@ -28,7 +28,6 @@ func _ready():
 
 func run_trans():
 	trans_step_timer.stop()
-	print("Start Trans Ani")
 	trans_sprite.position = Vector2(0,0)
 	trans_step_timer.start()
 	pass

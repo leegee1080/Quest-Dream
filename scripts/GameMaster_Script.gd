@@ -54,6 +54,7 @@ enum game_state{
 const class_select_screen = preload("res://nodes/ClassSelectScreen.tscn")
 var current_class_select_screen
 var unlocked_classes = [Player_Enums.player_types_enum.assassin] #this is an array of each enum of each playable class that is unlocked, if every enum is there every class is unlocked
+var money_ui_node
 
 func _ready():
 	trans_timer = Timer.new()
@@ -69,6 +70,10 @@ func _ready():
 	trans_middle_timer.connect("timeout", self, "middle_scene_trans")
 	
 	add_child(trans_screen)
+	
+	money_ui_node = UI_MainMenu_Player_Info.new(Vector2(142,281))
+	money_ui_node.name = "UI Money"
+	add_child(money_ui_node)
 	
 	#setup the chances to pull a certain tile for the queue
 	generate_tile_chance_arrays(Tile_Enums.tile_path_chances, GlobalVars.tile_path_type_chance_array)
@@ -92,6 +97,8 @@ func start_scene_trans():
 
 func middle_scene_trans():
 	UiVars.hide_buttons("mainmenu_buttons")
+	if money_ui_node != null:
+		money_ui_node.queue_free()
 	if current_stage != null:
 		current_stage.queue_free()
 		current_stage = null
@@ -99,6 +106,7 @@ func middle_scene_trans():
 		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
 	if next_game_state == game_state.newgame:
 		current_class_select_screen.queue_free()
+		UI_Vars.hide_buttons("class_select_back_button")
 		GlobalVars.player_consumable_amount = 0
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
@@ -110,6 +118,9 @@ func middle_scene_trans():
 		UiVars.hide_buttons("mainmenu_continue_button")
 		UI_Vars.hide_buttons("tutorial_button")
 		UI_Vars.hide_buttons("class_select_back_button")
+		money_ui_node = UI_MainMenu_Player_Info.new(Vector2(142,281))
+		money_ui_node.name = "UI Money"
+		add_child(money_ui_node)
 		if credits_screen_instance != null:
 			credits_screen_instance.queue_free()
 		if tutorial_screen_instance != null:

@@ -5,12 +5,12 @@
 
 
 ### prog todo:
-- [ ] Main menu
+- [x] Main menu
    - [x] credits menu
-   - [ ] character select on new game
-      - [ ] sprites of each hero on each button
-      - [ ] button is un-clickable when the hero is not unlocked yet
-      - [ ] clicking on a locked hero unlocks it and spends the correct money
+   - [x] character select on new game
+      - [x] sprites of each hero on each button
+      - [x] button is un-clickable when the hero is not unlocked yet
+      - [x] clicking on a locked hero unlocks it and spends the correct money
    - [x] how to play button
 - [ ] Sound system
    - [ ] as a class child of game controller
@@ -37,3 +37,4 @@
 - [x] fight animation
 - [ ] player animations (happy, pickup)
 - [ ] better tutorial
+- [ ] stage start countdown (shows stage number and theme and boss "final" stage)
