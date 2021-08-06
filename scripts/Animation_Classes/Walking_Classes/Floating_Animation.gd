@@ -1,14 +1,12 @@
 extends Node2D
 
-class_name Flip_Animation
+class_name Floating_Animation
 
 const walk_ani_pos_list = [
-	[Vector2(0,-2), 75],
-	[Vector2(0,-5), 100],
-	[Vector2(0,-6), 180],
-	[Vector2(0,-5), -100],
-	[Vector2(0,-2), -75],
-	[Vector2(0,0), 0]
+	[Vector2(0,-1), 0],
+	[Vector2(0,-2), 0],
+	[Vector2(0,-3), 0],
+	[Vector2(0,-2), 0]
 ]
 
 
@@ -16,7 +14,7 @@ var ani_sprite
 var walk_animation_step = 0
 var walk_animation_timer
 
-var walk_animation_speed = 0.05
+var walk_animation_speed = 0.1
 
 func _init(new_ani_sprite):
 	ani_sprite = new_ani_sprite
@@ -32,15 +30,14 @@ func _ready():
 func walk_cycle():
 	ani_sprite.position = walk_ani_pos_list[walk_animation_step][0]
 	ani_sprite.rotation = walk_ani_pos_list[walk_animation_step][1]
-	walk_animation_step += 1
-	if walk_animation_step == walk_ani_pos_list.size():
-		stop_animation()
+	walk_animation_step -= 1
+	if walk_animation_step < 0:
+		walk_animation_step = (walk_ani_pos_list.size()-1)
 
 func play_animation():
-	walk_animation_step = 0
 	walk_animation_timer.start()
 
 func stop_animation():
 	walk_animation_timer.stop()
-	ani_sprite.position = walk_ani_pos_list[5][0]
-	ani_sprite.rotation = walk_ani_pos_list[5][1]
+	ani_sprite.position = Vector2(0,0)
+	ani_sprite.rotation = 0

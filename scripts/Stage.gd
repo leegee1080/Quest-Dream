@@ -78,6 +78,10 @@ var player_room_screen_loc = Vector2(room_screen_loc[0]-40,room_screen_loc[1])
 var player_last_loc
 var content_room_screen_loc = Vector2(room_screen_loc[0]+20,room_screen_loc[1])
 
+#gamestate timer
+const gamestate_time = 2
+var gamestate_timer
+
 ##queue area vars
 const queue_length = 5
 var tile_queue = []
@@ -121,6 +125,14 @@ func _ready():
 	start_timer.set_one_shot(true)
 	start_timer.connect("timeout", self, "start_round")
 	start_timer.start()
+	
+	gamestate_timer = Timer.new()
+	gamestate_timer.name = "Gamestate Timer"
+	add_child(gamestate_timer)
+	gamestate_timer.add_to_group("timers")
+	gamestate_timer.set_wait_time(gamestate_time)
+	gamestate_timer.set_one_shot(true)
+	gamestate_timer.connect("timeout", self, "comunicate_winstate_gamemaster")
 	#setup the clickable play area and starting tiles
 	num_difficult_tiles = int(0.5 * GlobalVars.current_stage_number)
 	setup_coord_array()
@@ -245,7 +257,7 @@ func lose_round():
 		player.walk_toggle()
 	print("Round Lost")
 	current_game_state = game_state.lose
-	get_parent().lose_stage()
+	gamestate_timer.start()
 	pass
 
 func win_round():
@@ -253,7 +265,16 @@ func win_round():
 		player.walk_toggle()
 	print("Round Win")
 	current_game_state = game_state.win
-	get_parent().win_stage()
+	gamestate_timer.start()
+	pass
+
+func comunicate_winstate_gamemaster():
+	if current_game_state == game_state.win:
+		get_parent().win_stage()
+		return
+	if current_game_state == game_state.lose:
+		get_parent().lose_stage()
+		return
 	pass
 
 func _input(event):

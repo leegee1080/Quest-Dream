@@ -44,5 +44,5 @@ func play_animation():
 
 func stop_animation():
 	walk_animation_timer.stop()
-	ani_sprite.position = walk_ani_pos_list[0][0]
-	ani_sprite.rotation = walk_ani_pos_list[0][1]
+	ani_sprite.position = walk_ani_pos_list[3][0]
+	ani_sprite.rotation = walk_ani_pos_list[3][1]

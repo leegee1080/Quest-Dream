@@ -141,6 +141,7 @@ func walk_toggle():
 	elif !can_walk:
 		can_walk = true
 		walk_timer.start()
+		ani_dict.happy.stop_animation()
 		ani_dict.walk.play_animation()
 		return
 
@@ -167,6 +168,7 @@ func check_map_edge():
 	var y_test = [playarea[0][1],playarea[1][1]]
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
 		if check_dist_exit():
+			ani_dict.happy.play_animation()
 			get_parent().win_round()
 			return true
 		turn_around()

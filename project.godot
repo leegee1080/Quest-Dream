@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Animation_Classes/Happy_Classes/Flip_Animation.gd"
 }, {
+"base": "Node2D",
+"class": "Floating_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Walking_Classes/Floating_Animation.gd"
+}, {
 "base": "Reference",
 "class": "Goblin",
 "language": "GDScript",
@@ -153,6 +158,11 @@ _global_script_classes=[ {
 "class": "Hit_Color_Animation",
 "language": "GDScript",
 "path": "res://scripts/Animation_Classes/Hit_Classes/Hit_Color_Animation.gd"
+}, {
+"base": "Node2D",
+"class": "Hopping_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Walking_Classes/Hopping_Animation.gd"
 }, {
 "base": "Reference",
 "class": "Human_Jack",
@@ -424,11 +434,13 @@ _global_script_class_icons={
 "Eye": "",
 "Fight": "",
 "Flip_Animation": "",
+"Floating_Animation": "",
 "Goblin": "",
 "Goblin_Boss": "",
 "Goblin_Wizard": "",
 "Golem_God": "",
 "Hit_Color_Animation": "",
+"Hopping_Animation": "",
 "Human_Jack": "",
 "Human_King": "",
 "Human_Queen": "",
