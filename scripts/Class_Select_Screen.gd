@@ -28,7 +28,7 @@ func _ready():
 	pass
 
 func generate_buttons():
-	var temp_loc_dict = {"select": [Vector2(hero_select_starting_vect.x,hero_select_starting_vect.y), 18, 19]}
+#	var temp_loc_dict = {"select": [Vector2(hero_select_starting_vect.x,hero_select_starting_vect.y), 18, 19]}
 	UiVars.buttons_dict["hero_select_buttons"] = []
 	var index_x = 0
 	var index_y = 0
@@ -36,7 +36,7 @@ func generate_buttons():
 	var all_rtl_nodes = []
 	var all_sprite_nodes = []
 	for entry in Player_Enums.player_types_enum:
-		temp_loc_dict = {entry: [Vector2(hero_select_starting_vect.x + (hero_select_button_spacing.x * index_x),hero_select_starting_vect.y + (hero_select_button_spacing.y * index_y)), 0, 1]}
+#		temp_loc_dict = {entry: [Vector2(hero_select_starting_vect.x + (hero_select_button_spacing.x * index_x),hero_select_starting_vect.y + (hero_select_button_spacing.y * index_y)), 0, 1]}
 #		UiVars.generate_button(temp_loc_dict, "res://assets/visuals/button_hero.tres", Vector2(66,41), "hero_select_buttons", 0, self)
 		all_button_loc_dict[entry] =  [Vector2(hero_select_starting_vect.x + (hero_select_button_spacing.x * index_x),hero_select_starting_vect.y + (hero_select_button_spacing.y * index_y)), 0, 1]
 		var sprite = AnimatedSprite.new()

@@ -19,6 +19,7 @@ func pick_up():
 	#play sound
 	#play animation
 	print("money")
+	GlobalVars.player_node_ref.ani_dict.happy.play_animation()
 	GlobalVars.money_gained_this_run += 5
 	get_tree().call_group("UI_Player_Info", "update_money")
 	finish_pickup_animation()

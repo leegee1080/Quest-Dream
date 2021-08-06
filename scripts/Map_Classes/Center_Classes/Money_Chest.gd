@@ -25,6 +25,7 @@ func pick_up():
 		#play opening animation
 		GlobalVars.keys_gained_this_run -= 1
 		GlobalVars.money_gained_this_run += 10
+		GlobalVars.player_node_ref.ani_dict.happy.play_animation()
 		get_tree().call_group("UI_Player_Info", "update_keys")
 		get_tree().call_group("UI_Player_Info", "update_money")
 		finish_pickup_animation()

@@ -124,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Map_Classes/Fight.gd"
 }, {
+"base": "Node2D",
+"class": "Flip_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Happy_Classes/Flip_Animation.gd"
+}, {
 "base": "Reference",
 "class": "Goblin",
 "language": "GDScript",
@@ -345,6 +350,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Player/Player_Classes/Traveler.gd"
 }, {
 "base": "Node2D",
+"class": "TwoHop_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Happy_Classes/TwoHop_Animation.gd"
+}, {
+"base": "Node2D",
 "class": "UI_MainMenu_Player_Info",
 "language": "GDScript",
 "path": "res://scripts/UI/UI_MainMenu_Player_Info.gd"
@@ -413,6 +423,7 @@ _global_script_class_icons={
 "Executioner": "",
 "Eye": "",
 "Fight": "",
+"Flip_Animation": "",
 "Goblin": "",
 "Goblin_Boss": "",
 "Goblin_Wizard": "",
@@ -457,6 +468,7 @@ _global_script_class_icons={
 "Tile_Enums": "",
 "Trans": "",
 "Traveler": "",
+"TwoHop_Animation": "",
 "UI_MainMenu_Player_Info": "",
 "UI_Player_Info": "",
 "UI_Vars": "",

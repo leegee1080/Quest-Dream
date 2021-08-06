@@ -7,7 +7,7 @@ const special_animations_dict = {
 	"walk": "wiggle_in_place",
 	"death": "death_flip_red",
 	"injure": "hit_color_change",
-	"happy": null
+	"happy": "happy_flip"
 }
 
 #map vars

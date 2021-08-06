@@ -70,7 +70,7 @@ const premade_tile_center_chances = [
 	[10, center_type_enum.moneychest],
 	[10, center_type_enum.reverse],
 	[2, center_type_enum.kill],
-	[500, center_type_enum.fight],
+	[5, center_type_enum.fight],
 	[7, center_type_enum.switch],
 	[20, center_type_enum.impass],
 	[5, center_type_enum.key],
