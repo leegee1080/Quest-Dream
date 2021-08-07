@@ -12,15 +12,14 @@ texture = ExtResource( 2 )
 centered = false
 
 [node name="Title" type="Label" parent="."]
-margin_left = 76.927
+margin_left = 77.9865
 margin_top = 88.6896
-margin_right = 576.927
+margin_right = 577.986
 margin_bottom = 468.69
 rect_scale = Vector2( 0.3, 0.3 )
 custom_fonts/font = ExtResource( 3 )
 text = "Quest
 Dream"
-align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false

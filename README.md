@@ -22,7 +22,7 @@
 - [ ] Macro Game
    - [x] 5 levels in a set for each theme, forest -> mountains -> swamp -> grave -> castle
    - [x] each level has changing tiles (keys and doors, spikes that come up and go away)
-   - [ ] play a happy animation for enemies and player at triggered points
+   - [x] play a happy animation for enemies and player at triggered points
    - [ ] boss battle on each 5th stage. (i.e. boss flies around and blows stuff up/ replaces tiles, lands then the player can run to him for a hit)
 
 ### art todo:
@@ -35,6 +35,9 @@
    - [ ] music (game (per theme), menu)
    - [ ] in game sounds (fight sounds, walk sounds, pickup sounds)
 - [x] fight animation
-- [ ] player animations (happy, pickup)
+- [ ] more animations (happy, pickup)
+   - [ ] at least 5 of each type
+- [ ] improve variety of heros
+   - [ ] each one should be different in playstyle
 - [ ] better tutorial
-- [ ] stage start countdown (shows stage number and theme and boss "final" stage)
+- [x] stage start countdown (shows stage number and theme and boss "final" stage)

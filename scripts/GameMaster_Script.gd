@@ -5,12 +5,14 @@ var player_type_class = Assassin
 var chosen_level_theme = Tile_Enums.tile_themes_enum.forest
 
 var current_stage: Node2D
+var is_boss_stage = false
 
 #ui vars
 var trans_timer = Timer.new()
 var trans_total_time = 1.0
 var trans_middle_timer = Timer.new()
 var trans_screen = Trans.new()
+var msg_node = Message.new()
 const mainmenu_button_z_index = 15
 const mainmenu_button_loc_dict = {
 	#fill with the locations to instance the button objects
@@ -70,6 +72,7 @@ func _ready():
 	trans_middle_timer.connect("timeout", self, "middle_scene_trans")
 	
 	add_child(trans_screen)
+	add_child(msg_node)
 	
 	money_ui_node = UI_MainMenu_Player_Info.new(Vector2(142,281))
 	money_ui_node.name = "UI Money"
@@ -102,8 +105,15 @@ func middle_scene_trans():
 	if current_stage != null:
 		current_stage.queue_free()
 		current_stage = null
+	
+	if GlobalVars.current_stage_number + 1 in GlobalVars.stage_order:
+		is_boss_stage = true
+	else:
+		is_boss_stage = false
+	
 	if GlobalVars.current_stage_number in GlobalVars.stage_order:
 		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
+		
 	if next_game_state == game_state.newgame:
 		current_class_select_screen.queue_free()
 		UI_Vars.hide_buttons("class_select_back_button")
@@ -232,9 +242,10 @@ func _input(event):
 						win_stage()
 					return
 				if event.scancode == KEY_SPACE:
-					print(current_game_state)
-					print(next_game_state)
-					print(UiVars.buttons_dict)
+					msg_node.run_msg(str(current_game_state))
+#					print(current_game_state)
+#					print(next_game_state)
+#					print(UiVars.buttons_dict)
 					return
 
 func create_stage(passed_theme):

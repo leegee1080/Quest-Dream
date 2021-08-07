@@ -147,6 +147,7 @@ func walk_toggle():
 
 func walk():
 	if is_dead:
+		ani_dict.walk.stop_animation()
 		return
 	translate(direction*map_move_speed)
 	walk_interval_count -= map_move_speed
@@ -256,15 +257,15 @@ func take_hit(damage):
 		injure_timer.start()
 		pass
 	get_tree().call_group("UI_Player_Info", "update_consumable")
-	ani_dict.injure.play_animation()
 	GlobalVars.player_consumable_amount -= damage
 	check_for_death()
+	ani_dict.injure.play_animation()
 	print("Player health: "+ str(GlobalVars.player_consumable_amount))
 
 func check_for_death():
 	if GlobalVars.player_consumable_amount <= 0:
+		is_dead = true
 		print("player dead")
 		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
-		is_dead = true
 	pass

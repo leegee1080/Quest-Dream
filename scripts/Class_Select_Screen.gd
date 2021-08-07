@@ -86,6 +86,7 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 		get_parent().ui_func("newgame", null)
 	else:
 		if GlobalVars.money_gained_this_run >= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost:
+			get_parent().msg_node.run_msg("Hero Unlock!")
 			get_parent().unlocked_classes.append(Player_Enums.player_types_string_dict.get(new_name)[1])
 			GlobalVars.money_gained_this_run -= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost
 			money_ui_node.update_money()

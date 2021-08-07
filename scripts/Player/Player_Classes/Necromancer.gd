@@ -16,7 +16,7 @@ const special_animations_dict = {
 #ingame vars
 var t_turn_right = false
 var starting_attack_power = 1
-var starting_consumable_amt = 100
+var starting_consumable_amt = 4
 var consumable_class = Consume_Hearts
 
 #action vars

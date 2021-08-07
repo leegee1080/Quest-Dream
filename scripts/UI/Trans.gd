@@ -17,7 +17,7 @@ func _ready():
 	trans_sprite.texture = trans_image
 	trans_sprite.offset = Vector2(304,0)
 	add_child(trans_sprite)
-	trans_sprite.z_index = 100
+	trans_sprite.z_index = 150
 	
 	trans_step_timer = Timer.new()
 	add_child(trans_step_timer)

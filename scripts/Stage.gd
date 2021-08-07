@@ -8,6 +8,9 @@ var is_fast_forwarded = false
 var premade_tile_pool
 
 var round_start_time = 5.0
+var start_countdown = 4
+var start_countdown_timer
+
 var num_difficult_tiles: int = 2
 
 var current_game_state
@@ -98,6 +101,10 @@ func _init(theme):
 	pass
 
 func _ready():
+	if get_parent().is_boss_stage:
+		get_parent().msg_node.run_msg("Boss Stage!")
+	else:
+		get_parent().msg_node.run_msg("Stage " + str(GlobalVars.current_stage_number))
 	current_game_state = game_state.setup
 	var bg_sprite = Sprite.new()
 	bg_sprite.centered = false
@@ -125,6 +132,15 @@ func _ready():
 	start_timer.set_one_shot(true)
 	start_timer.connect("timeout", self, "start_round")
 	start_timer.start()
+	
+	start_countdown_timer = Timer.new()
+	start_countdown_timer.name = "Countdown Timer"
+	add_child(start_countdown_timer)
+	start_countdown_timer.add_to_group("timers")
+	start_countdown_timer.set_wait_time(1.5)
+	start_countdown_timer.set_one_shot(true)
+	start_countdown_timer.connect("timeout", self, "round_start_countdown")
+	start_countdown_timer.start()
 	
 	gamestate_timer = Timer.new()
 	gamestate_timer.name = "Gamestate Timer"
@@ -247,12 +263,23 @@ func generate_premade_center_tile_pool():
 	premade_tile_pool = pool_array
 	pass
 
+func round_start_countdown():
+	get_parent().msg_node.run_msg("Go!")
+#	if start_countdown <= 0:
+#		get_parent().msg_node.run_msg("Go!")
+#		start_countdown_timer.stop()
+#	else:
+#		get_parent().msg_node.run_msg(str(start_countdown))
+#	start_countdown -= 1
+#	pass
+
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run
 	player.walk_toggle()
 	pass
 
 func lose_round():
+	get_parent().msg_node.run_msg("Too Bad!")
 	if current_game_state == game_state.run:
 		player.walk_toggle()
 	print("Round Lost")
@@ -261,6 +288,7 @@ func lose_round():
 	pass
 
 func win_round():
+	get_parent().msg_node.run_msg("Great Job!")
 	if current_game_state == game_state.run:
 		player.walk_toggle()
 	print("Round Win")
