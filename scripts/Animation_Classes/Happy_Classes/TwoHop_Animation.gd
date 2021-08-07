@@ -18,7 +18,7 @@ var ani_sprite
 var walk_animation_step = 0
 var walk_animation_timer
 
-var walk_animation_speed = 0.1
+var walk_animation_speed = 0.07
 
 func _init(new_ani_sprite):
 	ani_sprite = new_ani_sprite

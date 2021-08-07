@@ -5,7 +5,7 @@ class_name Safe_Reverse
 var sound
 
 var ani_sprite
-var item_frame = 81
+var item_frame = 90
 const can_pick_up = true
 var changes_direction = true
 

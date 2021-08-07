@@ -7,10 +7,10 @@ const string_name = "Assassin"
 const unlock_cost = 100
 
 const special_animations_dict = {
-	"walk": "hop_walk",
+	"walk": "wiggle_in_place",
 	"death": "death_flip_red",
 	"injure": "hit_color_change",
-	"happy": "happy_twohop"
+	"happy": "happy_flip"
 }
 
 #ingame vars

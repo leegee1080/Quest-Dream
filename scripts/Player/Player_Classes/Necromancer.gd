@@ -7,10 +7,10 @@ const string_name = "Necromancer"
 const unlock_cost = 200
 
 const special_animations_dict = {
-	"walk": "wiggle_in_place",
+	"walk": "float_walk",
 	"death": "death_flip_red",
 	"injure": "hit_color_change",
-	"happy": null
+	"happy": "happy_twohop"
 }
 
 #ingame vars

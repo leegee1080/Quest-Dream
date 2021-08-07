@@ -53,7 +53,7 @@ enum game_state{
 #player progression data
 const class_select_screen = preload("res://nodes/ClassSelectScreen.tscn")
 var current_class_select_screen
-var unlocked_classes = [Player_Enums.player_types_enum.assassin] #this is an array of each enum of each playable class that is unlocked, if every enum is there every class is unlocked
+var unlocked_classes = [Player_Enums.player_types_enum.traveler] #this is an array of each enum of each playable class that is unlocked, if every enum is there every class is unlocked
 var money_ui_node
 
 func _ready():
