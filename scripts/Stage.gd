@@ -64,6 +64,7 @@ var ingame_tilegroup_Node = Node2D.new()
 var can_player_place_tiles
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
 var clickable_coords_list = []
+var clickable_area_was_clicked = false
 var potential_terminal_locations = []
 var start_tile
 var end_tile
@@ -307,9 +308,13 @@ func comunicate_winstate_gamemaster():
 
 func _input(event):
 	if event is InputEventMouseButton: #when the user clicks
-		if UiVars.clicked == true:
+#		if UiVars.clicked == true:
+#			return
+		if clickable_area_was_clicked == true:
+			clickable_area_was_clicked = false
 			return
 		if can_player_place_tiles and (current_game_state == game_state.run or current_game_state == game_state.setup):
+			clickable_area_was_clicked = true
 			for loc in clickable_coords_list:
 				var x_test = loc[0]
 				var y_test = loc[1]

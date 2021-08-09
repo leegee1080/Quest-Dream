@@ -36,7 +36,8 @@ func _ready():
 func _input(event):
 	if clickable:
 		if event is InputEventMouseButton:
-			if UiVars.clicked == true and was_clicked:
+#			if UiVars.clicked == true and was_clicked:
+			if was_clicked:
 				ani_sprite.set_frame(neutral_frame)
 				click_btn()
 				return

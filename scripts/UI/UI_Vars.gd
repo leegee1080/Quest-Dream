@@ -2,18 +2,31 @@ extends Node
 
 class_name UI_Vars
 
-var clicked = false
+#var clicked = false
+#var misclick = false
 var buttons_dict = {}
 var is_trans = false
 
-func _input(event):
-	if event is InputEventMouseButton:
-		if clicked:
-			clicked = false
-			return
-		else:
-			clicked = true
-			return
+#func _input(event):
+#	if event is InputEventMouseButton:
+#		print("click")
+#		if clicked:
+#			print("unclock")
+#			clicked = false
+#			click_reset_check()
+#			return
+#		else:
+#			print("clock")
+#			clicked = true
+#			click_reset_check()
+#			return
+
+#func click_reset_check():
+#	if clicked == true:
+#		misclick = true
+#	if clicked == false:
+#		misclick = false
+#	pass
 
 static func generate_button(button_loc_dict, sprite_frames_file_loc, button_size, button_container_name, new_z_index, button_parent_node):
 	var temp_button_list = []
