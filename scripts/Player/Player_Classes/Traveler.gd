@@ -10,7 +10,7 @@ const special_animations_dict = {
 	"walk": "hop_walk",
 	"death": "death_flip_red",
 	"injure": "hit_color_change",
-	"happy": "happy_twohop"
+	"happy": "happy_sidehop"
 }
 
 #ingame vars

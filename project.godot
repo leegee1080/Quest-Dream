@@ -304,6 +304,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Map_Classes/Center_Classes/Safe_Switch.gd"
 }, {
+"base": "Node2D",
+"class": "Sidehop_Animation",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Happy_Classes/Sidehop_Animation.gd"
+}, {
 "base": "Reference",
 "class": "Slime_Big",
 "language": "GDScript",
@@ -474,6 +479,7 @@ _global_script_class_icons={
 "Safe_Keygate": "",
 "Safe_Reverse": "",
 "Safe_Switch": "",
+"Sidehop_Animation": "",
 "Slime_Big": "",
 "Slime_Boss": "",
 "Slime_Tiny": "",

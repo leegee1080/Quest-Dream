@@ -7,5 +7,6 @@ const ani_dict = {#dictionary of all the animation classes
 	"happy_flip": Flip_Animation,
 	"happy_twohop": TwoHop_Animation,
 	"hop_walk": Hopping_Animation,
-	"float_walk": Floating_Animation
+	"float_walk": Floating_Animation,
+	"happy_sidehop": Sidehop_Animation
 }
