@@ -14,12 +14,13 @@ const special_animations_dict = {
 }
 
 #ingame vars
-var t_turn_right = true
-var starting_attack_power = 1
-var starting_consumable_amt = 10
-var consumable_class = Consume_Hearts
+const t_turn_right = true
+const starting_attack_power = 1
+const starting_consumable_amt = 10
+const speed = 0.04
+const consumable_class = Consume_Hearts
 
 #action vars
-var action_cost = 1
-var tile_direction = Tile_Enums.tile_directions_enum.cross
-var tile_center = Tile_Enums.center_type_enum.none
+const action_cost = 1
+const tile_direction = Tile_Enums.tile_directions_enum.cross
+const tile_center = Tile_Enums.center_type_enum.none

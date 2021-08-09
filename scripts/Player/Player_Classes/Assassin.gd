@@ -20,6 +20,6 @@ var starting_consumable_amt = 5
 var consumable_class = Consume_Hearts
 
 #action vars
-var action_cost = 1
-var tile_direction = Tile_Enums.tile_directions_enum.cross
+var action_cost = 2
+var tile_direction = Tile_Enums.tile_directions_enum.elbow
 var tile_center = Tile_Enums.center_type_enum.none

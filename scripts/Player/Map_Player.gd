@@ -40,7 +40,7 @@ var direction: Vector2 = Vector2(0,0)
 var map_move_speed = .3
 const walk_interval = 16
 var walk_interval_count = walk_interval
-var walk_timer_wait_time = 0.04
+var walk_timer_wait_time = GlobalVars.player_type_class_storage.speed
 var walk_timer
 var injure_timer
 const center_interval = 3
@@ -56,7 +56,7 @@ var map_action_queued = false
 func _ready():
 	add_to_group("fast_forward_grp")
 	if GlobalVars.main_node_ref.is_fast_forwarded:
-		walk_timer_wait_time = 0.04
+		walk_timer_wait_time = GlobalVars.player_type_class_storage.speed / 10
 	
 	type_class = GlobalVars.player_type_class_storage
 	walk_timer = Timer.new()
@@ -125,7 +125,7 @@ func change_dir(new_dir):
 	return
 
 func fast_forward():
-	walk_timer.set_wait_time(0.004)
+	walk_timer.set_wait_time(GlobalVars.player_type_class_storage.speed / 10)
 	pass
 
 func walk_toggle():
