@@ -14,13 +14,19 @@ const special_animations_dict = {
 }
 
 #ingame vars
-const t_turn_right = true
-const starting_attack_power = 1
-const starting_consumable_amt = 10
-const speed = 0.04
+const t_turn_right = false
+const starting_attack_power = 5
+const starting_consumable_amt = 5
+const speed = 0.02
 const consumable_class = Consume_Hearts
+
+#combat vars
+const fight_class = null
+const minion_invis = true
+
+#gimmick
+const gimmick_class = null
 
 #action vars
 const action_cost = 1
-const tile_direction = Tile_Enums.tile_directions_enum.cross
-const tile_center = Tile_Enums.center_type_enum.none
+const action_class = Action_Turn_Around

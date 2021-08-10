@@ -20,7 +20,19 @@ const starting_consumable_amt = 10
 const speed = 0.04
 const consumable_class = Consume_Hearts
 
+#combat vars
+const fight_class = null
+const minion_invis = true
+
+#gimmick
+const gimmick_class = null
+
 #action vars
 const action_cost = 1
+const action_class = Action_Place_Tile
 const tile_direction = Tile_Enums.tile_directions_enum.cross
 const tile_center = Tile_Enums.center_type_enum.none
+
+func action():
+	Action_Place_Tile.action(tile_direction, tile_center)
+	pass

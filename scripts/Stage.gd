@@ -265,14 +265,14 @@ func generate_premade_center_tile_pool():
 	pass
 
 func round_start_countdown():
-	get_parent().msg_node.run_msg("Go!")
+#	get_parent().msg_node.run_msg("Go!")
 #	if start_countdown <= 0:
 #		get_parent().msg_node.run_msg("Go!")
 #		start_countdown_timer.stop()
 #	else:
 #		get_parent().msg_node.run_msg(str(start_countdown))
 #	start_countdown -= 1
-#	pass
+	pass
 
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run

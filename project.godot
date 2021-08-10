@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Action_Place_Tile",
+"language": "GDScript",
+"path": "res://scripts/Player/Actions/Action_Place_Tile.gd"
+}, {
+"base": "Node",
+"class": "Action_Turn_Around",
+"language": "GDScript",
+"path": "res://scripts/Player/Actions/Action_Turn_Around.gd"
+}, {
 "base": "Reference",
 "class": "Alien_God",
 "language": "GDScript",
@@ -420,6 +430,8 @@ _global_script_classes=[ {
 "path": "res://scripts/Player/Player_Classes/Wizard.gd"
 } ]
 _global_script_class_icons={
+"Action_Place_Tile": "",
+"Action_Turn_Around": "",
 "Alien_God": "",
 "Animation_Enums": "",
 "Assassin": "",
