@@ -34,10 +34,10 @@ func _ready():
 	rtl_node_money.rect_position = Vector2(money_sprite_pos.x + 10, money_sprite_pos.y - 10)
 	rtl_node_money.rect_scale = Vector2(text_scale,text_scale)
 	rtl_node_money.rect_size = rect_size
-	rtl_node_money.text = str(GlobalVars.money_gained_this_run)
+	rtl_node_money.text = str(GlobalVars.money_gained_total)
 	rtl_node_money.add_font_override("font", load(font))
 	pass
 
 func update_money():
 	#play money sound
-	rtl_node_money.text = str(GlobalVars.money_gained_this_run)
+	rtl_node_money.text = str(GlobalVars.money_gained_total)

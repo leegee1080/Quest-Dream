@@ -280,7 +280,7 @@ func start_round(): #just for the first time start, can add more here if needed
 	pass
 
 func lose_round():
-	get_parent().msg_node.run_msg("Too Bad!")
+	get_parent().msg_node.run_msg("You Died!")
 	if current_game_state == game_state.run:
 		player.walk_toggle()
 	print("Round Lost")
@@ -289,7 +289,12 @@ func lose_round():
 	pass
 
 func win_round():
-	get_parent().msg_node.run_msg("Great Job!")
+	if get_parent().is_boss_stage:
+		get_parent().msg_node.run_msg("Boss Killed!")
+		get_parent().msg_node_subtext.run_msg("money: Banked!")
+	else:
+		get_parent().msg_node.run_msg("Round Complete!")
+		get_parent().msg_node_subtext.run_msg("Keep Going!")
 	if current_game_state == game_state.run:
 		player.walk_toggle()
 	print("Round Win")

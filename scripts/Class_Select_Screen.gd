@@ -22,7 +22,7 @@ func _ready():
 	UiVars.generate_button(hero_select_back_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "class_select_back_button", 15, get_parent())
 	generate_buttons()
 	
-	money_ui_node = UI_MainMenu_Player_Info.new(Vector2(142,221))
+	money_ui_node = UI_MainMenu_Player_Info.new(Vector2(132,221))
 	money_ui_node.name = "UI Money"
 	add_child(money_ui_node)
 	pass
@@ -85,10 +85,10 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 		get_parent().player_type_class = Player_Enums.player_types_string_dict.get(new_name)[0]
 		get_parent().ui_func("newgame", null)
 	else:
-		if GlobalVars.money_gained_this_run >= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost:
+		if GlobalVars.money_gained_total >= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost:
 			get_parent().msg_node.run_msg("Hero Unlock!")
 			get_parent().unlocked_classes.append(Player_Enums.player_types_string_dict.get(new_name)[1])
-			GlobalVars.money_gained_this_run -= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost
+			GlobalVars.money_gained_total -= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost
 			money_ui_node.update_money()
 			UiVars.hide_buttons("hero_select_buttons")
 			generate_buttons()

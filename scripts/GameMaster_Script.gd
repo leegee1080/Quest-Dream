@@ -6,13 +6,15 @@ var chosen_level_theme = Tile_Enums.tile_themes_enum.forest
 
 var current_stage: Node2D
 var is_boss_stage = false
+var cumulative_money = 0 #money earned this round to be subtracted from the global boss money value
 
 #ui vars
 var trans_timer = Timer.new()
 var trans_total_time = 1.0
 var trans_middle_timer = Timer.new()
 var trans_screen = Trans.new()
-var msg_node = Message.new()
+var msg_node = Message.new(10, 0.11)
+var msg_node_subtext = Message.new(10, 0.14)
 const mainmenu_button_z_index = 15
 const mainmenu_button_loc_dict = {
 	#fill with the locations to instance the button objects
@@ -72,9 +74,12 @@ func _ready():
 	trans_middle_timer.connect("timeout", self, "middle_scene_trans")
 	
 	add_child(trans_screen)
+	msg_node.name ="ScreenMsg"
+	msg_node_subtext.name = "ScreenMsgSubtext"
 	add_child(msg_node)
+	add_child(msg_node_subtext)
 	
-	money_ui_node = UI_MainMenu_Player_Info.new(Vector2(142,281))
+	money_ui_node = UI_MainMenu_Player_Info.new(Vector2(95,281))
 	money_ui_node.name = "UI Money"
 	add_child(money_ui_node)
 	
@@ -112,12 +117,15 @@ func middle_scene_trans():
 		is_boss_stage = false
 	
 	if GlobalVars.current_stage_number in GlobalVars.stage_order:
+		GlobalVars.money_gained_total += GlobalVars.money_gained_this_run - cumulative_money
 		chosen_level_theme = GlobalVars.stage_order[GlobalVars.current_stage_number]
-		
+		cumulative_money = GlobalVars.money_gained_this_run
+	
 	if next_game_state == game_state.newgame:
 		current_class_select_screen.queue_free()
 		UI_Vars.hide_buttons("class_select_back_button")
 		GlobalVars.player_consumable_amount = 0
+		GlobalVars.money_gained_this_run = 0
 		create_stage(chosen_level_theme)
 		add_child(current_stage)
 		current_game_state = game_state.stage
@@ -128,7 +136,7 @@ func middle_scene_trans():
 		UiVars.hide_buttons("mainmenu_continue_button")
 		UI_Vars.hide_buttons("tutorial_button")
 		UI_Vars.hide_buttons("class_select_back_button")
-		money_ui_node = UI_MainMenu_Player_Info.new(Vector2(142,281))
+		money_ui_node = UI_MainMenu_Player_Info.new(Vector2(95,281))
 		money_ui_node.name = "UI Money"
 		add_child(money_ui_node)
 		if credits_screen_instance != null:

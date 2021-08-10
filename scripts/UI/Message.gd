@@ -10,10 +10,10 @@ var msg_step_timer
 const msg_step_time = 0.01
 
 var midstop_timer
-const midstop_time = 1
+const midstop_time = 1.5
 
-const starting_scroll_speed = 10
-const starting_speed_mod = 0.12
+var starting_scroll_speed = 10
+var starting_speed_mod = 0.12
 var scroll_speed = starting_scroll_speed
 var speed_mod = starting_speed_mod
 
@@ -23,8 +23,12 @@ const rect_size = Vector2(1650,300)
 const font = "res://assets/fonts/pixel_dyna_font.tres"
 const text_scale = 0.15
 
+func _init(new_scroll_speed, new_speed_mod):
+	starting_scroll_speed = new_scroll_speed
+	starting_speed_mod = new_speed_mod
+	pass
+
 func _ready():
-	name = "ScreenMsg"
 	z_index = 100
 	
 	position = Vector2(0,700)
