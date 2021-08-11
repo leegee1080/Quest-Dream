@@ -36,10 +36,10 @@ func _ready():
 func _input(event):
 	if clickable:
 		if event is InputEventMouseButton:
-#			if UiVars.clicked == true and was_clicked:
 			if was_clicked:
 				ani_sprite.set_frame(neutral_frame)
 				click_btn()
+				was_clicked = false
 				return
 			was_clicked = false
 			if event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:

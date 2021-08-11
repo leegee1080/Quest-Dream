@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Fight
+class_name Normal_Fight
 
 #generic room vars
 var room_screen_loc #the location the room will appear on the player's screen

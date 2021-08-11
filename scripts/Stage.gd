@@ -38,26 +38,10 @@ const menu_button_loc_dict = {
 	"quit": [Vector2(119,301), 6, 7],
 	"fastforward": [Vector2(189,301), 2, 3]
 }
-#const room_button_z_index = 5
-#const room_button_loc_dict = {
-#	#fill with the locations to instance the button objects
-#	"back": [Vector2(111,207), 0, 1]
-#}
+
 var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
 var pause_menu
 const pause_menu_loc = Vector2(152,273)
-##battle ui vars
-#const battle_button_z_index = 15
-#const battle_button_loc_dict = {
-#	#fill with the locations to instance the button objects
-#	"up": [Vector2(20,251), 16, 17],
-#	"down": [Vector2(20,341), 18, 19],
-#	"attack": [Vector2(191,251), 20, 21]
-#}
-#const menu_battle_button_loc_dict = {
-#	#fill with the locations to instance the button objects
-#	"menu": [Vector2(191,347), 4, 5]
-#}
 
 ##play area vars
 var ingame_tilegroup_Node = Node2D.new()
@@ -241,19 +225,7 @@ func ui_menu():
 
 func ui_action():
 	if GlobalVars.player_consumable_amount >= (GlobalVars.player_type_class_storage.action_cost + 1):
-		GlobalVars.player_node_ref.map_action_queued = true
-
-#func ui_touch_dodge_up():
-#	GlobalVars.room_player_node_ref.player_command("dodge_up")
-#	pass
-#
-#func ui_touch_dodge_down():
-#	GlobalVars.room_player_node_ref.player_command("dodge_down")
-#	pass
-#
-#func ui_touch_attack():
-#	GlobalVars.room_player_node_ref.player_command("attack")
-#	pass
+		GlobalVars.player_node_ref.map_action()
 
 func generate_premade_center_tile_pool():
 	var pool_array = []
@@ -336,28 +308,6 @@ func _input(event):
 						tile_dict[loc[2]].name = loc[2]
 						slide_queue()
 						return
-
-#func open_boss_room():
-#	player.walk_toggle()
-#	can_player_place_tiles = false
-#	room_screen = Room.new(Tile_Enums.center_type_enum.boss, chosen_level_theme, room_screen_loc)
-#
-#	var room_bg = AnimatedSprite.new()
-#	room_bg.centered = false
-#	room_bg.set_sprite_frames(load("res://assets/visuals/scene_trans_frames.tres"))
-#	add_child(room_bg)
-#	room_bg.set_frame(6)
-#
-#	room_screen.name = "boss battle"
-#
-#	UI_Vars.hide_buttons("main")
-#	UI_Vars.generate_button(menu_battle_button_loc_dict, "res://assets/visuals/button_frames.tres", Vector2(66,137), "main", main_button_z_index, self)
-#	UI_Vars.generate_button(battle_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "battle", battle_button_z_index, self)
-#	add_child(room_screen)
-#	current_game_state = game_state.boss
-##play animation for opening room.
-##add deco using deco tiles based on room theme
-#	return
 
 func delete_centertile():
 	var current_tile = player.current_tile

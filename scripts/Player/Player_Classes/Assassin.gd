@@ -21,8 +21,7 @@ const speed = 0.02
 const consumable_class = Consume_Hearts
 
 #combat vars
-const fight_class = null
-const minion_invis = true
+const fight_class = Normal_Fight
 
 #gimmick
 const gimmick_class = null
