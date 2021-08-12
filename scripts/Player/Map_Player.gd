@@ -37,6 +37,8 @@ var can_walk = false
 var direction: Vector2 = Vector2(0,0)
 
 var map_move_speed = .3
+var turn_around_damage = 1
+var outer_wall_damage = 1
 const walk_interval = 16
 var walk_interval_count = walk_interval
 var walk_timer_wait_time = GlobalVars.player_type_class_storage.speed
@@ -58,6 +60,9 @@ func _ready():
 		walk_timer_wait_time = GlobalVars.player_type_class_storage.speed / 10
 	
 	type_class = GlobalVars.player_type_class_storage
+	turn_around_damage = type_class.gimmick_class.bool_dict["turn_around_damage"]
+	outer_wall_damage = type_class.gimmick_class.bool_dict["outer_wall_damage"]
+	
 	walk_timer = Timer.new()
 	add_child(walk_timer)
 	walk_timer.add_to_group("timers")
@@ -178,7 +183,7 @@ func check_map_edge():
 			ani_dict.happy.play_animation()
 			get_parent().win_round()
 			return true
-		turn_around()
+		turn_around(outer_wall_damage)
 		return true
 	return false
 
@@ -203,11 +208,11 @@ func check_tile():
 					if current_tile_dict.get(loc[2]) != null:
 						if current_tile_dict.get(loc[2]).is_impass_tile == true and can_check_next_tile:
 							can_check_next_tile = false
-							turn_around()
+							turn_around(turn_around_damage)
 							return
 						if current_tile_dict.get(loc[2]).rot_value_changer(direction, GlobalVars.player_type_class_storage.t_turn_right) == null and can_check_next_tile:
 							can_check_next_tile = false
-							turn_around()
+							turn_around(turn_around_damage)
 							return
 						if current_tile_dict.get(loc[2]).is_locked != true:
 							current_tile_dict.get(loc[2]).lock_tile()
@@ -215,7 +220,7 @@ func check_tile():
 						return
 					elif current_tile_dict.get(loc[2]) == null and can_check_next_tile:
 						can_check_next_tile = false
-						turn_around()
+						turn_around(turn_around_damage)
 						return
 	return
 
@@ -240,10 +245,12 @@ func check_center_tile():
 		return
 	return
 
-func turn_around():
+func turn_around(penalty):
+	if penalty == null:
+		penalty = 0
 	direction = (direction *-1) #turn the player around
 	center_interval_count = 2
-	take_hit(1)
+	take_hit(penalty)
 	return
 
 func take_hit(damage):
@@ -253,8 +260,9 @@ func take_hit(damage):
 		walk_toggle()
 		injure_timer.start()
 		pass
-	GlobalVars.player_consumable_amount -= damage
-	get_tree().call_group("UI_Player_Info", "update_consumable")
+	GlobalVars.change_consume(damage * -1)
+#	GlobalVars.player_consumable_amount -= damage
+#	get_tree().call_group("UI_Player_Info", "update_consumable")
 	check_for_death()
 	ani_dict.injure.play_animation()
 	print("Player health: "+ str(GlobalVars.player_consumable_amount))

@@ -20,14 +20,17 @@ func pick_up():
 	#play sound
 	#play animation
 	print("chest")
-	if GlobalVars.keys_gained_this_run >= 1:
+	if GlobalVars.keys_gained_this_run >= 1 or GlobalVars.player_node_ref.type_class.gimmick_class.bool_dict["chests_locked"] == false:
 		#play opening sound
 		#play opening animation
-		GlobalVars.keys_gained_this_run -= 1
-		GlobalVars.money_gained_this_run += 10
+		if GlobalVars.player_node_ref.type_class.gimmick_class.bool_dict["chests_locked"] == true:
+			GlobalVars.change_keys(-1)
+#			GlobalVars.keys_gained_this_run -= 1
+#		GlobalVars.money_gained_this_run += 10
+		GlobalVars.change_money(10)
 		GlobalVars.player_node_ref.ani_dict.happy.play_animation()
-		get_tree().call_group("UI_Player_Info", "update_keys")
-		get_tree().call_group("UI_Player_Info", "update_money")
+#		get_tree().call_group("UI_Player_Info", "update_keys")
+#		get_tree().call_group("UI_Player_Info", "update_money")
 		finish_pickup_animation()
 		return changes_direction
 

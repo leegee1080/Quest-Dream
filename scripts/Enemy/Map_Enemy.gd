@@ -214,6 +214,7 @@ func take_hit(damage):
 
 func check_for_death():
 	if health <= 0:
+		GlobalVars.player_type_class_storage.kills += 1
 		print("enemy dead")
 		ani_dict.death.play_animation()
 		is_dead = true

@@ -18,10 +18,11 @@ func _ready():
 
 func pick_up():
 	print("gate")
-	if GlobalVars.keys_gained_this_run <= 0:
-		GlobalVars.player_node_ref.direction = (GlobalVars.player_node_ref.direction *-1)
-		return changes_direction
-	GlobalVars.keys_gained_this_run -= 1
+	if GlobalVars.player_node_ref.type_class.gimmick_class.bool_dict["doors_locked"] == true:
+		if GlobalVars.keys_gained_this_run <= 0:
+			GlobalVars.player_node_ref.direction = (GlobalVars.player_node_ref.direction *-1)
+			return changes_direction
+		GlobalVars.keys_gained_this_run -= 1
 	get_tree().call_group("UI_Player_Info", "update_keys")
 	finish_pickup_animation()
 	#play sound

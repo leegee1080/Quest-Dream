@@ -21,10 +21,10 @@ const speed = 0.04
 const consumable_class = Consume_Hearts
 
 #combat vars
-const fight_class = Normal_Fight
+const fight_class = Fight_Normal
 
 #gimmick
-const gimmick_class = null
+const gimmick_class = Gimmick_Normal
 
 #action vars
 const action_cost = 1

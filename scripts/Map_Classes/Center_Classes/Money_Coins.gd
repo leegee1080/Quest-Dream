@@ -20,8 +20,9 @@ func pick_up():
 	#play animation
 	print("money")
 	GlobalVars.player_node_ref.ani_dict.happy.play_animation()
-	GlobalVars.money_gained_this_run += 1
-	get_tree().call_group("UI_Player_Info", "update_money")
+#	GlobalVars.money_gained_this_run += 1
+#	get_tree().call_group("UI_Player_Info", "update_money")
+	GlobalVars.change_money(1)
 	finish_pickup_animation()
 	return changes_direction
 

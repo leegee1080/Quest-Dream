@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Normal_Fight
+class_name Fight_Normal
 
 #generic room vars
 var room_screen_loc #the location the room will appear on the player's screen
@@ -115,8 +115,9 @@ func finish_fight():
 	if GlobalVars.player_node_ref.is_dead:
 		pass
 	else:
-		GlobalVars.money_gained_this_run += enemy_node.type_class.reward
-		get_tree().call_group("UI_Player_Info", "update_money")
+#		GlobalVars.money_gained_this_run += enemy_node.type_class.reward
+#		get_tree().call_group("UI_Player_Info", "update_money")
+		GlobalVars.change_money(enemy_node.type_class.reward)
 		enemy_node.queue_free()
 		GlobalVars.player_node_ref.walk_toggle()
 	pass

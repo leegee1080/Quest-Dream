@@ -20,8 +20,9 @@ func pick_up():
 	#play animation
 	print("key")
 	GlobalVars.player_node_ref.ani_dict.happy.play_animation()
-	get_tree().call_group("UI_Player_Info", "update_keys")
-	GlobalVars.keys_gained_this_run += 1
+#	get_tree().call_group("UI_Player_Info", "update_keys")
+#	GlobalVars.keys_gained_this_run += 1
+	GlobalVars.change_keys(1)
 	finish_pickup_animation()
 	return changes_direction
 
