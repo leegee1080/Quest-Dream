@@ -49,3 +49,7 @@ func change_keys(amount):
 	keys_gained_this_run += amount
 	get_tree().call_group("UI_Player_Info", "update_keys")
 	pass
+
+func call_func_all_minions(func_name):
+	get_tree().call_group("minion_grp", func_name)
+	pass

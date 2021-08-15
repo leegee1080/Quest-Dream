@@ -11,7 +11,7 @@ static func action():
 	var old_tile_coords
 	var hero_tile_type
 	var hero_tile_center
-	var tile_group_node: Node2D
+#	var tile_group_node: Node2D
 	
 	if GlobalVars.player_node_ref.current_tile == null:
 		return false
@@ -19,7 +19,7 @@ static func action():
 	hero_tile_type = GlobalVars.player_type_class_storage.tile_direction
 	hero_tile_center = GlobalVars.player_type_class_storage.tile_center
 
-	tile_group_node = GlobalVars.main_node_ref.ingame_tilegroup_Node
+#	tile_group_node = GlobalVars.main_node_ref.ingame_tilegroup_Node
 	next_tile_coord = Vector2(current_tile.tile_loc_clickable_area.x + (GlobalVars.player_node_ref.direction.x *-1), current_tile.tile_loc_clickable_area.y + (GlobalVars.player_node_ref.direction.y *-1))
 	next_tile_coord_str = str(next_tile_coord.x) +","+ str(next_tile_coord.y)
 #	print(next_tile_coord_str)

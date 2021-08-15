@@ -14,12 +14,20 @@ const special_animations_dict = {
 }
 
 #ingame vars
-var t_turn_right = false
-var starting_attack_power = 1
-var starting_consumable_amt = 4
-var consumable_class = Consume_Hearts
+const t_turn_right = false
+const starting_attack_power = 2
+const starting_consumable_amt = 2
+const speed = 0.04
+const consumable_class = Consume_Skulls
+
+var kills = 0
+
+#combat vars
+const fight_class = Fight_InstantKill_GainConsume
+
+#gimmick
+const gimmick_class = Gimmick_Normal
 
 #action vars
-var action_cost = 1
-var tile_direction = Tile_Enums.tile_directions_enum.cross
-var tile_center = Tile_Enums.center_type_enum.none
+const action_cost = 0
+const action_class = Action_Killself_getPaid

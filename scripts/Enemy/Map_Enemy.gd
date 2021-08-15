@@ -54,6 +54,7 @@ var can_check_next_tile = true
 var ani_sprite
 
 func _ready():
+	add_to_group("minion_grp")
 	add_to_group("fast_forward_grp")
 	if GlobalVars.main_node_ref.is_fast_forwarded:
 		walk_timer_wait_time = 0.01
@@ -104,6 +105,11 @@ func fast_forward():
 
 func walk_toggle():
 	if is_dead:
+		can_walk = false
+		walk_timer.stop()
+		ani_dict.walk.stop_animation()
+		ani_sprite.position = Vector2.ZERO
+		ani_sprite.rotation = 0
 		return
 	if can_walk:
 		can_walk = false
@@ -148,7 +154,6 @@ func check_map_edge():
 func check_player_current_tile():
 	if position.distance_to(GlobalVars.player_node_ref.position) <= 5:
 		var fight_class = GlobalVars.player_node_ref.type_class.fight_class.new(self, position)
-#		var fight_class = Normal_Fight.new(self, position)
 		GlobalVars.main_node_ref.add_child(fight_class)
 		return
 #	if current_tile == null:
@@ -212,10 +217,19 @@ func take_hit(damage):
 	print("enemy health: " + str(health))
 	check_for_death()
 
+func instant_kill():
+	is_dead = true
+	walk_toggle()
+	GlobalVars.player_type_class_storage.kills += 1
+	print("enemy dead")
+	ani_dict.death.play_animation()
+	pass
+
 func check_for_death():
 	if health <= 0:
+		is_dead = true
+		walk_toggle()
 		GlobalVars.player_type_class_storage.kills += 1
 		print("enemy dead")
 		ani_dict.death.play_animation()
-		is_dead = true
 	pass

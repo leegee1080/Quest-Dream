@@ -20,7 +20,7 @@ const starting_consumable_amt = 500
 const speed = 0.02
 const consumable_class = Consume_Hearts
 
-var kills
+var kills = 0
 
 
 #combat vars

@@ -140,6 +140,11 @@ func fast_forward():
 
 func walk_toggle():
 	if is_dead:
+		can_walk = false
+		walk_timer.stop()
+		ani_dict.walk.stop_animation()
+		ani_sprite.position = Vector2.ZERO
+		ani_sprite.rotation = 0
 		return
 	if can_walk:
 		can_walk = false
