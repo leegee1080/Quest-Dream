@@ -26,4 +26,5 @@ func pick_up():
 	return changes_direction
 
 func finish_pickup_animation():
+	get_parent().center_object_enum = 0
 	queue_free()

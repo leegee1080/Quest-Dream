@@ -17,8 +17,11 @@ func _ready():
 
 func pick_up():
 	GlobalVars.player_node_ref.direction = (GlobalVars.player_node_ref.direction *-1)
+	if GlobalVars.player_type_class_storage.gimmick_class.bool_dict["pickup_reverse"] == true:
+		finish_pickup_animation()
 	return changes_direction
 	#play sound
 
 func finish_pickup_animation():
+	get_parent().center_object_enum = 0
 	queue_free()

@@ -98,9 +98,8 @@ func setup_animations():
 
 func map_action():
 	if GlobalVars.player_consumable_amount > type_class.action_cost and can_walk:
-		GlobalVars.player_consumable_amount -= type_class.action_cost
-		get_tree().call_group("UI_Player_Info", "update_consumable")
-		type_class.action_class.action()
+		if type_class.action_class.action():
+				GlobalVars.change_consume(-type_class.action_cost)
 	pass
 
 #func map_action():

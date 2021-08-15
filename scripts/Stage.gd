@@ -53,7 +53,7 @@ var potential_terminal_locations = []
 var start_tile
 var end_tile
 var tile_dict = {} #this is a dict more readable collection of tiles (string: tileobject)
-const starting_playarea_coord = [32,32] #the center x y of the starting top corner of the play area
+const starting_playarea_coord = [32,32] #the center x y of the starting top left corner of the play area
 const tile_size = 48
 var rows_total = 5
 var col_total = 5
@@ -306,6 +306,7 @@ func _input(event):
 						tile_dict[loc[2]] = tile_queue[0]
 						tile_dict[loc[2]].place_tile(loc[3])
 						tile_dict[loc[2]].name = loc[2]
+						tile_dict[loc[2]].tile_loc_clickable_area = loc[4]
 						slide_queue()
 						return
 
@@ -383,7 +384,7 @@ func setup_coord_array():
 				if col == col_total:
 					potential_terminal_locations.append([Vector2(current_x-8, current_y+24),coord_name_vector])
 			#add an array of usuable coords for placing tiles in play area
-			clickable_coords_list.append([[current_x,current_x+48],[current_y,current_y+48],coord_name, Vector2(current_x+24, current_y+24)])
+			clickable_coords_list.append([[current_x,current_x+48],[current_y,current_y+48],coord_name, Vector2(current_x+24, current_y+24), Vector2(col,row)])
 			current_y += 48
 			row -= 1
 		current_x += 48

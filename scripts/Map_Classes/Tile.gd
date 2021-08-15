@@ -89,6 +89,7 @@ const player_turn_dict = {
 var theme_enum = Tile_Enums.tile_themes_enum.forest
 var direction_enum = Tile_Enums.tile_directions_enum.cross
 var center_object_enum = Tile_Enums.center_type_enum.none
+var tile_loc_clickable_area = null
 
 #pull info about the centertile here
 var center_subtile

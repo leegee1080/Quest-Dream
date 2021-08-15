@@ -36,4 +36,5 @@ func pick_up():
 
 func finish_pickup_animation():
 	ani_sprite.set_frame(open_chest)
+	get_parent().center_object_enum = 0
 	can_pick_up = false

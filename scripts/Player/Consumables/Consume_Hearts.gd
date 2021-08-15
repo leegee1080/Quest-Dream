@@ -25,4 +25,5 @@ func pick_up():
 	finish_pickup_animation()
 
 func finish_pickup_animation():
+	get_parent().center_object_enum = 0
 	queue_free()

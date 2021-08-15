@@ -145,6 +145,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Animation_Classes/Walking_Classes/Floating_Animation.gd"
 }, {
 "base": "Node",
+"class": "Gimmick_Assassin",
+"language": "GDScript",
+"path": "res://scripts/Player/Gimmicks/Gimmick_Assassin.gd"
+}, {
+"base": "Node",
 "class": "Gimmick_Normal",
 "language": "GDScript",
 "path": "res://scripts/Player/Gimmicks/Gimmick_Normal.gd"
@@ -462,6 +467,7 @@ _global_script_class_icons={
 "Fight_Normal": "",
 "Flip_Animation": "",
 "Floating_Animation": "",
+"Gimmick_Assassin": "",
 "Gimmick_Normal": "",
 "Goblin": "",
 "Goblin_Boss": "",

@@ -1,6 +1,6 @@
 extends Node
 
-class_name Gimmick_Normal
+class_name Gimmick_Assassin
 
 const bool_dict = {
 	"pickup_keys": true,
@@ -10,7 +10,7 @@ const bool_dict = {
 	"pickup_consumable": true,
 	"doors_locked": true,
 	"chests_locked": true,
-	"pickup_reverse": false,
+	"pickup_reverse": true,
 	"pickup_switch": false,
 	"turn_around_damage": 1,
 	"outer_wall_damage": 1

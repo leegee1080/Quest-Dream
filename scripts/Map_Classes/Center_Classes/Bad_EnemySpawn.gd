@@ -36,5 +36,6 @@ func spawn():
 	GlobalVars.main_node_ref.add_child(temp_enemy)
 	temp_enemy.name = "enemy"
 	temp_enemy.walk_toggle()
+	get_parent().center_object_enum = 0
 	queue_free()
 	pass

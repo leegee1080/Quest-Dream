@@ -32,8 +32,12 @@ func pick_up():
 			var old_tile_rot_var = tile.rotate_var
 			tile.rotate_var = rot_num_flip_dict.get(old_tile_rot_var)
 			tile.ani_sprite.set_frame(tile.tile_theme_dict.get(tile.theme_enum).get(tile.direction_enum)[tile.rotate_var])
+	if GlobalVars.player_type_class_storage.gimmick_class.bool_dict["pickup_switch"] == true:
+		finish_pickup_animation()	
 	return changes_direction
 	#play sound
 
 func finish_pickup_animation():
+	get_parent().center_object_enum = 0
+	queue_free()
 	pass
