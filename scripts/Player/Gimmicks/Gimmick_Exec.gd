@@ -1,10 +1,10 @@
 extends Node
 
-class_name Gimmick_Valk
+class_name Gimmick_Exec
 
 const bool_dict = {
 	"pickup_keys": true,
-	"pickup_money": false,
+	"pickup_money": true,
 	"kill_money": true,
 	"boss_money": true,
 	"pickup_consumable": true,
@@ -17,4 +17,6 @@ const bool_dict = {
 }
 
 static func activate_gimmick():
+	var kills = GlobalVars.player_type_class_storage.kills
+	GlobalVars.money_gained_total += kills
 	pass

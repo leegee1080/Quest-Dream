@@ -13,13 +13,22 @@ const special_animations_dict = {
 	"happy": "happy_twohop"
 }
 
-#ingame vars
-var t_turn_right = false
-var starting_attack_power = 1
-var starting_consumable_amt = 10
-var consumable_class = Consume_Hearts
+const t_turn_right = false
+const starting_attack_power = 1
+const starting_consumable_amt = 5
+const speed = 0.06
+const consumable_class = Consume_Hearts
+
+var kills = 0
+
+#combat vars
+const fight_class = Fight_InstantKill_GainDoubleMoney
+
+#gimmick
+const gimmick_class = Gimmick_Exec
 
 #action vars
-var action_cost = 1
-var tile_direction = Tile_Enums.tile_directions_enum.cross
-var tile_center = Tile_Enums.center_type_enum.none
+const action_cost = 1
+const action_class = Action_Place_Tile
+const tile_direction = Tile_Enums.tile_directions_enum.cross
+const tile_center = Tile_Enums.center_type_enum.timedspike

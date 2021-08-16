@@ -30,4 +30,4 @@ const gimmick_class = Gimmick_Normal
 
 #action vars
 const action_cost = 0
-const action_class = Action_Killself_getPaid
+const action_class = Action_KillSelf_GetPaid

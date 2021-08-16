@@ -1,6 +1,6 @@
 extends Node
 
-class_name Action_Killself_getPaid
+class_name Action_KillSelf_GetPaid
 
 static func action():
 	if GlobalVars.player_consumable_amount <= 2:

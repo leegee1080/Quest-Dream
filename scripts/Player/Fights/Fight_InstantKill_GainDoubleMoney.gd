@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Fight_InstantKill_GainConsume
+class_name Fight_InstantKill_GainDoubleMoney
 
 #generic room vars
 var room_screen_loc #the location the room will appear on the player's screen
@@ -117,7 +117,8 @@ func finish_fight():
 	else:
 #		GlobalVars.money_gained_this_run += enemy_node.type_class.reward
 #		get_tree().call_group("UI_Player_Info", "update_money")
-		GlobalVars.change_consume(1)
+		GlobalVars.change_money(enemy_node.type_class.reward *2)
+#		GlobalVars.change_consume(1)
 		enemy_node.queue_free()
 		GlobalVars.player_node_ref.walk_toggle()
 	pass

@@ -1,14 +1,14 @@
 extends Node
 
-class_name Gimmick_Valk
+class_name Gimmick_Knight
 
 const bool_dict = {
 	"pickup_keys": true,
-	"pickup_money": false,
+	"pickup_money": true,
 	"kill_money": true,
 	"boss_money": true,
 	"pickup_consumable": true,
-	"doors_locked": true,
+	"doors_locked": false,
 	"chests_locked": true,
 	"pickup_reverse": false,
 	"pickup_switch": false,
