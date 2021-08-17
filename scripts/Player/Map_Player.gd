@@ -172,6 +172,7 @@ func walk():
 		check_tile()
 	if center_interval_count <= 0:
 		center_interval_count = center_interval
+#		print(walk_interval_count) = 15.7
 		check_center_tile()
 	if walk_interval_count <= 0:
 		walk_interval_count = walk_interval

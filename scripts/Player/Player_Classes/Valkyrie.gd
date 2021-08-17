@@ -30,6 +30,6 @@ const gimmick_class = Gimmick_Valk
 
 #action vars
 const action_cost = 1
-const action_class = Action_Place_Tile
+const action_class = Action_Jumpone_Tile
 const tile_direction = Tile_Enums.tile_directions_enum.cross
-const tile_center = Tile_Enums.center_type_enum.fight
+const tile_center = Tile_Enums.center_type_enum.none

@@ -1,9 +1,8 @@
 extends Node
 
-class_name Action_Place_Tile
+class_name Action_Jumpone_Tile
 
 static func action():
-	
 	var current_tile
 	var next_tile_node: Node2D = null
 	var next_tile_coord
@@ -18,7 +17,7 @@ static func action():
 	hero_tile_type = GlobalVars.player_type_class_storage.tile_direction
 	hero_tile_center = GlobalVars.player_type_class_storage.tile_center
 
-	next_tile_coord = Vector2(current_tile.tile_loc_clickable_area.x + (GlobalVars.player_node_ref.direction.x *-1), current_tile.tile_loc_clickable_area.y + (GlobalVars.player_node_ref.direction.y *-1))
+	next_tile_coord = Vector2(current_tile.tile_loc_clickable_area.x + (GlobalVars.player_node_ref.direction.x *-2), current_tile.tile_loc_clickable_area.y + (GlobalVars.player_node_ref.direction.y *-2))
 	next_tile_coord_str = str(next_tile_coord.x) +","+ str(next_tile_coord.y)
 	if next_tile_coord_str in GlobalVars.main_node_ref.tile_dict:
 		if GlobalVars.main_node_ref.tile_dict[next_tile_coord_str] == null:
@@ -34,6 +33,11 @@ static func action():
 			old_tile_coords = next_tile_node.position
 			next_tile_node.queue_free()
 			pass
+		
+		GlobalVars.player_node_ref.walk_toggle()
+	#	#jump
+	
+	#	#land
 		var new_tile = Tile.new(hero_tile_type, GlobalVars.current_theme, hero_tile_center, 0, -1)
 		new_tile.is_player_built = true
 		GlobalVars.main_node_ref.tile_dict[next_tile_coord_str] = new_tile
@@ -41,7 +45,15 @@ static func action():
 		GlobalVars.main_node_ref.tile_dict[next_tile_coord_str].place_tile(old_tile_coords)
 		GlobalVars.main_node_ref.tile_dict[next_tile_coord_str].tile_loc_clickable_area = next_tile_coord
 		GlobalVars.main_node_ref.tile_dict[next_tile_coord_str].name = ("built_tile " + next_tile_coord_str)
+	
+		GlobalVars.player_node_ref.current_tile = new_tile
+		GlobalVars.player_node_ref.position = old_tile_coords
+		GlobalVars.player_node_ref.check_center_tile()
+		GlobalVars.player_node_ref.center_interval_count = 0
+		GlobalVars.player_node_ref.walk_interval_count = 15.7
+		GlobalVars.player_node_ref.walk_toggle()
+		var particle = GroundPound.new(GlobalVars.player_node_ref.position)
+		GlobalVars.main_node_ref.add_child(particle)
 		return true
 	else:
 		return false
-

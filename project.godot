@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://scripts/Player/Actions/Action_BoostAttackPower.gd"
 }, {
 "base": "Node",
+"class": "Action_Jumpone_Tile",
+"language": "GDScript",
+"path": "res://scripts/Player/Actions/Action_Jumpone_Tile.gd"
+}, {
+"base": "Node",
 "class": "Action_KillSelf_GetPaid",
 "language": "GDScript",
 "path": "res://scripts/Player/Actions/Action_KillSelf_GetPaid.gd"
@@ -243,6 +248,11 @@ _global_script_classes=[ {
 "class": "Golem_God",
 "language": "GDScript",
 "path": "res://scripts/Enemy/Enemy_Collection/Golem_God.gd"
+}, {
+"base": "Node2D",
+"class": "GroundPound",
+"language": "GDScript",
+"path": "res://scripts/Animation_Classes/Particle_Animations/GroundPound.gd"
 }, {
 "base": "Node2D",
 "class": "Hit_Color_Animation",
@@ -511,6 +521,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Action_BoostAttackPower": "",
+"Action_Jumpone_Tile": "",
 "Action_KillSelf_GetPaid": "",
 "Action_Killall_Minions": "",
 "Action_Place_Tile": "",
@@ -557,6 +568,7 @@ _global_script_class_icons={
 "Goblin_Boss": "",
 "Goblin_Wizard": "",
 "Golem_God": "",
+"GroundPound": "",
 "Hit_Color_Animation": "",
 "Hopping_Animation": "",
 "Human_Jack": "",

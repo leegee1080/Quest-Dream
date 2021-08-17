@@ -4,10 +4,10 @@ class_name AttackUp
 
 var ani_sprite
 var start_pos
-var animation_steps = 10
+var animation_steps = 20
 
 func _init(new_pos: Vector2):
-	start_pos = new_pos
+	start_pos = Vector2(new_pos.x, new_pos.y - 5)
 	pass
 
 func _ready():
@@ -20,7 +20,7 @@ func _ready():
 	
 	var ani_timer = Timer.new()
 	add_child(ani_timer)
-	ani_timer.set_wait_time(0.1)
+	ani_timer.set_wait_time(0.05)
 	ani_timer.set_one_shot(false)
 	ani_timer.connect("timeout", self, "animation_step")
 	ani_timer.start()
@@ -29,7 +29,7 @@ func _ready():
 	pass
 
 func animation_step():
-	position.y -= 1
+	position.y -= 1.5
 	ani_sprite.modulate.a -= 0.1
 	animation_steps -= 1
 	if animation_steps <= 0:
