@@ -171,6 +171,8 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 		ui_fastforward()
 		return
 	if new_name == "action":
+		if is_fast_forwarded:
+			return
 		ui_action()
 		return
 

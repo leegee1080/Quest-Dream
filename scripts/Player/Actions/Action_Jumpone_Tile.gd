@@ -35,6 +35,8 @@ static func action():
 			pass
 		
 		GlobalVars.player_node_ref.walk_toggle()
+		var particle1 = FlyAway.new(GlobalVars.player_node_ref.position)
+		GlobalVars.main_node_ref.add_child(particle1)
 	#	#jump
 	
 	#	#land
@@ -52,8 +54,8 @@ static func action():
 		GlobalVars.player_node_ref.center_interval_count = 0
 		GlobalVars.player_node_ref.walk_interval_count = 15.7
 		GlobalVars.player_node_ref.walk_toggle()
-		var particle = GroundPound.new(GlobalVars.player_node_ref.position)
-		GlobalVars.main_node_ref.add_child(particle)
+		var particle2 = GroundPound.new(GlobalVars.player_node_ref.position)
+		GlobalVars.main_node_ref.add_child(particle2)
 		return true
 	else:
 		return false
