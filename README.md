@@ -38,7 +38,7 @@
 - [x] more animations (happy, walking)
    - [x] at least 3 of each type
 - [ ] Place tiles animation (particles)
-- [ ] improve variety of heros
-   - [ ] each one should be different in playstyle
+- [x] improve variety of heros
+   - [x] each one should be different in playstyle
 - [ ] better tutorial
 - [x] stage start countdown (shows stage number and theme and boss "final" stage)
