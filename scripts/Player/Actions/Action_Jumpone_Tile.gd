@@ -11,6 +11,8 @@ static func action():
 	var hero_tile_type
 	var hero_tile_center
 	
+	var jump_particle_pos_array = []
+	
 	if GlobalVars.player_node_ref.current_tile == null:
 		return false
 	current_tile = GlobalVars.player_node_ref.current_tile
@@ -19,6 +21,14 @@ static func action():
 
 	next_tile_coord = Vector2(current_tile.tile_loc_clickable_area.x + (GlobalVars.player_node_ref.direction.x *-2), current_tile.tile_loc_clickable_area.y + (GlobalVars.player_node_ref.direction.y *-2))
 	next_tile_coord_str = str(next_tile_coord.x) +","+ str(next_tile_coord.y)
+	
+	jump_particle_pos_array = [
+		Vector2(GlobalVars.player_node_ref.position.x + (GlobalVars.player_node_ref.direction.x *0), GlobalVars.player_node_ref.position.y + (GlobalVars.player_node_ref.direction.y *0)),
+		Vector2(GlobalVars.player_node_ref.position.x + (GlobalVars.player_node_ref.direction.x *20), GlobalVars.player_node_ref.position.y + (GlobalVars.player_node_ref.direction.y *20)),
+		Vector2(GlobalVars.player_node_ref.position.x + (GlobalVars.player_node_ref.direction.x *40), GlobalVars.player_node_ref.position.y + (GlobalVars.player_node_ref.direction.y *40)),
+		Vector2(GlobalVars.player_node_ref.position.x + (GlobalVars.player_node_ref.direction.x *60), GlobalVars.player_node_ref.position.y + (GlobalVars.player_node_ref.direction.y *60)),
+		Vector2(GlobalVars.player_node_ref.position.x + (GlobalVars.player_node_ref.direction.x *80), GlobalVars.player_node_ref.position.y + (GlobalVars.player_node_ref.direction.y *80))
+	]
 	if next_tile_coord_str in GlobalVars.main_node_ref.tile_dict:
 		if GlobalVars.main_node_ref.tile_dict[next_tile_coord_str] == null:
 			for item in GlobalVars.main_node_ref.clickable_coords_list:
@@ -34,9 +44,12 @@ static func action():
 			next_tile_node.queue_free()
 			pass
 		
-		GlobalVars.player_node_ref.walk_toggle()
-		var particle1 = FlyAway.new(GlobalVars.player_node_ref.position)
-		GlobalVars.main_node_ref.add_child(particle1)
+		for pos in jump_particle_pos_array:
+			print(pos)
+			GlobalVars.player_node_ref.walk_toggle()
+#			var particle1 = FlyAway.new(GlobalVars.player_node_ref.position)
+			var particle1 = FlyAway.new(pos)
+			GlobalVars.main_node_ref.add_child(particle1)
 	#	#jump
 	
 	#	#land

@@ -71,7 +71,7 @@ func run_msg(new_msg: String):
 	position = Vector2(0,700)
 	scroll_speed = starting_scroll_speed
 	speed_mod = starting_speed_mod
-	print("start message: " + new_msg)
+	print("display message: " + new_msg)
 	if new_msg.length() > 15:
 		print("shortend string")
 		new_msg = "Oh no!"
