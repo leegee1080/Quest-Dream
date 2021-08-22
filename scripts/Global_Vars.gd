@@ -8,11 +8,13 @@ const stage_order = { #the stage number and corresponding theme
 	21: Tile_Enums.tile_themes_enum.castle
 }
 
+var audio_player
+
 var current_stage_number: int = 1
 const difficulty_increment = 0.5
 var current_theme = Tile_Enums.tile_themes_enum.castle
 
-var money_gained_total = 200
+var money_gained_total = 0
 var money_gained_this_run = 0
 #var money_gained_this_boss = 0
 

@@ -5,16 +5,17 @@
 
 
 ### prog todo:
-- [x] Main menu
+- [ ] Main menu
    - [x] credits menu
    - [x] character select on new game
       - [x] sprites of each hero on each button
       - [x] button is un-clickable when the hero is not unlocked yet
       - [x] clicking on a locked hero unlocks it and spends the correct money
    - [x] how to play button
-- [ ] Sound system
-   - [ ] as a class child of game controller
-   - [ ] functions to play sounds based on string in func called
+   - [ ] options menu to turn off music and/or sounds
+- [x] Sound system
+   - [x] as a class child of game controller
+   - [x] functions to play sounds based on string in func called
 - [x] consumable and money counter in the middle of the map screen
 - [x] collectables around the map randomly generates on tiles
    - [x] the collectable is different per player class, they will increase the players (consumable) stat (health for the warrior, skulls for the nec)

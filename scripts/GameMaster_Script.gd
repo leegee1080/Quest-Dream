@@ -30,6 +30,8 @@ const creditsmenu_button_loc_dict = {
 	"back": [Vector2(121,371), 0, 1]
 }
 const optionsmenu_button_loc_dict = {
+	"sound_toggle": [Vector2(171,211), 18, 19],
+	"music_toggle": [Vector2(171,281), 18, 19],
 	"back": [Vector2(121,371), 0, 1]
 }
 var credits_screen = preload("res://nodes/Credits_Screen.tscn")
@@ -61,6 +63,10 @@ var unlocked_classes = [Player_Enums.player_types_enum.traveler] #this is an arr
 var money_ui_node
 
 func _ready():
+	var temp_audio_player = Audio_Player.new()
+	add_child(temp_audio_player)
+	GlobalVars.audio_player = temp_audio_player
+	
 	trans_timer = Timer.new()
 	add_child(trans_timer)
 	trans_timer.set_wait_time(trans_total_time)
@@ -227,6 +233,10 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 	if new_name == "tutorial":
 		next_game_state = game_state.tutorial
 		start_scene_trans()
+		return
+	if new_name == "sound_toggle":
+		return
+	if new_name == "music_toggle":
 		return
 
 func ui_new():
