@@ -27,6 +27,7 @@ func _ready():
 	trans_step_timer.stop()
 
 func run_trans():
+	GlobalVars.audio_player.play("woosh")
 	trans_step_timer.stop()
 	trans_sprite.position = Vector2(0,0)
 	trans_step_timer.start()

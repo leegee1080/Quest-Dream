@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/proj1.wav-276c119790639b27c466bf69d89c31fa.sample"
+path="res://.import/bossdeath2.wav-738a1fec09f1e3f26b46f551a2247679.sample"
 
 [deps]
 
-source_file="res://assets/sounds/proj1.wav"
-dest_files=[ "res://.import/proj1.wav-276c119790639b27c466bf69d89c31fa.sample" ]
+source_file="res://assets/sounds/bossdeath2.wav"
+dest_files=[ "res://.import/bossdeath2.wav-738a1fec09f1e3f26b46f551a2247679.sample" ]
 
 [params]
 

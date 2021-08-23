@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/oof.wav-710a5d8cc453b941f813e008402bb11b.sample"
+path="res://.import/teleport.wav-7db4b33e97a8c83a28013048e088c735.sample"
 
 [deps]
 
-source_file="res://assets/sounds/oof.wav"
-dest_files=[ "res://.import/oof.wav-710a5d8cc453b941f813e008402bb11b.sample" ]
+source_file="res://assets/sounds/teleport.wav"
+dest_files=[ "res://.import/teleport.wav-7db4b33e97a8c83a28013048e088c735.sample" ]
 
 [params]
 

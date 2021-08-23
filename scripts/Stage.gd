@@ -198,6 +198,7 @@ func ui_back():
 	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "main", main_button_z_index, self)
 
 func ui_unpause():
+	GlobalVars.audio_player.play("pause")
 	var timers = get_tree().get_nodes_in_group("timers")
 	current_game_state = previous_game_state
 	for timer in timers:
@@ -207,6 +208,7 @@ func ui_unpause():
 	print("unpause game")
 
 func ui_pause():
+	GlobalVars.audio_player.play("unpause")
 	var timers = get_tree().get_nodes_in_group("timers")
 	previous_game_state = current_game_state
 	for timer in timers:
@@ -305,6 +307,7 @@ func _input(event):
 						return
 					elif tile_dict.get(loc[2]) == null and tile_queue.size()>0:
 						#assign the new tile node to the correct dictionary entry
+						GlobalVars.audio_player.play("placetile")
 						tile_dict[loc[2]] = tile_queue[0]
 						tile_dict[loc[2]].place_tile(loc[3])
 						tile_dict[loc[2]].name = loc[2]

@@ -87,10 +87,13 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 	else:
 		if GlobalVars.money_gained_total >= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost:
 			get_parent().msg_node.run_msg("Hero Unlock!")
+			GlobalVars.audio_player.play("unlock")
 			get_parent().unlocked_classes.append(Player_Enums.player_types_string_dict.get(new_name)[1])
 			GlobalVars.money_gained_total -= Player_Enums.player_types_string_dict.get(new_name)[0].unlock_cost
 			money_ui_node.update_money()
 			UiVars.hide_buttons("hero_select_buttons")
 			generate_buttons()
 			pass
+		else:
+			GlobalVars.audio_player.play("notunlock")
 

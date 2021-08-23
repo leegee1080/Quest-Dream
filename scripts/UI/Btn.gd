@@ -45,6 +45,7 @@ func _input(event):
 			if event.position[0] >= position.x and event.position[0] < clickable_area_max.x and event.position[1] >= position.y and event.position[1] < clickable_area_max.y:
 				ani_sprite.set_frame(down_frame)
 				was_clicked = true
+				GlobalVars.audio_player.play("click")
 				return
 
 func click_btn():
