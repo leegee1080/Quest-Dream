@@ -17,6 +17,7 @@ func _ready():
 func pick_up():
 	#play sound
 	#play animation
+	GlobalVars.audio_player.play("consumepickup")
 	print("consumable")
 	GlobalVars.player_node_ref.ani_dict.happy.play_animation()
 	GlobalVars.change_consume(1)

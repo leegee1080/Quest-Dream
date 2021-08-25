@@ -265,6 +265,7 @@ func take_hit(damage):
 		walk_toggle()
 		injure_timer.start()
 		pass
+	GlobalVars.audio_player.play("playerhurt")
 	GlobalVars.change_consume(damage * -1)
 #	GlobalVars.player_consumable_amount -= damage
 #	get_tree().call_group("UI_Player_Info", "update_consumable")
@@ -278,4 +279,5 @@ func check_for_death():
 		print("player dead")
 		GlobalVars.main_node_ref.lose_round()
 		ani_dict.death.play_animation()
+		GlobalVars.audio_player.play("playerdeath")
 	pass

@@ -265,6 +265,7 @@ func lose_round():
 	pass
 
 func win_round():
+	GlobalVars.audio_player.play("win")
 	if get_parent().is_boss_stage:
 		get_parent().msg_node.run_msg("Boss Killed!")
 		get_parent().msg_node_subtext.run_msg("money: Banked!")

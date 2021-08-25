@@ -117,6 +117,7 @@ func finish_fight():
 	else:
 #		GlobalVars.money_gained_this_run += enemy_node.type_class.reward
 #		get_tree().call_group("UI_Player_Info", "update_money")
+		GlobalVars.audio_player.play("execfight")
 		GlobalVars.change_money(enemy_node.type_class.reward *2)
 #		GlobalVars.change_consume(1)
 		enemy_node.queue_free()

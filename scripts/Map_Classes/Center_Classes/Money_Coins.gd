@@ -23,6 +23,7 @@ func pick_up():
 #	GlobalVars.money_gained_this_run += 1
 #	get_tree().call_group("UI_Player_Info", "update_money")
 	GlobalVars.change_money(1)
+	GlobalVars.audio_player.play("coinpickup")
 	finish_pickup_animation()
 	return changes_direction
 

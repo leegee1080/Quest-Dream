@@ -24,6 +24,13 @@ const bottom_fight_frames = 0
 const top_fade_frames = 7
 const bottom_fade_frames = 4
 
+var sound_list = [
+	"punch1",
+	"punch2",
+	"punch3",
+	"punch4"
+]
+
 func _ready():
 	add_to_group("fast_forward_grp")
 	if GlobalVars.main_node_ref.is_fast_forwarded:
@@ -82,6 +89,9 @@ func pass_fight_turn():
 	pass
 
 func ani_timer_step():
+	randomize()
+	sound_list.shuffle()
+	GlobalVars.audio_player.play(sound_list[0])
 	if fight_fade_stage:
 		fade_ani_step()
 	else:

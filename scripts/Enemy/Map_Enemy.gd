@@ -221,6 +221,7 @@ func instant_kill():
 	is_dead = true
 	walk_toggle()
 	GlobalVars.player_type_class_storage.kills += 1
+	GlobalVars.audio_player.play("miniondeath")
 	print("enemy dead")
 	ani_dict.death.play_animation()
 	pass
@@ -230,6 +231,7 @@ func check_for_death():
 		is_dead = true
 		walk_toggle()
 		GlobalVars.player_type_class_storage.kills += 1
+		GlobalVars.audio_player.play("miniondeath")
 		print("enemy dead")
 		ani_dict.death.play_animation()
 	pass

@@ -18,6 +18,7 @@ func pick_up():
 	#play sound
 	#play animation
 	print("consumable")
+	GlobalVars.audio_player.play("consumepickup")
 	GlobalVars.player_node_ref.ani_dict.happy.play_animation()
 	GlobalVars.change_consume(1)
 #	GlobalVars.player_consumable_amount += 1

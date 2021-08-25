@@ -14,7 +14,7 @@ var current_stage_number: int = 1
 const difficulty_increment = 0.5
 var current_theme = Tile_Enums.tile_themes_enum.castle
 
-var money_gained_total = 0
+var money_gained_total = 2220
 var money_gained_this_run = 0
 #var money_gained_this_boss = 0
 

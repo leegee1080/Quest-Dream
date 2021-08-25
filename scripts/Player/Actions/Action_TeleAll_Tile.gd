@@ -67,6 +67,7 @@ static func action():
 		GlobalVars.player_node_ref.walk_toggle()
 		var particle2 = TeleportBack.new(GlobalVars.player_node_ref.position)
 		GlobalVars.main_node_ref.add_child(particle2)
+		GlobalVars.audio_player.play("teleport")
 		return true
 	else:
 		return false

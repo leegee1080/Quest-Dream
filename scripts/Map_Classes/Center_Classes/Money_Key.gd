@@ -23,6 +23,7 @@ func pick_up():
 #	get_tree().call_group("UI_Player_Info", "update_keys")
 #	GlobalVars.keys_gained_this_run += 1
 	GlobalVars.change_keys(1)
+	GlobalVars.audio_player.play("coinpickup")
 	finish_pickup_animation()
 	return changes_direction
 

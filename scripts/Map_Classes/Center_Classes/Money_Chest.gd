@@ -28,6 +28,7 @@ func pick_up():
 #			GlobalVars.keys_gained_this_run -= 1
 #		GlobalVars.money_gained_this_run += 10
 		GlobalVars.change_money(10)
+		GlobalVars.audio_player.play("coinpickup")
 		GlobalVars.player_node_ref.ani_dict.happy.play_animation()
 #		get_tree().call_group("UI_Player_Info", "update_keys")
 #		get_tree().call_group("UI_Player_Info", "update_money")

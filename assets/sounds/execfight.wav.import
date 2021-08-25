@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/execfight.wav-14de4d65e8ec8aaf3a371c9aabba1531.sample"
+
+[deps]
+
+source_file="res://assets/sounds/execfight.wav"
+dest_files=[ "res://.import/execfight.wav-14de4d65e8ec8aaf3a371c9aabba1531.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -69,6 +69,7 @@ static func action():
 		GlobalVars.player_node_ref.walk_toggle()
 		var particle2 = GroundPound.new(GlobalVars.player_node_ref.position)
 		GlobalVars.main_node_ref.add_child(particle2)
+		GlobalVars.audio_player.play("jump")
 		return true
 	else:
 		return false
