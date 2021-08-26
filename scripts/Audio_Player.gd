@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Audio_Player
 
-#GlobalVars.audio_player.play("miniondeath") Place this line anywhere I want to place music
+#GlobalVars.audio_player.play("lose") Place this line anywhere I want to place music
 
 const audio_dict = {
 #	"song_name": ["is_music: T or F", "file_location"]
@@ -13,6 +13,7 @@ const audio_dict = {
 	"jump": [false, "res://assets/sounds/jump.wav"],
 	"notunlock": [false, "res://assets/sounds/notunlockedyet.wav"],
 	"unpause": [false, "res://assets/sounds/pause.wav"],
+	"fastforward": [false, "res://assets/sounds/winstage.wav"],
 	"placetile": [false, "res://assets/sounds/placetile.wav"],
 	"playerdeath": [false, "res://assets/sounds/playerdeath.wav"],
 	"miniondeath": [false, "res://assets/sounds/minondeath.wav"],
@@ -21,7 +22,8 @@ const audio_dict = {
 	"unlock": [false, "res://assets/sounds/unlock.wav"],
 	"pause": [false, "res://assets/sounds/unpause.wav"],
 	"woosh": [false, "res://assets/sounds/woosh.wav"],
-	"win": [false, "res://assets/sounds/winstage.wav"],
+	"win": [false, "res://assets/sounds/winsong.wav"],
+	"lose": [false, "res://assets/sounds/losesong.wav"],
 	"bossdeath1": [false, "res://assets/sounds/bossdeath1.wav"],
 	"bossdeath2": [false, "res://assets/sounds/bossdeath2.wav"],
 	"bossdeath3": [false, "res://assets/sounds/bossdeath3.wav"],
@@ -32,7 +34,10 @@ const audio_dict = {
 	"punch3": [false, "res://assets/sounds/punch3.wav"],
 	"punch4": [false, "res://assets/sounds/punch4.wav"],
 	"necrofight": [false, "res://assets/sounds/necrofight.wav"],
-	"execfight": [false, "res://assets/sounds/execfight.wav"]
+	"execfight": [false, "res://assets/sounds/execfight.wav"],
+	"castlesong": [true, "res://assets/sounds/musiccastle.wav"],
+	"forestsong": [true, "res://assets/sounds/musicforest.wav"],
+	"gravesong": [true, "res://assets/sounds/musicgrave.wav"]
 }
 var audio_streams = {}
 

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/musicforest.wav-47cb58b48224e02712718a90e3e94d75.sample"
+
+[deps]
+
+source_file="res://assets/sounds/musicforest.wav"
+dest_files=[ "res://.import/musicforest.wav-47cb58b48224e02712718a90e3e94d75.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

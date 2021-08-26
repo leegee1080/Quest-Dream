@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/musiccastle.wav-ac27635ceba7c6c90e4da07e41c99ada.sample"
+
+[deps]
+
+source_file="res://assets/sounds/musiccastle.wav"
+dest_files=[ "res://.import/musiccastle.wav-ac27635ceba7c6c90e4da07e41c99ada.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

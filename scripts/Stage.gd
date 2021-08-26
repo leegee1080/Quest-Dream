@@ -181,6 +181,7 @@ func ui_quit():
 	pass
 
 func ui_fastforward():
+	GlobalVars.audio_player.play("fastforward")
 	is_fast_forwarded = true
 #	var new_speed = 0.0001
 	for node in get_tree().get_nodes_in_group("fast_forward_grp"):
@@ -256,6 +257,7 @@ func start_round(): #just for the first time start, can add more here if needed
 	pass
 
 func lose_round():
+	GlobalVars.audio_player.play("lose")
 	get_parent().msg_node.run_msg("You Died!")
 	if current_game_state == game_state.run:
 		player.walk_toggle()

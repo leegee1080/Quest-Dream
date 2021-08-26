@@ -6,7 +6,7 @@
 
 ### prog todo:
 - [ ] Main menu
-   - [x] credits menu
+   - [ ] credits menu
    - [x] character select on new game
       - [x] sprites of each hero on each button
       - [x] button is un-clickable when the hero is not unlocked yet
@@ -29,16 +29,14 @@
 ### art todo:
 - [x] change outer walls to spikes
 - [x] consumable, keys, and money counter in the middle of the map screen
-- [ ] remake art in vector style
 - [x] add scene trans
 - [ ] add sounds
-   - [ ] menu sounds (click, swoosh, bloops)
+   - [x] menu sounds (click, swoosh, bloops)
    - [ ] music (game (per theme), menu)
-   - [ ] in game sounds (fight sounds, walk sounds, pickup sounds)
+   - [x] in game sounds (fight sounds, walk sounds, pickup sounds)
 - [x] fight animation
 - [x] more animations (happy, walking)
    - [x] at least 3 of each type
-- [ ] Place tiles animation (particles)
 - [x] improve variety of heros
    - [x] each one should be different in playstyle
 - [ ] better tutorial
