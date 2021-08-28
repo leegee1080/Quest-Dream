@@ -12,7 +12,8 @@
       - [x] button is un-clickable when the hero is not unlocked yet
       - [x] clicking on a locked hero unlocks it and spends the correct money
    - [x] how to play button
-   - [ ] options menu to turn off music and/or sounds
+   - [x] options menu to turn off music and/or sounds
+   - [ ] add some kind of hint to each hero choice with a discription of each hero's abilities
 - [x] Sound system
    - [x] as a class child of game controller
    - [x] functions to play sounds based on string in func called
@@ -25,19 +26,21 @@
    - [x] each level has changing tiles (keys and doors, spikes that come up and go away)
    - [x] play a happy animation for enemies and player at triggered points
    - [ ] boss battle on each 5th stage. (i.e. boss flies around and blows stuff up/ replaces tiles, lands, then the player can run to him for a hit)
+   - [ ] end to the game after the final boss
 
 ### art todo:
 - [x] change outer walls to spikes
 - [x] consumable, keys, and money counter in the middle of the map screen
 - [x] add scene trans
-- [ ] add sounds
+- [x] add sounds
    - [x] menu sounds (click, swoosh, bloops)
-   - [ ] music (game (per theme), menu)
+   - [x] music (game (per theme), menu)
    - [x] in game sounds (fight sounds, walk sounds, pickup sounds)
 - [x] fight animation
 - [x] more animations (happy, walking)
    - [x] at least 3 of each type
 - [x] improve variety of heros
    - [x] each one should be different in playstyle
+- [ ] fix the turn around center tile, the instant death center tile, and the necro pickup
 - [ ] better tutorial
 - [x] stage start countdown (shows stage number and theme and boss "final" stage)

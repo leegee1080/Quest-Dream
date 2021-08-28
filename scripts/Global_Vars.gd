@@ -9,6 +9,8 @@ const stage_order = { #the stage number and corresponding theme
 }
 
 var audio_player
+var effects_muted: bool
+var music_muted: bool
 
 var current_stage_number: int = 1
 const difficulty_increment = 0.5

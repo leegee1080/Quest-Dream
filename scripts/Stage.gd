@@ -107,6 +107,11 @@ func _ready():
 	#create UI
 	UI_Vars.generate_button(main_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "main", main_button_z_index, self)
 	
+	#music
+	if GlobalVars.audio_player.audio_streams[GlobalVars.audio_player.song_themes[GlobalVars.current_theme][0]].is_playing() == false:
+		GlobalVars.audio_player.stop_all_music()
+		GlobalVars.audio_player.play(GlobalVars.audio_player.song_themes[GlobalVars.current_theme][0])
+	
 	#setup start timer and player character
 	can_player_place_tiles = true
 	var start_timer = Timer.new()
@@ -177,6 +182,7 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 		return
 
 func ui_quit():
+	GlobalVars.audio_player.stop_all_music()
 	get_parent().exit_to_menu()
 	pass
 

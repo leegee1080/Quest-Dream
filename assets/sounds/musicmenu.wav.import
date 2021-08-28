@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/musiccastle.wav-ac27635ceba7c6c90e4da07e41c99ada.sample"
+path="res://.import/musicmenu.wav-6f819be237916b20a09debea987ebf81.sample"
 
 [deps]
 
-source_file="res://assets/sounds/musiccastle.wav"
-dest_files=[ "res://.import/musiccastle.wav-ac27635ceba7c6c90e4da07e41c99ada.sample" ]
+source_file="res://assets/sounds/musicmenu.wav"
+dest_files=[ "res://.import/musicmenu.wav-6f819be237916b20a09debea987ebf81.sample" ]
 
 [params]
 

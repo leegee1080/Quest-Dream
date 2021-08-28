@@ -29,9 +29,9 @@ const mainmenu_contgame_button_loc_dict = {
 const creditsmenu_button_loc_dict = {
 	"back": [Vector2(121,371), 0, 1]
 }
-const optionsmenu_button_loc_dict = {
-	"sound_toggle": [Vector2(171,211), 18, 19],
-	"music_toggle": [Vector2(171,281), 18, 19],
+var optionsmenu_button_loc_dict = {
+	"sound_toggle": [Vector2(81,231), 24, 25],
+	"music_toggle": [Vector2(159,231), 28, 29],
 	"back": [Vector2(121,371), 0, 1]
 }
 var credits_screen = preload("res://nodes/Credits_Screen.tscn")
@@ -95,6 +95,7 @@ func _ready():
 	generate_tile_chance_arrays(Tile_Enums.premade_tile_center_chances, GlobalVars.premade_center_chance_array)
 	
 	setup_mainmenu()
+	GlobalVars.audio_player.play("menusong")
 	pass
 
 func setup_mainmenu():
@@ -128,6 +129,7 @@ func middle_scene_trans():
 		cumulative_money = GlobalVars.money_gained_this_run
 	
 	if next_game_state == game_state.newgame:
+		GlobalVars.audio_player.stop("menusong")
 		current_class_select_screen.queue_free()
 		UI_Vars.hide_buttons("class_select_back_button")
 		GlobalVars.player_consumable_amount = 0
@@ -188,6 +190,7 @@ func middle_scene_trans():
 		current_game_state = game_state.options
 		UiVars.hide_buttons("mainmenu_buttons")
 		UiVars.hide_buttons("mainmenu_continue_button")
+		
 		UiVars.generate_button(optionsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "optionsmenu_buttons", mainmenu_button_z_index, self)
 		return
 	pass
@@ -235,8 +238,44 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 		start_scene_trans()
 		return
 	if new_name == "sound_toggle":
+		if GlobalVars.effects_muted == true:
+			optionsmenu_button_loc_dict["sound_toggle"][1] = 24
+			optionsmenu_button_loc_dict["sound_toggle"][2] = 25
+			GlobalVars.effects_muted = false
+			_btn_node_ref.neutral_frame = 24
+			_btn_node_ref.down_frame = 25
+			_btn_node_ref.ani_sprite.set_frame(24)
+			GlobalVars.audio_player.unmute_sounds(null, true, false)
+			return
+		if GlobalVars.effects_muted == false:
+			GlobalVars.effects_muted = true
+			optionsmenu_button_loc_dict["sound_toggle"][1] = 26
+			optionsmenu_button_loc_dict["sound_toggle"][2] = 27
+			_btn_node_ref.neutral_frame = 26
+			_btn_node_ref.down_frame = 27
+			_btn_node_ref.ani_sprite.set_frame(26)
+			GlobalVars.audio_player.mute_sounds(null, true, false)
+			return
 		return
 	if new_name == "music_toggle":
+		if GlobalVars.music_muted == true:
+			GlobalVars.music_muted = false
+			optionsmenu_button_loc_dict["music_toggle"][1] = 28
+			optionsmenu_button_loc_dict["music_toggle"][2] = 29
+			_btn_node_ref.neutral_frame = 28
+			_btn_node_ref.down_frame = 29
+			_btn_node_ref.ani_sprite.set_frame(28)
+			GlobalVars.audio_player.unmute_sounds(null, false, true)
+			return
+		if GlobalVars.music_muted == false:
+			GlobalVars.music_muted = true
+			optionsmenu_button_loc_dict["music_toggle"][1] = 30
+			optionsmenu_button_loc_dict["music_toggle"][2] = 31
+			_btn_node_ref.neutral_frame = 30
+			_btn_node_ref.down_frame = 31
+			_btn_node_ref.ani_sprite.set_frame(30)
+			GlobalVars.audio_player.mute_sounds(null, false, true)
+			return
 		return
 
 func ui_new():
@@ -285,6 +324,7 @@ func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	pass
 
 func exit_to_menu():
+	GlobalVars.audio_player.play("menusong")
 	next_game_state = game_state.mainmenu
 	print("go back to main menu")
 	start_scene_trans()
