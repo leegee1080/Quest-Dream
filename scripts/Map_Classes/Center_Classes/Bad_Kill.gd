@@ -5,7 +5,7 @@ class_name Bad_Kill
 var sound
 
 var ani_sprite
-var item_frame = 55
+var item_frame = 91
 const can_pick_up = true
 var changes_direction = false
 

@@ -12,15 +12,21 @@ centered = false
 [node name="Label" type="Label" parent="."]
 margin_left = 65.0
 margin_top = 90.0
-margin_right = 1217.0
-margin_bottom = 1296.0
-rect_scale = Vector2( 0.15, 0.15 )
+margin_right = 1504.0
+margin_bottom = 2396.0
+rect_scale = Vector2( 0.12, 0.12 )
 custom_fonts/font = ExtResource( 1 )
-text = "A Game by
+text = "A Game by:
 Moist Apps
 
-MA is:
-Mitch Greene"
+Moist Apps is:
+Mitch Greene
+
+Sprites:
+Jerom
+
+Sound Effects:
+Juhani Junkala"
 align = 1
 valign = 1
 __meta__ = {

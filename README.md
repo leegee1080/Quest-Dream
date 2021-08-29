@@ -6,14 +6,14 @@
 
 ### prog todo:
 - [ ] Main menu
-   - [ ] credits menu
+   - [x] credits menu
    - [x] character select on new game
       - [x] sprites of each hero on each button
       - [x] button is un-clickable when the hero is not unlocked yet
       - [x] clicking on a locked hero unlocks it and spends the correct money
    - [x] how to play button
    - [x] options menu to turn off music and/or sounds
-   - [ ] add some kind of hint to each hero choice with a discription of each hero's abilities
+   - [ ] add some kind of hint to each hero choice with a description of each hero's abilities
 - [x] Sound system
    - [x] as a class child of game controller
    - [x] functions to play sounds based on string in func called
@@ -41,6 +41,6 @@
    - [x] at least 3 of each type
 - [x] improve variety of heros
    - [x] each one should be different in playstyle
-- [ ] fix the turn around center tile, the instant death center tile, and the necro pickup
+- [x] fix the turn around center tile, the instant death center tile, and the necro pickup
 - [ ] better tutorial
 - [x] stage start countdown (shows stage number and theme and boss "final" stage)

@@ -5,7 +5,7 @@ class_name Consume_Skulls
 var sound
 
 var ani_sprite
-var item_frame = 91
+var item_frame = 92
 const can_pick_up = true
 
 func _ready():
