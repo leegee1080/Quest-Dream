@@ -119,6 +119,12 @@ const starting_lock_frame = 90
 func _ready():
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
+	if name == "Start TileH":
+		var close_sprite = TileClose_Animation.new(false, 0.25)
+		add_child(close_sprite)
+	if name == "Start TileV":
+		var close_sprite = TileClose_Animation.new(true, 0.25)
+		add_child(close_sprite)
 	generate_tile()
 
 func _init(new_type, new_theme, new_center, new_deco_number: int, chosen_sprite: int): #if chosen_sprite is -1 then rand gen sprite

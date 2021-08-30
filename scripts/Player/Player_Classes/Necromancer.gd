@@ -18,7 +18,7 @@ const t_turn_right = false
 const starting_attack_power = 2
 const starting_consumable_amt = 2
 const speed = 0.04
-const consumable_class = Consume_Skulls
+const consumable_class = Consume_Hearts
 
 var kills = 0
 

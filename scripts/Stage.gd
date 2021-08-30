@@ -12,6 +12,7 @@ var start_countdown = 4
 var start_countdown_timer
 
 var num_difficult_tiles: int = 2
+var num_end_tiles = 1 + (GlobalVars.current_stage_number/ 5)
 
 var current_game_state
 var previous_game_state
@@ -419,41 +420,51 @@ func place_starting_tiles():
 	#work on start tile
 	var start_tile_index = int(rand_range(0,potential_terminal_locations.size())) #so that the entry can be removed later insuring the end and start are not on the same tile
 	var start_tile_sprite_index = 0
+	var start_tile_name = "null"
 	picked_coord = potential_terminal_locations[start_tile_index]
 	if picked_coord[1].y == 1:
 		start_tile_sprite_index = 2
 		player.direction = Vector2(0,-1)
+		start_tile_name = "Start TileH"
 	elif picked_coord[1].y == rows_total:
 		start_tile_sprite_index = 3
 		player.direction = Vector2(0,1)
+		start_tile_name = "Start TileH"
 	elif picked_coord[1].x == 1:
 		start_tile_sprite_index = 0
 		player.direction = Vector2(-1,0)
+		start_tile_name = "Start TileV"
 	elif picked_coord[1].x == col_total:
 		start_tile_sprite_index = 1
 		player.direction = Vector2(1,0)
+		start_tile_name = "Start TileV"
 	start_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, start_tile_sprite_index)
-	start_tile.name = "Start Tile"
+	start_tile.name = start_tile_name
 	start_tile.is_terminal_tile = true
 	add_child(start_tile)
 	start_tile.place_tile(picked_coord[0])
 	potential_terminal_locations.remove(start_tile_index)
 	#work on end tile
-	var end_tile_sprite_index = 0
-	picked_coord = potential_terminal_locations[int(rand_range(0,potential_terminal_locations.size()))]
-	if picked_coord[1].y == 1:
-		end_tile_sprite_index = 3
-	elif picked_coord[1].y == rows_total:
-		end_tile_sprite_index = 2
-	elif picked_coord[1].x == 1:
-		end_tile_sprite_index = 1
-	elif picked_coord[1].x == col_total:
-		end_tile_sprite_index = 0
-	end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, end_tile_sprite_index)
-	end_tile.name = "End Tile"
-	end_tile.is_terminal_tile = true
-	add_child(end_tile)
-	end_tile.place_tile(picked_coord[0])
+	while num_end_tiles > 0:
+		var end_tile_sprite_index = 0
+		var end_tile_index = int(rand_range(0,potential_terminal_locations.size()))
+		picked_coord = potential_terminal_locations[end_tile_index]
+		if picked_coord in potential_terminal_locations:
+			if picked_coord[1].y == 1:
+				end_tile_sprite_index = 3
+			elif picked_coord[1].y == rows_total:
+				end_tile_sprite_index = 2
+			elif picked_coord[1].x == 1:
+				end_tile_sprite_index = 1
+			elif picked_coord[1].x == col_total:
+				end_tile_sprite_index = 0
+			end_tile = Tile.new(Tile_Enums.tile_directions_enum.terminal, chosen_level_theme, Tile_Enums.center_type_enum.none, 0, end_tile_sprite_index)
+			end_tile.name = "End Tile"
+			end_tile.is_terminal_tile = true
+			add_child(end_tile)
+			end_tile.place_tile(picked_coord[0])
+			num_end_tiles -=1
+			potential_terminal_locations.remove(end_tile_index)
 	#place preplaced tiles
 	if num_difficult_tiles > 1:
 		while num_difficult_tiles > 0:
