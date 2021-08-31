@@ -12,7 +12,7 @@ var start_countdown = 4
 var start_countdown_timer
 
 var num_difficult_tiles: int = 2
-var num_end_tiles = 1 + (GlobalVars.current_stage_number/ 5)
+var num_end_tiles = 1 + int((GlobalVars.current_stage_number/ 5))
 
 var current_game_state
 var previous_game_state

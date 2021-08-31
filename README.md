@@ -6,7 +6,7 @@
 
 ### prog todo:
 - [ ] Game save system that keeps track of player money earned
-- [ ] Main menu
+- [x] Main menu
    - [x] credits menu
    - [x] character select on new game
       - [x] sprites of each hero on each button
@@ -14,7 +14,7 @@
       - [x] clicking on a locked hero unlocks it and spends the correct money
    - [x] how to play button
    - [x] options menu to turn off music and/or sounds
-   - [ ] add some kind of hint to each hero choice with a description of each hero's abilities
+   - [x] add some kind of hint to each hero choice with a description of each hero's abilities
 - [x] Sound system
    - [x] as a class child of game controller
    - [x] functions to play sounds based on string in func called

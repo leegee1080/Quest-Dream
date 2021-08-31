@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Necromancer
 
-const sprite_frame = 9
+const sprite_frame = 8
 const string_name = "Necromancer"
 const unlock_cost = 200
 
