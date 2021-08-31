@@ -5,6 +5,7 @@
 
 
 ### prog todo:
+- [ ] Game save system that keeps track of player money earned
 - [ ] Main menu
    - [x] credits menu
    - [x] character select on new game

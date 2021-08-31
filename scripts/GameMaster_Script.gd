@@ -304,6 +304,8 @@ func _input(event):
 #					print(next_game_state)
 #					print(UiVars.buttons_dict)
 					return
+				if event.scancode == KEY_M:
+					GlobalVars.money_gained_total += 1000
 
 func create_stage(passed_theme):
 	GlobalVars.current_theme = chosen_level_theme
