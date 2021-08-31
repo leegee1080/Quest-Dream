@@ -305,7 +305,9 @@ func _input(event):
 #					print(UiVars.buttons_dict)
 					return
 				if event.scancode == KEY_M:
+					msg_node.run_msg("Money Added!")
 					GlobalVars.money_gained_total += 1000
+					get_tree().call_group("UI_Player_Info", "update_money")
 
 func create_stage(passed_theme):
 	GlobalVars.current_theme = chosen_level_theme
