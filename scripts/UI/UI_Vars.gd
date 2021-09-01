@@ -53,7 +53,6 @@ static func disable_button(button_container_name):
 	if button_container_name in UiVars.buttons_dict:
 		var list_to_check = UiVars.buttons_dict[button_container_name]
 		for button in list_to_check:
-			print(typeof(button))
 			if button == null or button.name == "ignore":
 				continue
 			button.clickable = false

@@ -78,8 +78,10 @@ func play(sound_name):
 
 func stop(sound_name):
 	if sound_name in audio_streams:
-		print("Stopping: " + sound_name)
-		audio_streams[sound_name].stop()
+		if audio_streams[sound_name].playing:
+			print("Stopping: " + sound_name)
+			audio_streams[sound_name].stop()
+			return
 		return
 	print("Sound does not exist: " + sound_name)
 
@@ -92,7 +94,7 @@ func stop_all_music():
 func mute_sounds(_sound_name, all_effects: bool, all_music: bool):
 	if _sound_name != null:
 		if _sound_name in audio_streams:
-			audio_streams[_sound_name].volume_db = -80
+			audio_streams[_sound_name].volume_db = -100
 			return
 		print("Sound does not exist: " + _sound_name)
 		return
@@ -100,12 +102,12 @@ func mute_sounds(_sound_name, all_effects: bool, all_music: bool):
 		for sound in audio_dict:
 			if sound in audio_streams:
 				if audio_dict[sound][0] == false:
-					audio_streams[sound].volume_db = -80
+					audio_streams[sound].volume_db = -100
 	if all_music == true:
 		for sound in audio_dict:
 			if sound in audio_streams:
 				if audio_dict[sound][0] == true:
-					audio_streams[sound].volume_db = -80
+					audio_streams[sound].volume_db = -100
 	return
 
 func unmute_sounds(_sound_name, all_effects: bool, all_music: bool):
