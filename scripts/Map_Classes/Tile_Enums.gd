@@ -32,7 +32,8 @@ enum center_type_enum{
 #	patrol,
 	impass,
 	key,
-	keygate
+	keygate,
+	web
 }
 const center_classes = {
 	center_type_enum.none: null, #there is never going to be a class here
@@ -48,7 +49,8 @@ const center_classes = {
 #	center_type_enum.patrol: null,
 	center_type_enum.impass: null, #there is never going to be a class here
 	center_type_enum.key: Money_Key,
-	center_type_enum.keygate: Safe_Keygate
+	center_type_enum.keygate: Safe_Keygate,
+	center_type_enum.web: Boss_WebEnemySpawn
 }
 
 #Chances To Spawn

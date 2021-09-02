@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Map_Enemy
+class_name Map_Boss
 
 var ani_dict = {
 	"walk": null,
@@ -54,13 +54,13 @@ var can_check_next_tile = true
 var ani_sprite
 
 func _ready():
-	add_to_group("minion_grp")
 	add_to_group("fast_forward_grp")
 	if GlobalVars.main_node_ref.is_fast_forwarded:
 		walk_timer_wait_time = 0.01
 	
 	direction = walk_dir_dict.get(int(rand_range(0, walk_dir_dict.size())))
 	health = type_class.starting_health
+	walk_timer_wait_time = type_class.speed
 	position = starting_pos
 	walk_timer = Timer.new()
 	add_child(walk_timer)
@@ -69,18 +69,20 @@ func _ready():
 	walk_timer.set_one_shot(false) # Make sure it loops
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
+	
+	GlobalVars.boss_node_ref.map_avatar_node
+	
 	setup_animations()
 
-func _init(chosen_enemy_enum, spawn_pos):
+func _init(spawn_pos):
 	starting_pos = spawn_pos
-	type_class = Enemy_Enums.enemy_types_dict.get(chosen_enemy_enum).new()
+	type_class = GlobalVars.boss_node_ref
 #	add_child(type_class)
 	ani_sprite = AnimatedSprite.new()
 	ani_sprite.set_sprite_frames(load("res://assets/visuals/enemy_frames.tres"))
 	add_child(ani_sprite)
 	ani_sprite.set_frame(type_class.sprite_frame)
 	playarea = GlobalVars.main_node_ref.max_starting_playarea
-	map_move_speed = type_class.speed
 
 func setup_animations():
 	for ani in type_class.special_animations_dict:
@@ -153,7 +155,8 @@ func check_map_edge():
 
 func check_player_current_tile():
 	if position.distance_to(GlobalVars.player_node_ref.position) <= 5:
-		var fight_class = GlobalVars.player_node_ref.type_class.fight_class.new(self, position)
+		var fight_class = Fight_Normal.new(self, position)
+#		var fight_class = GlobalVars.player_node_ref.type_class.fight_class.new(self, position)
 		GlobalVars.main_node_ref.add_child(fight_class)
 		return
 #	if current_tile == null:
@@ -209,6 +212,10 @@ func turn_around():
 	center_interval_count = 2
 	return
 
+func leave():
+	queue_free()
+	pass
+
 func take_hit(damage):
 	if is_dead:
 		return
@@ -217,21 +224,12 @@ func take_hit(damage):
 	print("enemy health: " + str(health))
 	check_for_death()
 
-func instant_kill():
-	is_dead = true
-	walk_toggle()
-	GlobalVars.player_type_class_storage.kills += 1
-	GlobalVars.audio_player.play("miniondeath")
-	print("enemy dead")
-	ani_dict.death.play_animation()
-	pass
-
 func check_for_death():
 	if health <= 0:
 		is_dead = true
 		walk_toggle()
-		GlobalVars.player_type_class_storage.kills += 1
-		GlobalVars.audio_player.play("miniondeath")
 		print("enemy dead")
 		ani_dict.death.play_animation()
+		GlobalVars.boss_node_ref.avatar_killed()
+		queue_free()
 	pass

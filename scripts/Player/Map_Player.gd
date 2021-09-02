@@ -34,7 +34,7 @@ var playarea
 var exit_tile_pos
 
 var can_walk = false
-var direction: Vector2 = Vector2(0,0)
+var direction = Vector2(0,0)
 
 var map_move_speed = .3
 var turn_around_damage = 1
@@ -185,7 +185,6 @@ func check_map_edge():
 	var y_test = [playarea[0][1],playarea[1][1]]
 	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
 		if check_dist_exit():
-			ani_dict.happy.play_animation()
 			get_parent().win_round()
 			return true
 		turn_around(outer_wall_damage)
@@ -193,6 +192,8 @@ func check_map_edge():
 	return false
 
 func check_dist_exit():
+	if exit_tile_pos == null:
+		return false
 	if position.distance_to(exit_tile_pos) <= 16:
 		return true
 	return false

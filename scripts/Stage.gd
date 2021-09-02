@@ -11,8 +11,8 @@ var round_start_time = 5.0
 var start_countdown = 4
 var start_countdown_timer
 
-var num_difficult_tiles: int = 2
-var num_end_tiles = 1 + int((GlobalVars.current_stage_number/ 5))
+var num_difficult_tiles = int(0.5 * GlobalVars.current_stage_number)
+var num_end_tiles = 1 + int(GlobalVars.current_stage_number / 5)
 
 var current_game_state
 var previous_game_state
@@ -38,6 +38,11 @@ const menu_button_loc_dict = {
 	"back": [Vector2(49,301), 0, 1],
 	"quit": [Vector2(119,301), 6, 7],
 	"fastforward": [Vector2(189,301), 2, 3]
+}
+const boss_menu_button_loc_dict = {
+	#fill with the locations to instance the button objects
+	"back": [Vector2(49,301), 0, 1],
+	"quit": [Vector2(119,301), 6, 7]
 }
 
 var pause_menu_sprite = load("res://assets/visuals/pause_menu_bg.png")
@@ -141,7 +146,6 @@ func _ready():
 	gamestate_timer.set_one_shot(true)
 	gamestate_timer.connect("timeout", self, "comunicate_winstate_gamemaster")
 	#setup the clickable play area and starting tiles
-	num_difficult_tiles = int(0.5 * GlobalVars.current_stage_number)
 	setup_coord_array()
 	setup_tile_dict()
 	generate_premade_center_tile_pool()
@@ -150,7 +154,10 @@ func _ready():
 	#setup the player's character
 	add_child(player)
 	player.playarea = max_starting_playarea
-	player.exit_tile_pos = end_tile.position
+	if get_parent().is_boss_stage:
+		player.exit_tile_pos = null
+	else:
+		player.exit_tile_pos = end_tile.position
 	player.name = "Player"
 	player.position = start_tile.position
 	#generate the heads-up for collectables
@@ -231,7 +238,10 @@ func ui_menu():
 	pause_menu.texture = pause_menu_sprite
 	pause_menu.z_index = 15
 	add_child(pause_menu)
-	UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
+	if get_parent().is_boss_stage:
+		UI_Vars.generate_button(boss_menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
+	else:
+		UI_Vars.generate_button(menu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "pause_menu", menu_button_z_index, self)
 	ui_pause()
 	UI_Vars.hide_buttons("main")
 
@@ -261,6 +271,11 @@ func round_start_countdown():
 func start_round(): #just for the first time start, can add more here if needed
 	current_game_state = game_state.run
 	player.walk_toggle()
+	if get_parent().is_boss_stage:
+		randomize()
+		Boss_Enums.boss_theme_dict[GlobalVars.current_theme].shuffle()
+		GlobalVars.boss_node_ref = Boss_Enums.boss_theme_dict[GlobalVars.current_theme][0].new()
+		add_child(GlobalVars.boss_node_ref)
 	pass
 
 func lose_round():
@@ -283,6 +298,7 @@ func win_round():
 		get_parent().msg_node_subtext.run_msg("Keep Going!")
 	if current_game_state == game_state.run:
 		player.walk_toggle()
+	GlobalVars.player_node_ref.ani_dict.happy.play_animation()
 	print("Round Win")
 	current_game_state = game_state.win
 	gamestate_timer.start()
@@ -445,7 +461,7 @@ func place_starting_tiles():
 	start_tile.place_tile(picked_coord[0])
 	potential_terminal_locations.remove(start_tile_index)
 	#work on end tile
-	while num_end_tiles > 0:
+	while num_end_tiles > 0 and get_parent().is_boss_stage == false:
 		var end_tile_sprite_index = 0
 		var end_tile_index = int(rand_range(0,potential_terminal_locations.size()))
 		picked_coord = potential_terminal_locations[end_tile_index]
@@ -466,10 +482,10 @@ func place_starting_tiles():
 			num_end_tiles -=1
 			potential_terminal_locations.remove(end_tile_index)
 	#place preplaced tiles
-	if num_difficult_tiles > 1:
+	if num_difficult_tiles > 1 and get_parent().is_boss_stage == false:
 		while num_difficult_tiles > 0:
 			picked_coord = clickable_coords_list[int(rand_range(0,clickable_coords_list.size()))]
-			if start_tile.position.distance_to(picked_coord[3]) > 48 and end_tile.position.distance_to(picked_coord[3]) > 48:
+			if start_tile.position.distance_to(picked_coord[3]) > 48 and (num_end_tiles == 0 or end_tile.position.distance_to(picked_coord[3]) > 48):
 				randomize()
 				GlobalVars.tile_path_type_chance_array.shuffle()
 				tile = Tile.new(GlobalVars.tile_path_type_chance_array[0], chosen_level_theme, pick_premade_tile(), 0, -1)

@@ -1,7 +1,7 @@
-class_name Goblin
+class_name Minion_Spider
 
-var string_name = "Goblin"
-var sprite_frame = 21
+var string_name = "Little Spider"
+var sprite_frame = 14
 
 const special_animations_dict = {
 	"walk": "wiggle_in_place",
@@ -15,6 +15,6 @@ var t_turn_right = false
 
 #battle vars
 var damage = 1
-var starting_health = 5
-var speed = 0.04
-var reward = 5
+var starting_health = 1
+var speed = 0.02
+var reward = 1

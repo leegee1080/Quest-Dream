@@ -32,7 +32,7 @@ func _ready():
 
 func spawn():
 	#Enemy_Enums.enemy_types_enum.goblin = 1
-	var temp_enemy = Map_Enemy.new(1, get_parent().position)
+	var temp_enemy = Map_Enemy.new(0, get_parent().position)
 	GlobalVars.main_node_ref.add_child(temp_enemy)
 	temp_enemy.name = "enemy"
 	temp_enemy.walk_toggle()
