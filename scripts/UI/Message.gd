@@ -10,7 +10,7 @@ var msg_step_timer
 const msg_step_time = 0.01
 
 var midstop_timer
-const midstop_time = 1.5
+const midstop_time = 2
 
 var starting_scroll_speed = 10
 var starting_speed_mod = 0.12
