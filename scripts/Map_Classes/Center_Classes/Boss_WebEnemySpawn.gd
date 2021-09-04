@@ -15,6 +15,10 @@ var boss_avatar = 0
 
 var action_array = [
 	"spawn_avatar",
+	"spawn_avatar",
+	"spawn_avatar",
+	"spawn_avatar",
+	"spawn_avatar",
 	"spawn_minion",
 	"slow_player"
 ]
@@ -33,25 +37,21 @@ func _ready():
 	ani_sprite.set_frame(item_frame)
 	add_child(ani_sprite)
 	
-	if action_array[0] == "spawn_avatar":
-		spawn_timer = Timer.new()
-		spawn_timer.name = "Start Timer"
-		add_child(spawn_timer)
-		spawn_timer.add_to_group("timers")
-		spawn_timer.set_wait_time(GlobalVars.main_node_ref.round_start_time)
-		spawn_timer.set_one_shot(false)
-		spawn_timer.connect("timeout", self, "spawnA")
-		spawn_timer.start()
-		
-	if action_array[0] == "spawn_minion":
-		spawn_timer = Timer.new()
-		spawn_timer.name = "Start Timer"
-		add_child(spawn_timer)
-		spawn_timer.add_to_group("timers")
-		spawn_timer.set_wait_time(GlobalVars.main_node_ref.round_start_time)
-		spawn_timer.set_one_shot(false)
-		spawn_timer.connect("timeout", self, "spawnM")
-		spawn_timer.start()
+	if GlobalVars.boss_node_ref.map_avatar_node != null:
+		action_array = ["spawn_minion","spawn_minion","spawn_minion", "slow_player"]
+	
+	if action_array[0] == "slow_player":
+		return
+	
+	spawn_timer = Timer.new()
+	spawn_timer.name = "Start Timer"
+	add_child(spawn_timer)
+	spawn_timer.add_to_group("timers")
+	spawn_timer.set_wait_time(GlobalVars.main_node_ref.round_start_time)
+	spawn_timer.set_one_shot(false)
+	spawn_timer.connect("timeout", self, "spawn")
+	spawn_timer.start()
+	
 	
 	#slow player
 
@@ -64,19 +64,21 @@ func finish_pickup_animation():
 	get_parent().center_object_enum = 0
 	queue_free()
 
-func spawnA():
-	var temp_enemy = Map_Boss.new(get_parent().position)
-	GlobalVars.main_node_ref.add_child(temp_enemy)
-	temp_enemy.name = "boss_avatar"
-	get_parent().center_object_enum = 0
-	queue_free()
-	pass
-
-func spawnM():
-	var temp_enemy = Map_Enemy.new(minion, get_parent().position)
-	GlobalVars.main_node_ref.add_child(temp_enemy)
-	temp_enemy.name = "enemy"
-	temp_enemy.walk_toggle()
-	get_parent().center_object_enum = 0
-	queue_free()
-	pass
+func spawn():
+	if action_array[0] == "spawn_avatar" and GlobalVars.boss_node_ref.map_avatar_node == null:
+		var temp_enemy = Map_Boss.new(get_parent().position)
+		GlobalVars.main_node_ref.add_child(temp_enemy)
+		GlobalVars.boss_node_ref.map_avatar_node = temp_enemy
+		temp_enemy.name = "boss_avatar"
+		temp_enemy.walk_toggle()
+		get_parent().center_object_enum = 0
+		queue_free()
+		return
+	if action_array[0] == "spawn_avatar":
+		var temp_enemy = Map_Enemy.new(minion, get_parent().position)
+		GlobalVars.main_node_ref.add_child(temp_enemy)
+		temp_enemy.name = "enemy"
+		temp_enemy.walk_toggle()
+		get_parent().center_object_enum = 0
+		queue_free()
+		return

@@ -125,7 +125,9 @@ func _ready():
 	if name == "Start TileV":
 		var close_sprite = TileClose_Animation.new(true, 0.25)
 		add_child(close_sprite)
+	
 	generate_tile()
+	pass
 
 func _init(new_type, new_theme, new_center, new_deco_number: int, chosen_sprite: int): #if chosen_sprite is -1 then rand gen sprite
 	direction_enum = new_type
@@ -187,28 +189,38 @@ func place_deco():
 		deco.translate(Vector2(rngx,rngy))
 	pass
 
+func unlock():
+	if is_locked == false:
+		return
+	is_locked = false
+	current_lock_frame = 3
+	lock_timer.start()
+	pass
+
 func lock_tile():
 	if is_locked == true:
 		return
 	is_locked = true
-	lock_sprite = AnimatedSprite.new()
-	lock_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
-	add_child(lock_timer)
-	lock_timer.set_wait_time(0.1)
-	lock_timer.set_one_shot(false)
-	lock_timer.connect("timeout", self, "change_lock_animation")
 	lock_timer.start()
 	lock_sprite.set_frame(starting_lock_frame)
-	add_child(lock_sprite)
+	current_lock_frame = 0
 	pass
 
 func change_lock_animation():
-	if current_lock_frame < (total_lock_frames):
-		lock_sprite.set_frame(starting_lock_frame + current_lock_frame)
-		current_lock_frame +=1
+	if is_locked == true:
+		if current_lock_frame < (total_lock_frames):
+			lock_sprite.set_frame(starting_lock_frame + current_lock_frame)
+			current_lock_frame +=1
+			return
+		lock_timer.stop()
 		return
-	lock_timer.stop()
-	pass
+	if is_locked == false:
+		if current_lock_frame > -1:
+			current_lock_frame -=1
+			lock_sprite.set_frame(starting_lock_frame + current_lock_frame)
+			return
+		lock_timer.stop()
+		return
 
 func rot_value_changer(current_player_dir: Vector2, tee_option):
 	var new_rot = current_player_dir
@@ -238,4 +250,13 @@ func place_tile(new_loc: Vector2):
 	self.position.y = new_loc.y
 	place_deco()
 	is_in_play = true
+	lock_sprite = AnimatedSprite.new()
+	lock_sprite.set_sprite_frames(load("res://assets/visuals/tile_frames.tres"))
+	add_child(lock_timer)
+	lock_timer.stop()
+	lock_timer.set_wait_time(0.1)
+	lock_timer.set_one_shot(false)
+	lock_timer.connect("timeout", self, "change_lock_animation")
+	add_child(lock_sprite)
+	lock_sprite.set_frame(102)
 	pass

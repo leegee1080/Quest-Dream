@@ -267,7 +267,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Map_Enemy",
 "language": "GDScript",
-"path": "res://scripts/Player/Player_Classes/Map_Enemy.gd"
+"path": "res://scripts/Enemy/Map_Enemy.gd"
 }, {
 "base": "Node2D",
 "class": "Map_Player",

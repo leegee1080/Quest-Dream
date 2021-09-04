@@ -71,7 +71,7 @@ func _ready():
 
 func play(sound_name):
 	if sound_name in audio_streams:
-		print("Playing: " + sound_name)
+#		print("Playing: " + sound_name)
 		audio_streams[sound_name].play()
 		return
 	print("Sound does not exist: " + sound_name)
@@ -79,7 +79,7 @@ func play(sound_name):
 func stop(sound_name):
 	if sound_name in audio_streams:
 		if audio_streams[sound_name].playing:
-			print("Stopping: " + sound_name)
+#			print("Stopping: " + sound_name)
 			audio_streams[sound_name].stop()
 			return
 		return

@@ -52,7 +52,7 @@ const pause_menu_loc = Vector2(152,273)
 ##play area vars
 var ingame_tilegroup_Node = Node2D.new()
 var can_player_place_tiles
-# [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord]
+# [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord, name of coord converted to a vector var]
 var clickable_coords_list = []
 var clickable_area_was_clicked = false
 var potential_terminal_locations = []
@@ -491,6 +491,7 @@ func place_starting_tiles():
 				tile = Tile.new(GlobalVars.tile_path_type_chance_array[0], chosen_level_theme, pick_premade_tile(), 0, -1)
 				tile.name = "Premade Tile: " + str(num_difficult_tiles)
 				tile_dict[picked_coord[2]] = tile
+				tile.tile_loc_clickable_area = picked_coord[4]
 				ingame_tilegroup_Node.add_child(tile)
 				tile.place_tile(picked_coord[3])
 				tile.lock_tile()

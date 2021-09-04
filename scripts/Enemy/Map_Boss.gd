@@ -54,9 +54,6 @@ var can_check_next_tile = true
 var ani_sprite
 
 func _ready():
-	add_to_group("fast_forward_grp")
-	if GlobalVars.main_node_ref.is_fast_forwarded:
-		walk_timer_wait_time = 0.01
 	
 	direction = walk_dir_dict.get(int(rand_range(0, walk_dir_dict.size())))
 	health = type_class.starting_health
@@ -70,7 +67,7 @@ func _ready():
 	walk_timer.connect("timeout", self, "walk")
 	walk_timer.stop()
 	
-	GlobalVars.boss_node_ref.map_avatar_node
+	GlobalVars.boss_node_ref.map_avatar_node = self
 	
 	setup_animations()
 
@@ -93,17 +90,6 @@ func setup_animations():
 		temp_ani_class.name = ani
 		add_child(temp_ani_class)
 		ani_dict[ani] = temp_ani_class
-
-func change_dir(new_dir):
-	if new_dir >= 0 and new_dir < walk_dir.size():
-		direction = walk_dir_dict.get(new_dir)
-		return
-	direction = Vector2(0,0)
-	return
-
-func fast_forward():
-	walk_timer.set_wait_time(0.004)
-	pass
 
 func walk_toggle():
 	if is_dead:
@@ -130,28 +116,7 @@ func walk():
 	if is_dead:
 		return
 	check_player_current_tile()
-	translate(direction*map_move_speed)
-	walk_interval_count -= map_move_speed
-	if center_interval_count == 1:
-		if check_map_edge() == true:
-			return
-		check_tile()
-	if center_interval_count <= 0:
-		center_interval_count = center_interval
-		check_center_tile()
-	if walk_interval_count <= 0:
-		walk_interval_count = walk_interval
-		center_interval_count -= 1
-		can_check_next_tile = true
 	return
-
-func check_map_edge():
-	var x_test = [playarea[0][0],playarea[1][0]]
-	var y_test = [playarea[0][1],playarea[1][1]]
-	if (position.x < x_test[0] or position.x > x_test[1]) or (position.y < y_test[0] or position.y > y_test[1]):
-		turn_around()
-		return true
-	return false
 
 func check_player_current_tile():
 	if position.distance_to(GlobalVars.player_node_ref.position) <= 5:
@@ -159,58 +124,6 @@ func check_player_current_tile():
 #		var fight_class = GlobalVars.player_node_ref.type_class.fight_class.new(self, position)
 		GlobalVars.main_node_ref.add_child(fight_class)
 		return
-#	if current_tile == null:
-#		return
-#	if current_tile == GlobalVars.player_node_ref.current_tile:
-#		print("enemy fight")
-##		walk_toggle()
-##		GlobalVars.player_node_ref.walk_toggle()
-##		GlobalVars.player_node_ref.take_hit(type_class.damage)
-##		queue_free()
-#		var fight_class = Fight.new(self, current_tile.position)
-#		GlobalVars.main_node_ref.add_child(fight_class)
-#		return
-#	pass
-
-func check_tile():
-	if is_dead:
-		return
-	var tile_coords_list = get_parent().clickable_coords_list
-	var current_tile_dict = get_parent().tile_dict
-	for loc in tile_coords_list:
-				var x_test = loc[0]
-				var y_test = loc[1]
-				if position.x >= x_test[0] and position.x < x_test[1] and position.y >= y_test[0] and position.y < y_test[1]:
-					if current_tile_dict.get(loc[2]) != null:
-						if current_tile_dict.get(loc[2]).is_impass_tile == true and can_check_next_tile:
-							can_check_next_tile = false
-							turn_around()
-							return
-						if current_tile_dict.get(loc[2]).rot_value_changer(direction, type_class.t_turn_right) == null and can_check_next_tile:
-							can_check_next_tile = false
-							turn_around()
-							return
-						if current_tile_dict.get(loc[2]).is_locked != true:
-							current_tile_dict.get(loc[2]).lock_tile()
-						current_tile = current_tile_dict.get(loc[2])
-						return
-					elif current_tile_dict.get(loc[2]) == null and can_check_next_tile:
-						can_check_next_tile = false
-						turn_around()
-						return
-	return
-
-func check_center_tile():
-	if current_tile == null:
-		return
-	position = current_tile.position #to make sure the grid stays aligned
-	direction = current_tile.rot_value_changer(direction, true)
-	pass
-
-func turn_around():
-	direction = (direction *-1) #turn the player around
-	center_interval_count = 2
-	return
 
 func leave():
 	queue_free()

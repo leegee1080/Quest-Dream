@@ -49,6 +49,6 @@ func _input(event):
 				return
 
 func click_btn():
-	print("Button pressed: " + local_name)
+#	print("Button pressed: " + local_name)
 	emit_signal("ui_sig", local_name, self)
 	return

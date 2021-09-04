@@ -189,7 +189,10 @@ func check_tile():
 							return
 						if current_tile_dict.get(loc[2]).is_locked != true:
 							current_tile_dict.get(loc[2]).lock_tile()
-						current_tile = current_tile_dict.get(loc[2])
+						if current_tile == null or current_tile != current_tile_dict.get(loc[2]):
+							if current_tile != null:
+								current_tile.unlock()
+							current_tile = current_tile_dict.get(loc[2])
 						return
 					elif current_tile_dict.get(loc[2]) == null and can_check_next_tile:
 						can_check_next_tile = false

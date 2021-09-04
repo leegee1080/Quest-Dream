@@ -17,7 +17,7 @@ static func action():
 	current_tile = GlobalVars.player_node_ref.current_tile
 	hero_tile_type = GlobalVars.player_type_class_storage.tile_direction
 	hero_tile_center = GlobalVars.player_type_class_storage.tile_center
-
+	
 	next_tile_coord = Vector2(current_tile.tile_loc_clickable_area.x + (GlobalVars.player_node_ref.direction.x *-1), current_tile.tile_loc_clickable_area.y + (GlobalVars.player_node_ref.direction.y *-1))
 	next_tile_coord_str = str(next_tile_coord.x) +","+ str(next_tile_coord.y)
 	if next_tile_coord_str in GlobalVars.main_node_ref.tile_dict:
@@ -30,7 +30,6 @@ static func action():
 			if GlobalVars.main_node_ref.tile_dict[next_tile_coord_str].is_player_built == true:
 				return false
 			next_tile_node = GlobalVars.main_node_ref.tile_dict[next_tile_coord_str]
-			print(next_tile_node.name)
 			old_tile_coords = next_tile_node.position
 			next_tile_node.queue_free()
 			pass

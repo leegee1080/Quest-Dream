@@ -39,7 +39,6 @@ static func action():
 			if GlobalVars.main_node_ref.tile_dict[next_tile_coord_str].is_player_built == true:
 				return false
 			next_tile_node = GlobalVars.main_node_ref.tile_dict[next_tile_coord_str]
-			print(next_tile_node.name)
 			old_tile_coords = next_tile_node.position
 			next_tile_node.queue_free()
 			pass

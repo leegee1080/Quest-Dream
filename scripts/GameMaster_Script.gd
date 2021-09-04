@@ -168,7 +168,7 @@ func middle_scene_trans():
 		add_child(current_class_select_screen)
 		return
 	if next_game_state == game_state.credits:
-		print("credits menu open")
+#		print("credits menu open")
 		current_game_state = game_state.credits
 		UiVars.hide_buttons("mainmenu_buttons")
 		UiVars.hide_buttons("mainmenu_continue_button")
@@ -177,7 +177,7 @@ func middle_scene_trans():
 		UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
 		return
 	if next_game_state == game_state.tutorial:
-		print("tutoral menu open")
+#		print("tutoral menu open")
 		current_game_state = game_state.credits
 		UiVars.hide_buttons("mainmenu_buttons")
 		UiVars.hide_buttons("mainmenu_continue_button")
@@ -186,7 +186,7 @@ func middle_scene_trans():
 		UiVars.generate_button(creditsmenu_button_loc_dict, "res://assets/visuals/small_button_frames.tres", Vector2(66,66), "creditmenu_button", mainmenu_button_z_index, self)
 		return
 	if next_game_state == game_state.options:
-		print("options menu open")
+#		print("options menu open")
 		current_game_state = game_state.options
 		UiVars.hide_buttons("mainmenu_buttons")
 		UiVars.hide_buttons("mainmenu_continue_button")
@@ -198,7 +198,7 @@ func middle_scene_trans():
 func end_scene_trans():
 	UiVars.is_trans = false
 	if next_game_state == game_state.newgame:
-		print("new game")
+#		print("new game")
 		current_game_state = game_state.stage
 		return
 #	if next_game_state == game_state.continuegame:
@@ -206,7 +206,7 @@ func end_scene_trans():
 #		current_game_state = game_state.stage
 #		return
 	if next_game_state == game_state.win:
-		print("cont game")
+#		print("cont game")
 		current_game_state = game_state.stage
 		return
 	pass
@@ -300,14 +300,15 @@ func _input(event):
 					return
 				if event.scancode == KEY_SPACE:
 					msg_node.run_msg(str(current_game_state))
-#					print(current_game_state)
-#					print(next_game_state)
-#					print(UiVars.buttons_dict)
 					return
 				if event.scancode == KEY_M:
 					msg_node.run_msg("Money Added!")
 					GlobalVars.money_gained_total += 1000
 					get_tree().call_group("UI_Player_Info", "update_money")
+				if event.scancode == KEY_H:
+					msg_node.run_msg("Health Added!")
+					GlobalVars.player_consumable_amount += 1000
+					get_tree().call_group("UI_Player_Info", "update_consumable")
 
 func create_stage(passed_theme):
 	GlobalVars.current_theme = chosen_level_theme
@@ -330,7 +331,7 @@ func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 func exit_to_menu():
 	GlobalVars.audio_player.play("menusong")
 	next_game_state = game_state.mainmenu
-	print("go back to main menu")
+#	print("go back to main menu")
 	start_scene_trans()
 	pass
 
@@ -338,13 +339,13 @@ func lose_stage():
 	GlobalVars.player_type_class_storage.queue_free()
 	GlobalVars.player_type_class_storage = null
 	next_game_state = game_state.lose
-	print("You died! Go back to main menu")
+#	print("You died! Go back to main menu")
 	start_scene_trans()
 	pass
 
 func win_stage():
 	GlobalVars.current_stage_number += 1
 	next_game_state = game_state.win
-	print("You continue on!")
+#	print("You continue on!")
 	start_scene_trans()
 	pass
