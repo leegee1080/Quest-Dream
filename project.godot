@@ -95,11 +95,6 @@ _global_script_classes=[ {
 "path": "res://scripts/Enemy/Boss_Collection/Boss_Forest_Spider.gd"
 }, {
 "base": "Node2D",
-"class": "Boss_Room",
-"language": "GDScript",
-"path": "res://scripts/Map_Classes/Boss_Room.gd"
-}, {
-"base": "Node2D",
 "class": "Boss_WebEnemySpawn",
 "language": "GDScript",
 "path": "res://scripts/Map_Classes/Center_Classes/Boss_WebEnemySpawn.gd"
@@ -325,11 +320,6 @@ _global_script_classes=[ {
 "path": "res://scripts/Map_Classes/Room_Enums.gd"
 }, {
 "base": "Node2D",
-"class": "Room_Player",
-"language": "GDScript",
-"path": "res://scripts/Player/Room_Player.gd"
-}, {
-"base": "Node2D",
 "class": "Safe_Keygate",
 "language": "GDScript",
 "path": "res://scripts/Map_Classes/Center_Classes/Safe_Keygate.gd"
@@ -447,7 +437,6 @@ _global_script_class_icons={
 "Berserker": "",
 "Boss_Enums": "",
 "Boss_Forest_Spider": "",
-"Boss_Room": "",
 "Boss_WebEnemySpawn": "",
 "Btn": "",
 "Class_Select_Screen": "",
@@ -493,7 +482,6 @@ _global_script_class_icons={
 "Player_Enums": "",
 "Ranger": "",
 "Room_Enums": "",
-"Room_Player": "",
 "Safe_Keygate": "",
 "Safe_Reverse": "",
 "Safe_Switch": "",
@@ -520,7 +508,8 @@ _global_script_class_icons={
 
 config/name="Quest Dream"
 run/main_scene="res://nodes/GameMaster.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://assets/Quest Dream Logo.png"
+config/icon="res://favicon.png"
 
 [autoload]
 
