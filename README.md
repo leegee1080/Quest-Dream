@@ -27,6 +27,11 @@
    - [x] each level has changing tiles (keys and doors, spikes that come up and go away)
    - [x] play a happy animation for enemies and player at triggered points
    - [ ] boss battle on each 5th stage. (i.e. boss flies around and blows stuff up/ replaces tiles, lands, then the player can run to him for a hit)
+      - [x] forest boss
+      - [x] mountain boss
+      - [ ] swamp boss
+      - [ ] grave boss
+      - [ ] final boss
    - [ ] end to the game after the final boss
 
 ### art todo:

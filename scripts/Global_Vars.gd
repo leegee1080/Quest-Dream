@@ -13,7 +13,7 @@ var audio_player
 var effects_muted: bool
 var music_muted: bool
 
-var current_stage_number: int = 1
+var current_stage_number: int = 5
 const difficulty_increment = 0.5
 var current_theme = Tile_Enums.tile_themes_enum.castle
 

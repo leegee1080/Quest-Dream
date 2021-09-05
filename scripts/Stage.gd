@@ -54,6 +54,8 @@ var ingame_tilegroup_Node = Node2D.new()
 var can_player_place_tiles
 # [[xmin, xmax],[ymin, ymax], name of coord, middle vector of coord, name of coord converted to a vector var]
 var clickable_coords_list = []
+#Vector(x,y): [[xmin, xmax],[ymin, ymax], middle vector of coord, coord str name]
+var vector_index_coords_dict = {}
 var clickable_area_was_clicked = false
 var potential_terminal_locations = []
 var start_tile
@@ -420,6 +422,7 @@ func setup_coord_array():
 					potential_terminal_locations.append([Vector2(current_x-8, current_y+24),coord_name_vector])
 			#add an array of usuable coords for placing tiles in play area
 			clickable_coords_list.append([[current_x,current_x+48],[current_y,current_y+48],coord_name, Vector2(current_x+24, current_y+24), Vector2(col,row)])
+			vector_index_coords_dict[Vector2(col,row)] = [[current_x,current_x+48], [current_y,current_y+48], Vector2(current_x+24, current_y+24), coord_name]
 			current_y += 48
 			row -= 1
 		current_x += 48

@@ -280,7 +280,8 @@ func ui_func(new_name, _btn_node_ref): #checks which button is pressed
 
 func ui_new():
 	next_game_state = game_state.newgame
-	GlobalVars.current_stage_number = 1
+	if cheats == false:
+		GlobalVars.current_stage_number = 1
 	if GlobalVars.player_type_class_storage != null:
 		GlobalVars.player_type_class_storage.queue_free()
 		GlobalVars.player_type_class_storage = null
