@@ -169,8 +169,9 @@ func check_map_edge():
 func check_dist_exit():
 	if exit_tile_pos == null:
 		return false
-	if position.distance_to(exit_tile_pos) <= 16:
-		return true
+	for node in exit_tile_pos:
+		if position.distance_to(node.position) <= 16:
+			return true
 	return false
 
 func check_tile():

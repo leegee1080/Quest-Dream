@@ -58,6 +58,7 @@ var clickable_area_was_clicked = false
 var potential_terminal_locations = []
 var start_tile
 var end_tile
+var end_tile_loc_array = []
 var tile_dict = {} #this is a dict more readable collection of tiles (string: tileobject)
 const starting_playarea_coord = [32,32] #the center x y of the starting top left corner of the play area
 const tile_size = 48
@@ -157,7 +158,7 @@ func _ready():
 	if get_parent().is_boss_stage:
 		player.exit_tile_pos = null
 	else:
-		player.exit_tile_pos = end_tile.position
+		player.exit_tile_pos = end_tile_loc_array
 	player.name = "Player"
 	player.position = start_tile.position
 	#generate the heads-up for collectables
@@ -481,6 +482,7 @@ func place_starting_tiles():
 			end_tile.place_tile(picked_coord[0])
 			num_end_tiles -=1
 			potential_terminal_locations.remove(end_tile_index)
+			end_tile_loc_array.append(end_tile)
 	#place preplaced tiles
 	if num_difficult_tiles > 1 and get_parent().is_boss_stage == false:
 		while num_difficult_tiles > 0:
@@ -495,6 +497,7 @@ func place_starting_tiles():
 				ingame_tilegroup_Node.add_child(tile)
 				tile.place_tile(picked_coord[3])
 				tile.lock_tile()
+				tile.is_preplaced = true
 			num_difficult_tiles -= 1
 
 	#create the starting queue

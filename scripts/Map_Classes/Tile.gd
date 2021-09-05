@@ -103,6 +103,7 @@ var deco_list = []
 var is_impass_tile = false
 var is_in_play = false
 var is_player_built = false
+var is_preplaced = false
 var is_terminal_tile = false
 
 #check sprite sheet for directions
@@ -190,7 +191,7 @@ func place_deco():
 	pass
 
 func unlock():
-	if is_locked == false:
+	if is_locked == false or is_preplaced:
 		return
 	is_locked = false
 	current_lock_frame = 3
