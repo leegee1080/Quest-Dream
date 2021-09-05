@@ -13,20 +13,22 @@ centered = false
 margin_left = 65.0
 margin_top = 90.0
 margin_right = 1504.0
-margin_bottom = 2396.0
+margin_bottom = 2231.0
 rect_scale = Vector2( 0.12, 0.12 )
 custom_fonts/font = ExtResource( 1 )
 text = "A Game by:
 Moist Apps
 
-Moist Apps is:
-Mitch Greene
+
 
 Sprites:
 Jerom
 
 Sound Effects:
-Juhani Junkala"
+Juhani Junkala
+
+Font:
+heaven castro"
 align = 1
 valign = 1
 __meta__ = {
