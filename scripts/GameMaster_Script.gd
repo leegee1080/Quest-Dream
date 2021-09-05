@@ -329,6 +329,7 @@ func generate_tile_chance_arrays(array_to_check, chance_array_to_build):
 	pass
 
 func exit_to_menu():
+	GlobalVars.audio_player.stop_all_music()
 	GlobalVars.audio_player.play("menusong")
 	next_game_state = game_state.mainmenu
 #	print("go back to main menu")
@@ -345,7 +346,12 @@ func lose_stage():
 
 func win_stage():
 	GlobalVars.current_stage_number += 1
-	next_game_state = game_state.win
+	if GlobalVars.current_stage_number == 26:
+		next_game_state = game_state.mainmenu
+		GlobalVars.audio_player.stop_all_music()
+		GlobalVars.audio_player.play("menusong")
+	else:
+		next_game_state = game_state.win
 #	print("You continue on!")
 	start_scene_trans()
 	pass

@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name Boss_Forest_Spider
+class_name Boss_Giant_Eye
 
 var string_name = "Giant Spider"
 var sprite_frame = 15

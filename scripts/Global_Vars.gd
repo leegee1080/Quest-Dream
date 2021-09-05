@@ -5,7 +5,8 @@ const stage_order = { #the stage number and corresponding theme
 	6: Tile_Enums.tile_themes_enum.mountain,
 	11: Tile_Enums.tile_themes_enum.swamp,
 	16: Tile_Enums.tile_themes_enum.grave,
-	21: Tile_Enums.tile_themes_enum.castle
+	21: Tile_Enums.tile_themes_enum.castle,
+	26: Tile_Enums.tile_themes_enum.castle
 }
 
 var audio_player

@@ -275,6 +275,9 @@ func start_round(): #just for the first time start, can add more here if needed
 	if get_parent().is_boss_stage:
 		randomize()
 		Boss_Enums.boss_theme_dict[GlobalVars.current_theme].shuffle()
+		if Boss_Enums.boss_theme_dict[GlobalVars.current_theme][0] == null:
+			win_round()
+			return
 		GlobalVars.boss_node_ref = Boss_Enums.boss_theme_dict[GlobalVars.current_theme][0].new()
 		add_child(GlobalVars.boss_node_ref)
 	pass
